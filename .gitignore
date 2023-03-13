@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# R project
+.Rproj.user
+
+# acquired or rendered files
+ref
+data
+fig
+**/*.spl
+**/*.tex
+**/*.pdf
