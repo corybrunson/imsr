@@ -8,6 +8,7 @@
 ref
 data
 fig
+**/*.log
 **/*.spl
 **/*.tex
 **/*.pdf
