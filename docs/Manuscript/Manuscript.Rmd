@@ -4,8 +4,8 @@ author:
   - name: Adi Cohen
     email: ac4569@my.nsu.edu
     affiliation: 1
-  - name: Patti McCall
-    email: 
+  - name: Patti McCall-Junkin
+    email: pattimccall.junkin@gmail.com
     affiliation: 2
   - name: Jason Cory Brunson
     email: jason.brunson@medicine.ufl.edu
@@ -15,23 +15,23 @@ address:
   - code: 1
     address: Nova Southeastern University College of Osteopathic Medicine, 3200 S University Drive, Davie, FL 33328
   - code: 2
-    address: Department, Street, City, State, Zip
+    address: University at Florida, Smathers Libraries Academic Research & Consulting Services, P. O. Box 117000, Gainesville, FL 32611-7000
   - code: 3
     address: Laboratory for Systems Medicine, University of Florida, P.O. Box 100225 JHMHC, Gainesville, FL 32610-0225
 abstract: |
-  Background
+  **Background**
   
   Applications of classical case-based reasoning (CBR) to clinical and health tasks have given rise to a family of techniques in which an (often conventional) model is fitted to a subset of labeled cases, selected for relevance or similarity to an unlabeled case to which the model is applied. These localized models, as we propose to call them, may perform as well as "black-box" models while retaining direct interpretations. Their adoption has been hindered by fragmented development and implementation challenges. Our goal in this scoping review was to describe the clinical and health applications of localized models to date and to derive a general framework for their design and evaluation.
   
-  Methods
+  **Methods**
   
   We searched five electronic bibliographic databases for publications that report applications of localized models to tasks involving analysis of clinical or health data. Two authors divided title/abstract screening and collaboratively reviewed screened entries for inclusion. We also reviewed a seed set that inspired the review and traced a subset of citations from  We discussed and summarized settings, tasks, and tools; identified and tabulated themes; and synthesized the methods into a general framework.
   
-  Results
+  **Results**
   
   Of 1,309 search results, 328 were reviewed. Of these, combined with 43 publications that seeded the review and 1 obtained by citation tracking, 51 were included in the review and 25 of these in the methodological synthesis. The specificity of several search terms was poor, and inter-rater reliability was low. Entries were published from 1997 to 2021, with half of these since 2015. The most common tasks were prognosis and diagnosis, with only few recent studies focusing on care recommendation. The studies overwhelmingly focused on clinical data, occasionally also including laboratory and image-derived data. Only three studies used localized models for any task other than prediction, most recently to identify significant determinants behind recommendation outputs. Several studies commented on memory and runtime costs, and four proposed partial solutions to them. While most techniques were not replicated and did not cite predecessors, a general technique that specializes to most of those encountered was straightforward to describe.
   
-  Conclusions
+  **Conclusions**
   
   Localized models hold promise to improve the performance of models used in clinical decision support tools while maintaining interpretability, provided their computational limitations can be overcome. Our search undoubtedly failed to capture all studies that used methods of this kind, but those reviewed and synthesized exhibit consistent enough design to be reproduced by a general-purpose tool. We hope that our review and synthesis will assist the development of more efficient implementations suitable for integration into practice.
 keywords: 
@@ -54,6 +54,13 @@ output:
     latex_engine: xelatex
     citation_package: natbib
 ---
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(stringr)
+googlesheets4::gs4_auth(email = "cornelioid@gmail.com")
+Sys.sleep(10)
+```
 
 # Introduction
 
@@ -92,21 +99,21 @@ We expected the general framework to boil down to three choices: A patient simil
 
 # Methods
 
-We modeled our literature review on PRISMA guidelines (PRISMA Group, 2021). Because we focus on methodologies rather than approaches, we deviated in some ways from these guidelines.
+## PRISMA checklist
 
-## PRISMA-S checklist
-
-The PRISMA-S checklist comprises 16 items categorized into information sources and methods, search strategies, peer review, and managing records. We use the checklist to report the steps of our systematic review. Some items of the PRISMA-S checklist are intended for meta analysis and, therefore, did not apply to this study. We followed the checklist throughout the search process and explain the deviations from it in [Supplemental Table 1](https://docs.google.com/spreadsheets/d/1lKI5WWGIzo_hE9olkWWVCbLjCY9To5fiKPiefXUqgoU/edit).
+We include a PRISMA checklist as Supplemental Table 1.
+Because we focus on methodologies rather than approaches, we deviate in some ways from PRISMA guidelines. In particular, many items of the checklist, involving bias assessment and quantitative synthesis, are intended for meta-analyses and, therefore, did not apply to this study.
 
 ## Search
 
-We derived the eligibility criteria itemized in the Introduction from a seed set of previously read studies. Based on these criteria, we formulated search strings for five platforms: PubMed, Web of Science, Academic Search Premier, Google Scholar, and MathSciNet. We finalized the PubMed search first, then adapted it to the other platforms. Through each platform, we searched those databases included by default.[^databases]
+We derived the eligibility criteria itemized in the Introduction from a seed set of previously read studies. Based on these criteria, we formulated search strings for five platforms: PubMed, Web of Science, Academic Search Premier, Google Scholar, and MathSciNet. We finalized the PubMed search first, then adapted it to the other platforms.
 
-[^databases]: This means that we searched both MEDLINE and PubMed Central (PMC) through Pubmed (we did not exclude other databases, but our earliest included results post-date them) and that we searched the six indices of the Core Collection (the Science Citation Index Expanded, the Social Sciences Citation Index, the Arts & Humanities Citation Index, the Emerging Sources Citation Index, the Conference Proceedings Citation Index, and the Book Citation Index) as well as several regional databases through the Web of Science platform.
+Through each platform, we searched those databases included by default.
+This means that we searched both MEDLINE and PubMed Central (PMC) through Pubmed (we did not exclude other databases, but our earliest included results post-date them) and that we searched the six indices of the Core Collection (the Science Citation Index Expanded, the Social Sciences Citation Index, the Arts & Humanities Citation Index, the Emerging Sources Citation Index, the Conference Proceedings Citation Index, and the Book Citation Index) as well as several regional databases through the Web of Science platform.
 
 The structure and terms of our search strings were inspired in part by previous reviews adjacent to our topic of interest [@Sharafoddini2017; @Parimbelli2018]. We organized the PubMed search in disjunctive normal form (an OR of ANDs). Following the solidification of an outline, we expanded each term to include synonyms that are similar enough to be applicable to our search. We then evaluated the expanded search string using the PubMed Advanced Search platform. We initially included each term and their synonyms separately to evaluate what resulted. We pruned several terms that returned no results ("phrases not found") or to reduce the number of results. At the conclusions of this process for each individual term, we combined the search terms using disjunctive normal form.
 
-We conducted all searches over 2021 July 19–22. We organized the results into a Zotero collection with one subcollection for each database. We then imported the pooled results to Covidence, which merged some duplicate entries.
+We conducted all searches over 2021 July 19–22. We tentatively excluded results from Google Scholar because they were missing abstracts, and later agreed to discard these results due to the lack of reproducibility of the search. We organized the remaining results into a Zotero collection with one subcollection for each database. We then imported the pooled results to Covidence, which merged some duplicate entries.
 
 ## Title/Abstract screen
 
@@ -133,7 +140,7 @@ We noticed during full text review that our inclusion criteria admitted studies 
 
 ## Coding
 
-Following the determination of 25 sources aligning with our systematic review, we collected characteristics of included studies ([Supplemental Table 2](https://docs.google.com/spreadsheets/d/1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo/edit)). The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, evaluation/performance/comparison measures (& their values), name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
+Following the determination of 25 sources aligning with our review, we collected characteristics of included studies ([Supplemental Table 2](https://docs.google.com/spreadsheets/d/1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo/edit)). The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, evaluation/performance/comparison measures (& their values), name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
 
 ## Synthesis
 
@@ -158,7 +165,6 @@ Inter-rater reliability was low, at 82% relative to a 72% probability of random 
 The 25 included studies were analyzed based on 20 characteristics (Table \ref{tab:synthesis}), and we describe some observations here. The studies were published in a variety of journals, with some of greater frequency, though no single journal published exceptionally many. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, and _Hindawi - Journal of Healthcare Engineering_ published 3. Another distinguishing factor was the years of publication of the included studies (Figure \ref{fig:year}). While they stretch back to the late 1990s, they have become more common in recent years, which suggests that this is still an active, though not rapidly expanding methodological approach. We note that, while CBR in health and medicine originated as early as 1990, these studies did emerge early on once CBR had established itself. So the idea has been "in the air" for as long as CBR has been in use.
 
 ```{r tab:synthesis, echo=FALSE, message=FALSE, warning=FALSE}
-library(dplyr)
 googlesheets4::read_sheet(
   ss = "1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo", sheet = 1L
 ) |>
@@ -168,16 +174,20 @@ googlesheets4::read_sheet(
     Citation = paste0("@", zotero_key),
     Date = format(date_of_publication, "%Y %b %d"),
     Task = objective,
+    Aim = ifelse(generalizable_knowledge == "Science", "Knowledge", "Practice"),
     Source = type_of_data,
     Type = range_of_data,
     `Cases` = number_of_cases_incidents,
     `Features` = number_of_predictors_features
   ) |>
   mutate(Task = ifelse(Task == "Recommendation", "Decision Support", Task)) |> 
-  mutate(across(
-    c(`Cases`, `Features`),
-    sapply, FUN = paste0, collapse = "; "
-  )) |> 
+  mutate(across(c(Cases, Features), sapply, FUN = format, big.mark = ",")) |>
+  mutate(across(c(Cases, Features), sapply, FUN = paste0, collapse = "; ")) |>
+  # mutate(across(c(Cases, Features), str_split, pattern = "; ")) |> 
+  # mutate(Dimensions = purrr::map2_chr(
+  #   Cases, Features,
+  #   ~ str_c(.x, .y, sep = " × ", collapse = "; ")
+  # )) |> 
   mutate(across(
     everything(),
     # ~ stringr::str_replace_all(., "<U+001B>", "")
@@ -185,12 +195,15 @@ googlesheets4::read_sheet(
   )) ->
   tab_synthesis
 tab_synthesis |> 
+  select(-Date) |> 
+  # prevent numeric list columns from dominating the horizontal space
+  mutate(across(c(-Cases, -Features), ~ str_c(., "\\hspace{6em}"))) |> 
   knitr::kable(
     align = "lllllrr",
     caption = paste0(
       "\\label{tab:synthesis}",
-      "Studies included in the method synthesis.",
-      " 'Date' is the earliest the study is known to have been public."
+      "Studies included in the method synthesis,",
+      " arranged by the earliest the study is known to have been public."
     )
   )
 ```
@@ -199,7 +212,7 @@ tab_synthesis |>
 knitr::include_graphics("../../fig/fig-years.png")
 ```
 
-Another dominant characteristic of included studies is their remit. We categorized studies as "science" or "quality improvement" based on whether their aim was to produce generalizable knowledge or to improve practice. We classified 7 of the 25 studies as "science", making the majority of studies from a "quality improvement" standpoint. These studies aimed primarily to provide providers with tools to use in clinic or to improve outcomes for patients currently receiving care. Lastly, we observed a commonality among 6 of the 25 included studies in having evaluated methods using leave-one-out cross-validation (LOOCV). The purpose of this measure is to estimate the overall performance of certain factors when used to make predictions, particularly utilized on smaller data sets, where models benefit greatly from larger training sets and additional model fitting is less costly.
+Another dominant characteristic of included studies is their remit. We categorized studies as "knowledge" or "practice" based on whether their aim was to produce generalizable knowledge or to improve practice. We classified 7 of the 25 studies as "knowledge", making the majority of studies from a "practice" standpoint. These studies aimed primarily to provide providers with tools to use in clinic or to improve outcomes for patients currently receiving care. Lastly, we observed a commonality among 6 of the 25 included studies in having evaluated methods using leave-one-out cross-validation (LOOCV). The purpose of this measure is to estimate the overall performance of certain factors when used to make predictions, particularly utilized on smaller data sets, where models benefit greatly from larger training sets and additional model fitting is less costly.
 
 In the Discussion, we discuss trends in the literature we reviewed, identify common limitations and gaps in understanding, and attempt to synthesize their methods into a general framework.
 
@@ -213,8 +226,6 @@ See Table \ref{tab:composite} for details on approaches taken by the synthesized
 (See [this sheet](https://docs.google.com/spreadsheets/d/1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs/).)
 
 ```{r tab:composite, echo=FALSE, message=FALSE, warning=FALSE}
-library(dplyr)
-library(stringr)
 googlesheets4::read_sheet(
   ss = "1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs", sheet = 1L
 ) |>
@@ -234,6 +245,7 @@ googlesheets4::read_sheet(
     # ~ str_replace_all(., "<U+001B>", "")
     textclean::replace_non_ascii
   )) |>
+  mutate(across(c(Citation), ~ str_c(., "\\hspace{6em}"))) |> 
   knitr::kable(
     align = "lllllrr",
     caption = paste0(
@@ -304,20 +316,18 @@ knitr::include_graphics("../../fig/fig-typology.pdf")
 
 Each step can be unsupervised supervised: Unsupervised similarity measures include discrete measures like the Levenshtein distance and continuous measures like cosine similarity, while supervised measures include the Mahalanobis distance and random forest proximity as well as several composite measures with weights calculated from the data. Most retrieval steps obtained cohorts with a uniform size (cardinality) or similarity threshold, and the remaining were likewise only informed by predictors; thus, while in principle a retrieval step could be supervised, in this sample none were. Almost all models were supervised, being that most performed predictive tasks, though @Mariuzzi1997 modeled only survival rates within localized cohorts. Meanwhile, each step can be optimized in a ML fashion by having its parameters tuned to improve performance. We found no studies that tuned the calculation of similarity, though most uniform cohort sizes were tuned. Some earlier studies tuned generalized regression models, but more recent studies have not.
 
-## Limitations
-
-
-
 ## Conclusions
 
 We propose the term _localized modeling_ to encompass an approach derived from CBR in which parameterized models are fitted in a standardized way to nearest neighborhoods of past or training cases according to a measure of patient similarity. We conducted a systematic search for studies that apply localized models to tasks involving health data and synthesized these largely independently developed approaches into a general framework. While the search was limited by low inter-rater reliability and failure to recover several motivating examples, the included studies used many of the same underlying tools to build, optimize, and evaluate their methods. We therefore believe that our framework can serve to taxonomize ongoing work of this type and inform the development of customizable implementations. Indeed, the availability of increasing computational power, the diversity of tasks to which these models were applied and of technical specifications they employed, and the apparent lack of any multi-group research program to date suggest great potential for growth. Whereas precious few of the reviewed studies used these models, for any task other than prediction, despite widespread suspicion among clinicians of "black-box" models and growing interest in interpretable alternatives, we recommend that future work put greater emphasis on the development and validation of interpretable localized models and on their reception by communities of medical research and clinical practice.
 
-## Appendix
+# Appendix
 
-### Search strings
+## Search strings
 
 Here we reproduce the search strings and platform specifications used in our literature search.
-We first finalized the **PubMed** search string below:
+We first finalized the **PubMed** search string below:[^pubmed-url]
+
+[^pubmed-url]: <https://pubmed.ncbi.nlm.nih.gov/?term=(+"case-based+reasoning"+[All+Fields]+OR+"case-based+system"+[All+Fields]+)+OR+(+"individualized+modeling"+[All+Fields]+OR+"personalized+modeling"+[All+Fields]+OR+"customized+modeling"+[All+Fields]+)+OR+(+"individualized+cohort"+[All+Fields]+)+OR+(+(+"patient+similarity"+[All+Fields]+OR+"patient+distance"+[All+Fields]+OR+"patient+connection"+[All+Fields]+OR+"patient+affinity"+[All+Fields]+OR+"patient+clustering"+[All+Fields]+)+AND+(+"cohort+study"+[All+Fields]+)+)&sort=date>
 
 ```
 (
@@ -368,7 +378,7 @@ Search string                    Number of items
 `"patient distance" OR`                         
 `"patient connection" OR`                       
 `"patient affinity" OR`                         
-`"patient clustering"`                          
+`"patient clustering"`;                         
 Refined search: `"cohort"`                      
 ------------------------------------------------
 
