@@ -3,9 +3,12 @@ library(tidyverse)
 # Excel file downloaded from Google Sheet:
 # https://docs.google.com/spreadsheets/d/
 # 1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs/
-here::here("data/IMSR composite techniques.xlsx") %>%
-  readxl::read_xlsx() %>%
-  select(seq(3L)) %>%
+# here::here("data/IMSR composite techniques.xlsx") %>%
+#   readxl::read_xlsx() %>%
+googlesheets4::read_sheet(
+  ss = "1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs", sheet = 1L
+) |> 
+  select(seq(2L, 4L)) %>%
   rename_with(~ str_replace(snakecase::to_snake_case(.), "_s$", "s")) %>%
   mutate(across(c(approach_types, terms), ~ str_split(., "(;|,) *"))) %>%
   print() -> composite_studies
@@ -23,7 +26,7 @@ composite_studies %>%
   ) +
   labs(x = NULL, y = NULL) ->
   year_plot
-ggsave(here::here("fig/fig-years.png"), year_plot, width = 5, height = 3)
+ggsave(here::here("fig/fig-years.png"), year_plot, width = 5, height = 2)
 
 # approach types
 composite_studies %>%
