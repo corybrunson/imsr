@@ -25,7 +25,7 @@ abstract: |
   
   **Methods**
   
-  We searched five electronic bibliographic databases for publications that report applications of localized models to tasks involving analysis of clinical or health data. Two authors divided title/abstract screening and collaboratively reviewed screened entries for inclusion. We also reviewed a seed set that inspired the review and traced a subset of citations from  We discussed and summarized settings, tasks, and tools; identified and tabulated themes; and synthesized the methods into a general framework.
+  We searched four electronic bibliographic platforms (PubMed, Web of Science, Academic Search Premier, and MathSciNet) during 2021 July 19–22. We screened and reviewed entries based on four criteria intended to specify applications of localized models to tasks involving analysis of clinical or health data. Two authors divided title/abstract screening and collaboratively reviewed screened entries for inclusion. We also screened and reviewed a seed set that inspired the review and traced methodological citations from included entries. We discussed and summarized settings, tasks, and tools; identified and tabulated themes; and synthesized the methods into a general framework. We received no specific funding for this work.
   
   **Results**
   
@@ -103,6 +103,7 @@ We expected the general framework to boil down to three choices: A patient simil
 
 We include a PRISMA checklist as Supplemental Table 1.
 Because we focus on methodologies rather than approaches, we deviate in some ways from PRISMA guidelines. In particular, many items of the checklist, involving bias assessment and quantitative synthesis, are intended for meta-analyses and, therefore, did not apply to this study.
+Because we are not aware of any standard procedures for conducting reviews and syntheses of methodology, no protocol was prepared for this study.
 
 ## Search
 
@@ -115,7 +116,7 @@ The structure and terms of our search strings were inspired in part by previous 
 
 We conducted all searches over 2021 July 19–22. We tentatively excluded results from Google Scholar because they were missing abstracts, and later agreed to discard these results due to the lack of reproducibility of the search. We organized the remaining results into a Zotero collection with one subcollection for each database. We then imported the pooled results to Covidence, which merged some duplicate entries.
 
-## Title/Abstract screen
+## Title/abstract screen
 
 Within Covidence, we screened titles and abstracts for relevance. We decided on four eligibility criteria to expedite the screening process. These include articles written in English for readability, original studies to strictly include primary sources with new information/conclusions, medical or clinical related settings due to the applicability of our data to this field, and alternative use of the key terms within the search string, meaning that it was clear from the title and abstract that the entry was included due to the use of one or more search terms with a different meaning than ours. Each of two authors (AC and JCB) screened roughly half of the entries. They regularly reviewed each other’s decisions to improve consistency. In cases of uncertainty, an entry would be included.
 
@@ -319,6 +320,24 @@ Each step can be unsupervised supervised: Unsupervised similarity measures inclu
 ## Conclusions
 
 We propose the term _localized modeling_ to encompass an approach derived from CBR in which parameterized models are fitted in a standardized way to nearest neighborhoods of past or training cases according to a measure of patient similarity. We conducted a systematic search for studies that apply localized models to tasks involving health data and synthesized these largely independently developed approaches into a general framework. While the search was limited by low inter-rater reliability and failure to recover several motivating examples, the included studies used many of the same underlying tools to build, optimize, and evaluate their methods. We therefore believe that our framework can serve to taxonomize ongoing work of this type and inform the development of customizable implementations. Indeed, the availability of increasing computational power, the diversity of tasks to which these models were applied and of technical specifications they employed, and the apparent lack of any multi-group research program to date suggest great potential for growth. Whereas precious few of the reviewed studies used these models, for any task other than prediction, despite widespread suspicion among clinicians of "black-box" models and growing interest in interpretable alternatives, we recommend that future work put greater emphasis on the development and validation of interpretable localized models and on their reception by communities of medical research and clinical practice.
+
+# Acknowledgments
+
+# Support
+
+The authors received no specific funding or other support for this work.
+
+# Competing interests
+
+The authors declare that they have no competing interests.
+
+# Data and code availability
+
+Data collected or encoded for included studies are publicly available in two Google Sheets. Code used to analyze these data and generate this manuscript is publicly available in a GitHub repository.
+
+* Properties of included studies: <https://docs.google.com/spreadsheets/d/1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo/>
+* Composite techniques: <https://docs.google.com/spreadsheets/d/1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs/>
+* Analysis and manuscript code: <https://github.com/corybrunson/imsr>
 
 # Appendix
 
