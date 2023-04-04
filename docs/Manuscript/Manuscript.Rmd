@@ -29,7 +29,7 @@ abstract: |
   
   **Results**
   
-  Of 1,309 search results, 328 were reviewed. Of these, combined with 43 publications that seeded the review and 1 obtained by citation tracking, 51 were included in the review and 25 of these in the methodological synthesis. The specificity of several search terms was poor, and inter-rater reliability was low. Entries were published from 1997 to 2021, with half of these since 2015. The most common tasks were prognosis and diagnosis, with only few recent studies focusing on care recommendation. The studies overwhelmingly focused on clinical data, occasionally also including laboratory and image-derived data. Only three studies used localized models for any task other than prediction, most recently to identify significant determinants behind recommendation outputs. Several studies commented on memory and runtime costs, and four proposed partial solutions to them. While most techniques were not replicated and did not cite predecessors, a general technique that specializes to most of those encountered was straightforward to describe.
+  Of 1,309 search results, 328 were reviewed. Of these, combined with 43 publications that seeded the review and 1 obtained by citation tracking, 25 were included in the review and methodological synthesis. The specificity of several search terms was poor, and inter-rater reliability was low. Entries were published from 1997 to 2021, with half of these since 2015. The most common tasks were prognosis and diagnosis, with only few recent studies focusing on care recommendation. The studies overwhelmingly focused on clinical data, occasionally also including laboratory and image-derived data. Only three studies used localized models for any task other than prediction, most recently to identify significant determinants behind recommendation outputs. Several studies commented on memory and runtime costs, and four proposed partial solutions to them. While most techniques were not replicated and did not cite predecessors, a general technique that specializes to most of those encountered was straightforward to describe.
   
   **Conclusions**
   
@@ -131,17 +131,16 @@ We set out 4 criteria for full-text review to restrict to studies that used some
 
 Note that classical CBR satisfies the first and third criteria by definition and in most cases will satisfy the second.
 
-In Covidence, two authors (AC and JCB) independently evaluated each manuscript for the four eligibility criteria. The first criterion that a manuscript failed was designated the reason for exclusion. An antecedent criterion was used to exclude manuscripts that did not report the results of original studies involving real-world experiments or empirical data, for example surveys of prior work and proposals of frameworks. In cases of disagreement between the authors on the reason for exclusion, the first criterion was adopted. There were 60 disagreements over inclusion versus exclusion. The authors arrived at agreement on each manuscript through discussion.
+In Covidence, two authors (AC and JCB) independently evaluated each manuscript for the four eligibility criteria. The first criterion that a manuscript failed was designated the reason for exclusion. An antecedent criterion was used to exclude manuscripts that did not report the results of original studies involving real-world experiments or empirical data, for example surveys of prior work and proposals of frameworks. In cases of disagreement between the authors on the reason for exclusion, the first criterion was adopted. There were 60 disagreements over inclusion versus exclusion. The authors arrived at agreement on each manuscript through discussion. We calculated inter-rater reliability to evaluate our screening and review process.
+
+During full text review, we decided to expand the conception of statistical models (fourth criterion): Rather than restricting to models that are fit and evaluated in separate steps, we chose to allow simple statistical summaries such as mean survival [@Mariuzzi1997] and survival curves [@Lowsky2012]. These approaches were novel to CBR and presage later developments, so were helpful to understanding the development of localized modeling.
+However, this then admitted studies that applied conventional nearest neighbors prediction: Each retrieved cohort consisted of the $k$ most similar cases to the index case, and the response for the index case was predicted to be either the mean (continuous response) or the plurality (discrete response) of the responses of the cohort. A review of all studies that use nearest neighbors prediction, even in the clinical domain, would be impractical. Because our focus is on novel approaches that combine similarity-based retrieval and statistical modeling of retrieved cohorts, we chose to exclude those studies whose approach was equivalent to nearest neighbors prediction using a conventional similarity measure.
 
 Finally, one author (JCB) applied the same review process to the seed set of 43 studies that inspired the review. This obtained 6 additional studies that had not been retrieved by any of our database searches [@Park2006; @Lowsky2013; @Lee2015; @Ng2015; @Lee2017; @Wang2019].
 
-## Taxonomy of included studies
-
-We noticed during full text review that our inclusion criteria admitted studies that applied conventional nearest neighbors prediction: Each retrieved cohort consisted of the $k$ most similar cases to the index case, and the response for the index case was predicted to be either the mean (continuous response) or the plurality (discrete response) of the responses of the cohort. Mean and plurality can be understood as statistical models, and other studies used equally simple though less conventional calculations. However, a review of all studies that use nearest neighbors prediction, even in the clinical domain, would be impractical. Because our focus is on novel approaches that combine similarity-based retrieval and statistical modeling of retrieved cohorts, we chose to analyze only those studies whose approach was not equivalent to nearest neighbors prediction using a conventional similarity measure. The unanalyzed studies comprised 25 of the 44 studies included from the search and 1 of those from the seed set, and our analysis focuses on the remaining 19 + 1 + 5 = 25 studies.
-
 ## Coding
 
-Following the determination of 25 sources aligning with our review, we collected characteristics of included studies ([Supplemental Table 2](https://docs.google.com/spreadsheets/d/1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo/edit)). The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, evaluation/performance/comparison measures (& their values), name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
+Following the selection sources aligning with our review, we collected characteristics of included studies ([Supplemental Table 2](https://docs.google.com/spreadsheets/d/1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo/edit)). The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, evaluation/performance/comparison measures (& their values), name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
 
 ## Synthesis
 
@@ -151,15 +150,14 @@ Rather than an evidence synthesis characteristic of most systematic reviews, we 
 
 ## Selection
 
-Figure \ref{fig:prisma} depicts our identification of studies via databases and registers. Following the completion and input of each search string, there were a total of 1,422 sources within all of the platforms used. De-duplication resulted in 1,309 entries, which were added to the title/abstract screening for review. Of these, 328 entries met the screening criteria and were assessed through full text review. Of these, 44 fit the criteria and were considered reports of included studies. Exclusion of NN models left 19 studies being included in the method synthesis.
+Figure \ref{fig:prisma} depicts our identification of studies via databases and registers. Following the completion and input of each search string, there were a total of 1,422 sources within all of the platforms used. De-duplication resulted in 1,309 entries, which were added to the title/abstract screening for review. Of these, 328 entries met the screening criteria and were assessed through full text review. Of these, 44 fit the original criteria, and 19 were included as distinct from NN prediction.
 
 ```{r fig:prisma, fig.align='center', out.width="80%", fig.cap = "\\label{fig:prisma}PRISMA-S flow chart.", echo=FALSE}
 knitr::include_graphics("../../fig/fig-prisma.pdf")
 ```
 
-We then reviewed 43 studies that comprised a seed set that inspired this review. After removing duplicates and screening for eligibility, we were left with 6 additional studies, 1 of which was excluded from the synthesis for using nearest neighbors prediction. Finally, citations in reference lists from the 43 + 328 = 371 studies assessed for eligibility led us to identify 1 additional study that met our criteria [@Kasabov2010]. This left us with 51 studies reviewed and 25 included in the synthesis.
-
-Inter-rater reliability was low, at 82% relative to a 72% probability of random agreement. This was due, in parts, to different interpretations of some eligibility criteria by the authors, inconsistent terminology across the sample, and incomplete reporting of resources and methods in the sample. Regarding interpretation of criteria, some wording of the criteria was adjusted following discussions between the reviewing authors during full-text review to better specify an agreed-upon meaning. We will discuss the different domains, terminologies, and reporting issues of the sample in later sections.
+We then reviewed 43 studies comprising a seed set that inspired this review. After removing duplicates and screening for eligibility, we were left with 6 additional studies, 1 of which was excluded from the synthesis for using nearest neighbors prediction. Finally, citations in reference lists from the 43 + 328 = 371 studies assessed for eligibility led us to identify 1 additional study that met our criteria [@Kasabov2010]. This left us with 19 + 1 + 5 = 25 studies included in the review and synthesis.
+Inter-rater reliability was low, at 82% relative to a 72% probability of random agreement.
 
 ## Overview
 
@@ -218,6 +216,10 @@ Another dominant characteristic of included studies is their remit. We categoriz
 In the Discussion, we discuss trends in the literature we reviewed, identify common limitations and gaps in understanding, and attempt to synthesize their methods into a general framework.
 
 # Discussion
+
+## Process
+
+The low inter-rater reliability was due, in parts, to different interpretations of some eligibility criteria by the authors, inconsistent terminology across the sample, and incomplete reporting of resources and methods in the sample. Regarding interpretation of criteria, some wording of the criteria was adjusted following discussions between the reviewing authors during full-text review to better specify an agreed-upon meaning. We will discuss the different domains, terminologies, and reporting issues of the sample in the remainder of this section.
 
 ## Trends
 
@@ -335,9 +337,9 @@ The authors declare that they have no competing interests.
 
 Data collected or encoded for included studies are publicly available in two Google Sheets. Code used to analyze these data and generate this manuscript is publicly available in a GitHub repository.
 
-* Properties of included studies: <https://docs.google.com/spreadsheets/d/1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo/>
-* Composite techniques: <https://docs.google.com/spreadsheets/d/1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs/>
-* Analysis and manuscript code: <https://github.com/corybrunson/imsr>
+* Bibliographic and methodological properties of included studies: <https://docs.google.com/spreadsheets/d/1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo/>
+* Terminology and composite techniques of included studies: <https://docs.google.com/spreadsheets/d/1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs/>
+* Code used to perform analyses and prepare the manuscript: <https://github.com/corybrunson/imsr>
 
 # Appendix
 
