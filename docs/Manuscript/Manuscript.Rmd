@@ -114,7 +114,7 @@ This means that we searched both MEDLINE and PubMed Central (PMC) through Pubmed
 
 The structure and terms of our search strings were inspired in part by previous reviews adjacent to our topic of interest [@Sharafoddini2017; @Parimbelli2018]. We organized the PubMed search in disjunctive normal form (an OR of ANDs). Following the solidification of an outline, we expanded each term to include synonyms that are similar enough to be applicable to our search. We then evaluated the expanded search string using the PubMed Advanced Search platform. We initially included each term and their synonyms separately to evaluate what resulted. We pruned several terms that returned no results ("phrases not found") or to reduce the number of results. At the conclusions of this process for each individual term, we combined the search terms using disjunctive normal form.
 
-We conducted all searches over 2021 July 19–22. We tentatively excluded results from Google Scholar because they were missing abstracts, and later agreed to discard these results due to the lack of reproducibility of the search. We organized the remaining results into a Zotero collection with one subcollection for each database. We then imported the pooled results to Covidence, which merged some duplicate entries.
+We conducted all searches over 2021 July 19–22. We tentatively excluded results from Google Scholar because they were missing abstracts, and later agreed to discard these results due to the lack of reproducibility of the search. We organized the remaining results into a public Zotero collection with one subcollection for each database. We then imported the pooled results to Covidence, which merged some duplicate entries.
 
 ## Title/abstract screen
 
@@ -335,8 +335,11 @@ The authors declare that they have no competing interests.
 
 # Data and code availability
 
-Data collected or encoded for included studies are publicly available in two Google Sheets. Code used to analyze these data and generate this manuscript is publicly available in a GitHub repository.
+Search results are publicly available in a Zotero group library.
+Data collected or encoded for included studies are publicly available in two Google Sheets.
+Code used to analyze these data and generate this manuscript is publicly available in a GitHub repository.
 
+* Search results, included studies, and other bibliography: <https://www.zotero.org/groups/5017571/imsr/>
 * Bibliographic and methodological properties of included studies: <https://docs.google.com/spreadsheets/d/1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo/>
 * Terminology and composite techniques of included studies: <https://docs.google.com/spreadsheets/d/1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs/>
 * Code used to perform analyses and prepare the manuscript: <https://github.com/corybrunson/imsr>
@@ -456,6 +459,6 @@ Search string                    Number of items
 
 Our searches of _Mathematical Reviews_ therefore yielded 113 results.
 
-These totaled 1,422 sources from all platforms. We organized the full results in a Zotero collection alongside the seed set and created a single folder for the 25 results reviewed in detail.
+These totaled 1,422 sources from all platforms. We organized the full results in a public Zotero collection alongside the seed set and created a single folder for the 25 results reviewed in detail.
 
 # References {-}
