@@ -1,5 +1,5 @@
 ---
-title: "Clinical prediction using similarity-based cohorts: A scoping review"
+title: "Clinical prediction with localized modeling using similarity-based cohorts: A scoping review"
 author:
   - name: Adi Cohen
     email: ac4569@my.nsu.edu
@@ -102,12 +102,10 @@ We expected the general framework to boil down to three choices: A patient simil
 
 # Methods
 
-## Protocol
-
-Our methods followed prepared plans, which we collect into a protocol in the Appendix.
+Our methods followed prepared plans, which we describe in detail in the Appendix.
 We also note deviations from these plans and the reasons for them.
 
-### PRISMA checklist
+## PRISMA checklist
 
 We include a PRISMA checklist as Supplemental Table 1 and a PRISMA abstract checklist as Supplemental Table 2.
 Because we focus on methodologies rather than approaches, we deviate in some ways from PRISMA guidelines. In particular, many items of the checklist, involving bias assessment and quantitative synthesis, are intended for meta-analyses and, therefore, did not apply to this study.
@@ -115,7 +113,7 @@ Because we are not aware of any standard procedures for conducting reviews and s
 
 ## Search
 
-We derived the eligibility criteria itemized in the Introduction from a seed set of previously read studies. Based on these criteria, we formulated search strings for five platforms: PubMed, Web of Science, Academic Search Premier, Google Scholar, and MathSciNet. We finalized the PubMed search first, then adapted it to the other platforms.
+We derived the eligibility criteria itemized in the Introduction from a seed set of previously read studies. Based on these criteria, we formulated search strings for five platforms: PubMed, Web of Science, Academic Search Premier, Google Scholar, and MathSciNet. We finalized the PubMed search first, then adapted it to the other platforms (Sections \ref{sec:appendix-search}).
 
 Through each platform, we searched those databases included by default.
 This means that we searched both MEDLINE and PubMed Central (PMC) through Pubmed (we did not exclude other databases, but our earliest included results post-date them) and that we searched the six indices of the Core Collection (the Science Citation Index Expanded, the Social Sciences Citation Index, the Arts & Humanities Citation Index, the Emerging Sources Citation Index, the Conference Proceedings Citation Index, and the Book Citation Index) as well as several regional databases through the Web of Science platform.
@@ -148,7 +146,7 @@ Finally, one author (JCB) applied the same review process to the seed set of 43 
 
 ## Coding
 
-Following the selection sources aligning with our review, we collected characteristics of included studies (see the Appendix). The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, evaluation/performance/comparison measures (& their values), name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
+Following the selection sources aligning with our review, we collected characteristics of included studies (Section \ref{sec:availability}). The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, evaluation/performance/comparison measures (& their values), name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
 
 ## Synthesis
 
@@ -160,48 +158,26 @@ Rather than an evidence synthesis characteristic of most systematic reviews, we 
 
 Figure \ref{fig:prisma} depicts our identification of studies via databases and registers. Following the completion and input of each search string, there were a total of 1,422 sources within all of the platforms used. De-duplication resulted in 1,309 entries, which were added to the title/abstract screening for review. Of these, 328 entries met the screening criteria and were assessed through full text review. Of these, 44 fit the original criteria, and 19 were included as distinct from NN prediction.
 
-```{r fig:prisma, fig.align='center', out.width="80%", fig.cap = "\\label{fig:prisma}PRISMA-S flow chart.", echo=FALSE}
+```{r fig:prisma, fig.align='center', out.width="80%", echo=FALSE}
+#| fig.cap =
+#| "\\label{fig:prisma}
+#| PRISMA-S flow chart.
+#|  Lowercase letters refer to items obtained from
+#|  the seed set (m),
+#|  the structured search (n), and
+#|  citation/reference tracking (s)."
 knitr::include_graphics("../../fig/fig-prisma.pdf")
 ```
 
 We then reviewed 43 studies comprising a seed set that inspired this review. After removing duplicates and screening for eligibility, we were left with 6 additional studies, 1 of which was excluded from the synthesis for using nearest neighbors prediction. Finally, citations in reference lists from the 43 + 328 = 371 studies assessed for eligibility led us to identify 1 additional study that met our criteria [@Kasabov2010]. This left us with 19 + 1 + 5 = 25 studies included in the review and synthesis.
 Inter-rater reliability was low, at 82% relative to a 72% probability of random agreement.
 
-## Overview
+## Bibliographic and methodological properties
 
-The 25 included studies were analyzed based on 20 characteristics (Table \ref{tab:synthesis}), and we describe some observations here. The studies were published in a variety of journals, with some of greater frequency, though no single journal published exceptionally many. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, and _Hindawi - Journal of Healthcare Engineering_ published 3. Another distinguishing factor was the years of publication of the included studies (Figure \ref{fig:year}). While they stretch back to the late 1990s, they have become more common in recent years, which suggests that this is still an active, though not rapidly expanding methodological approach. We note that, while CBR in health and medicine originated as early as 1990, these studies did emerge early on once CBR had established itself. So the idea has been "in the air" for as long as CBR has been in use.
+The 25 included studies were analyzed based on 20 characteristics (see Section \ref{sec:availability}), and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, and _Hindawi - Journal of Healthcare Engineering_ published 3. Another interesting pattern lay in the years of publication of the included studies (Figure \ref{fig:year}). While they stretch back to the late 1990s, they have become more common, which suggests that this is still an active, though not rapidly expanding, methodological approach. We note that, while CBR in health and medicine originated as early as 1990, these studies did emerge early on once CBR had established itself. So the idea has been "in the air" for as long as CBR has been in use.
 
 ```{r tab:synthesis, echo=FALSE, message=FALSE, warning=FALSE}
-googlesheets4::read_sheet(
-  ss = "1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo", sheet = 1L
-) |>
-  rename_with(snakecase::to_snake_case) |>
-  filter(is.na(synthesis)) |> 
-  arrange(date_of_publication) |> 
-  transmute(
-    Citation = paste0("@", zotero_key),
-    Date = format(date_of_publication, "%Y %b %d"),
-    Task = objective,
-    Aim = ifelse(generalizable_knowledge == "Science", "Knowledge", "Practice"),
-    Source = type_of_data,
-    Type = range_of_data,
-    `Cases` = number_of_cases_incidents,
-    `Features` = number_of_predictors_features
-  ) |>
-  mutate(Task = ifelse(Task == "Recommendation", "Decision Support", Task)) |> 
-  mutate(across(c(Cases, Features), sapply, FUN = format, big.mark = ",")) |>
-  mutate(across(c(Cases, Features), sapply, FUN = paste0, collapse = "; ")) |>
-  # mutate(across(c(Cases, Features), str_split, pattern = "; ")) |> 
-  # mutate(Dimensions = purrr::map2_chr(
-  #   Cases, Features,
-  #   ~ str_c(.x, .y, sep = " × ", collapse = "; ")
-  # )) |> 
-  mutate(across(
-    everything(),
-    # ~ stringr::str_replace_all(., "<U+001B>", "")
-    textclean::replace_non_ascii
-  )) ->
-  tab_synthesis
+tab_synthesis <- read_rds(here::here("tab/synthesis.rds"))
 tab_synthesis |> 
   select(-Date) |> 
   # prevent numeric list columns from dominating the horizontal space
@@ -219,7 +195,10 @@ tab_synthesis |>
   )
 ```
 
-```{r fig:year, fig.align='center', out.width="80%", fig.cap = "\\label{fig:year}Number of publications in our sample each year.", echo=FALSE}
+```{r fig:year, fig.align='center', out.width="80%", echo=FALSE}
+#| fig.cap =
+#| "\\label{fig:year}
+#| Number of publications in our sample each year."
 knitr::include_graphics("../../fig/fig-years.png")
 ```
 
@@ -332,7 +311,10 @@ With the exception of the descriptive survival models of @Mariuzzi1997, only one
 
 This relatively small sample exhibited a wide range of approaches, both technically and conceptually. Discussion of the technical diversity of these approaches has been summarized above and published in greater detail in previous reviews [@Choudhury2016; @Sharafoddini2017; @Parimbelli2018], and we focus here on the conceptual. The design of a localized modeling approach can be decomposed into three largely independent choices: (1) how to measure the similarity between cases, (2) how to retrieve a cohort of cases similar to an index case, and (3) how to generate a prediction or other statistical insight for the index case from the similarity cohort. The choices are the _similarity measure_, the _retrieval step_, and the _statistical model_, respectively. These are diagrammed in Figure \ref{fig:framework}.
 
-```{r fig:framework, fig.align='center', out.width="80%", fig.cap = "\\label{fig:framework}General framework for localized models.", echo=FALSE}
+```{r fig:framework, fig.align='center', out.width="80%", echo=FALSE}
+#| fig.cap =
+#| "\\label{fig:framework}
+#| General framework for localized models."
 knitr::include_graphics("../../fig/fig-typology.pdf")
 ```
 
@@ -353,6 +335,7 @@ The authors received no specific funding or other support for this work.
 The authors declare that they have no competing interests.
 
 # Data and code availability
+\label{sec:availability}
 
 Search results are publicly available in a Zotero group library.
 Data collected or encoded for included studies are publicly available in two Google Sheets.
@@ -365,19 +348,19 @@ Code used to analyze these data and generate this manuscript is publicly availab
 
 # Appendix
 
-## Protocol
-
-### Research question
+## Research question
 
 How is patient similarity–based individualized modeling conducted using retrospective data?
 
-### Purpose of review
+## Purpose of review
+\label{sec:appendix-purpose}
 
 1. Provide a summary of individualized models to date.
 2. Lay the groundwork for conducting a comparison study of individualized models.
 3. Provide a framework for future individualized modeling studies.
 
-### Search
+## Search
+\label{sec:appendix-search}
 
 The procedure for formulating the search began with an evaluation of the research question. We highlighted specific elements within our topic of interest that we found critical to our search and listed them using an OR of ANDs, pairing terms we believed would provide our desired result. Following the solidification of the search, a thesaurus was created in which each term was expanded by synonyms that are similar enough to our core term to be applicable to our search. The expanded search string was then evaluated using the PubMed Advanced Search platform. We initially included each term and their synonyms separately to evaluate what resulted. Several terms were eliminated due to PubMed classifying them as “phrases not found” and other terms were removed to reduce the number of results, providing a more concise list of results. At the conclusions of this process for each individual term, we combined each search term using an OR of ANDs to ultimately form our search.
 
@@ -391,36 +374,7 @@ Once we have finalized the search as a logical pattern, we will take the followi
 
 Following discussion among AC, PMJ, and JCB, we omitted results from Google Scholar due to missing abstracts, missing URLs, high overlap with other search results, and irreproducibility of the search process.
 
-### Screening process
-
-1. Deduplication (Covidence)
-    a. Specific to that source: title, creator, URL, DOI
-    b. May overlap: journal, publication date, ISSN
-2. Title
-    a. Exclude non clinical/non medical setting
-    b. Must be in English
-    c. Must be original study (not reviews, surveys, opinion, news)
-    d. Exclude if search term clearly has different meaning than intended
-3. Abstract
-4. Full Text
-    a. Study criteria (inclusion/exclusion)
-
-### Selection process
-
-Our selection of relevant papers from the search corpus will be based on the following inclusion/exclusion criteria:
-
-* Uses labeled case-level (empirical) data set 
-* Defines a continuous-valued multivariate case similarity measure
-* Uses the similarity measure to select cohorts for index cases from the corpus
-* Fits statistical models to cohorts to make inferences about index cases
-
-We decided after concluding full-text review to perform one round of citation-tracking, of citations within the Methods (or analogous) sections of the included entries.
-
-### Analysis and synthesis
-
-Because we could not predict the scope of methodological approaches we would encounter, we did not prepare specific analyses or syntheses _a priori_.
-
-## Search strings
+### Search strings
 
 Here we reproduce the search strings and platform specifications used in our literature search.
 We first finalized the **PubMed** search string below:[^pubmed-url]
@@ -534,5 +488,36 @@ Search string                    Number of items
 Our searches of _Mathematical Reviews_ therefore yielded 113 results.
 
 These totaled 1,422 sources from all platforms. We organized the full results in a public Zotero collection alongside the seed set and created a single folder for the 25 results reviewed in detail.
+
+## Screening process
+\label{sec:appendix-screening}
+
+1. Deduplication (Covidence)
+    a. Specific to that source: title, creator, URL, DOI
+    b. May overlap: journal, publication date, ISSN
+2. Title
+    a. Exclude non clinical/non medical setting
+    b. Must be in English
+    c. Must be original study (not reviews, surveys, opinion, news)
+    d. Exclude if search term clearly has different meaning than intended
+3. Abstract
+4. Full Text
+    a. Study criteria (inclusion/exclusion)
+
+## Selection process
+\label{sec:appendix-selection}
+
+Our selection of relevant papers from the search corpus will be based on the following inclusion/exclusion criteria:
+
+* Uses labeled case-level (empirical) data set 
+* Defines a continuous-valued multivariate case similarity measure
+* Uses the similarity measure to select cohorts for index cases from the corpus
+* Fits statistical models to cohorts to make inferences about index cases
+
+We decided after concluding full-text review to perform one round of citation-tracking, of citations within the Methods (or analogous) sections of the included entries.
+
+## Analysis and synthesis
+
+Because we could not predict the scope of methodological approaches we would encounter, we did not prepare specific analyses or syntheses _a priori_.
 
 # References {-}
