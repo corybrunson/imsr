@@ -179,7 +179,7 @@ The 25 included studies were analyzed based on 20 characteristics (see Section \
 Another interesting pattern lay in the years of publication of the included studies (Figure \ref{fig:year}). While they stretch back to the late 1990s, they have become more common, which suggests that this is still an active, though not rapidly expanding, methodological approach. We note that, while CBR in health and medicine originated as early as 1990, these studies did emerge early on once CBR had established itself. So the idea has been "in the air" for as long as CBR has been in use.
 
 ```{r tab:synthesis, echo=FALSE, message=FALSE, warning=FALSE}
-tab_synthesis <- read_rds(here::here("tab/synthesis.rds"))
+tab_synthesis <- readr::read_rds(here::here("tab/synthesis.rds"))
 tab_synthesis |> 
   select(-Date) |> 
   # prevent numeric list columns from dominating the horizontal space
@@ -280,13 +280,13 @@ CBR can be understood as the opposite side of a trade-off with rule-based reason
 
 Other studies addressed limitations of available tools. @Lopez2011 implemented a comprehensive CBR tool in response to the lack of general-purpose software, to enable coupling with other tools as well as to expedite development, experimentation, and uptake. Several other teams also set out to develop  more interoperable clinical support tools [@Elter2007; @Liang2015; @Ng2015; @Zhang2018a].
 
-The frequency plot in Figure \ref{fig:} compares the rates at which several methodological elements are invoked in the sample.
+The frequency plot in Figure \ref{fig:methods} compares the rates at which several methodological elements are invoked in the sample.
 
 ```{r fig:methods, fig.align='center', out.width="100%", echo=FALSE}
 #| fig.cap =
 #| "\\label{fig:methods}
 #| Frequency of recurring methodological elements across included studies."
-# knitr::include_graphics("../../fig/fig-methods.png")
+knitr::include_graphics("../../fig/fig-methods.png")
 ```
 
 In the Discussion, we discuss trends in the literature we reviewed, identify common limitations and gaps in understanding, and attempt to synthesize their methods into a general framework.
