@@ -7,10 +7,10 @@ library(ggmosaic)
 # 1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo/
 googlesheets4::read_sheet(
   ss = "1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo", sheet = 1L
-) |>
-  rename_with(snakecase::to_snake_case) |>
-  filter(is.na(synthesis)) |> 
-  arrange(date_of_publication) |> 
+) %>%
+  rename_with(snakecase::to_snake_case) %>%
+  filter(is.na(synthesis)) %>% 
+  arrange(date_of_publication) %>% 
   transmute(
     Citation = paste0("@", zotero_key),
     Date = format(date_of_publication, "%Y %b %d"),
@@ -20,15 +20,21 @@ googlesheets4::read_sheet(
     Type = range_of_data,
     `Cases` = number_of_cases_incidents,
     `Features` = number_of_predictors_features
-  ) |>
-  mutate(Task = ifelse(Task == "Recommendation", "Decision Support", Task)) |> 
-  mutate(across(c(Cases, Features), sapply, FUN = format, big.mark = ",")) |>
-  mutate(across(c(Cases, Features), sapply, FUN = paste0, collapse = "; ")) |>
-  # mutate(across(c(Cases, Features), str_split, pattern = "; ")) |> 
+  ) %>%
+  mutate(Task = ifelse(Task == "Recommendation", "Decision Support", Task)) %>% 
+  mutate(across(
+    c(Cases, Features),
+    \(x) sapply(x, FUN = format, big.mark = ",")
+  )) %>% 
+  mutate(across(
+    c(Cases, Features),
+    \(x) sapply(x, FUN = paste0, collapse = "; ")
+  )) %>%
+  # mutate(across(c(Cases, Features), str_split, pattern = "; ")) %>% 
   # mutate(Dimensions = purrr::map2_chr(
   #   Cases, Features,
   #   ~ str_c(.x, .y, sep = " × ", collapse = "; ")
-  # )) |> 
+  # )) %>% 
   mutate(across(
     everything(),
     # ~ stringr::str_replace_all(., "<U+001B>", "")
@@ -90,7 +96,7 @@ ggsave(
 #   readxl::read_xlsx() %>%
 googlesheets4::read_sheet(
   ss = "1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs", sheet = 1L
-) |> 
+) %>% 
   filter(is.na(Synthesis)) %>%
   select(seq(3L, 5L)) %>%
   rename_with(~ str_replace(snakecase::to_snake_case(.), "_s$", "s")) %>%
