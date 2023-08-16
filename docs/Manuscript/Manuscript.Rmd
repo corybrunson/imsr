@@ -174,7 +174,9 @@ Inter-rater reliability was low, at 82% relative to a 72% probability of random 
 
 ## Bibliographic and methodological properties
 
-The 25 included studies were analyzed based on 20 characteristics (see Section \ref{sec:availability}), and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, and _Hindawi - Journal of Healthcare Engineering_ published 3. Another interesting pattern lay in the years of publication of the included studies (Figure \ref{fig:year}). While they stretch back to the late 1990s, they have become more common, which suggests that this is still an active, though not rapidly expanding, methodological approach. We note that, while CBR in health and medicine originated as early as 1990, these studies did emerge early on once CBR had established itself. So the idea has been "in the air" for as long as CBR has been in use.
+The 25 included studies were analyzed based on 20 characteristics (see Section \ref{sec:availability}), and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, and _Hindawi - Journal of Healthcare Engineering_ published 3.
+
+Another interesting pattern lay in the years of publication of the included studies (Figure \ref{fig:year}). While they stretch back to the late 1990s, they have become more common, which suggests that this is still an active, though not rapidly expanding, methodological approach. We note that, while CBR in health and medicine originated as early as 1990, these studies did emerge early on once CBR had established itself. So the idea has been "in the air" for as long as CBR has been in use.
 
 ```{r tab:synthesis, echo=FALSE, message=FALSE, warning=FALSE}
 tab_synthesis <- read_rds(here::here("tab/synthesis.rds"))
@@ -202,22 +204,12 @@ tab_synthesis |>
 knitr::include_graphics("../../fig/fig-years.png")
 ```
 
-Another dominant characteristic of included studies is their remit. We categorized studies as "knowledge" or "practice" based on whether their aim was to produce generalizable knowledge or to improve practice. We classified 7 of the 25 studies as "knowledge", making the majority of studies from a "practice" standpoint. These studies aimed primarily to provide providers with tools to use in clinic or to improve outcomes for patients currently receiving care. Lastly, we observed a commonality among 6 of the 25 included studies in having evaluated methods using leave-one-out cross-validation (LOOCV). The purpose of this measure is to estimate the overall performance of certain factors when used to make predictions, particularly utilized on smaller data sets, where models benefit greatly from larger training sets and additional model fitting is less costly.
+Another dominant characteristic of included studies is their remit. We categorized studies as "knowledge" or "practice" based on whether their aim was to produce generalizable knowledge or to improve practice. We classified 7 of the 25 studies as "knowledge", making the majority of studies from a "practice" standpoint. These studies aimed primarily to provide providers with tools to use in clinic or to improve outcomes for patients currently receiving care.
 
-In the Discussion, we discuss trends in the literature we reviewed, identify common limitations and gaps in understanding, and attempt to synthesize their methods into a general framework.
+Lastly, we observed a commonality among 6 of the 25 included studies in having evaluated methods using leave-one-out cross-validation (LOOCV). The purpose of this measure is to estimate the overall performance of certain factors when used to make predictions, particularly utilized on smaller data sets, where models benefit greatly from larger training sets and additional model fitting is less costly.
 
-# Discussion
-
-## Process
-
-The low inter-rater reliability was due, in parts, to different interpretations of some eligibility criteria by the authors, inconsistent terminology across the sample, and incomplete reporting of resources and methods in the sample. Regarding interpretation of criteria, some wording of the criteria was adjusted following discussions between the reviewing authors during full-text review to better specify an agreed-upon meaning. We will discuss the different domains, terminologies, and reporting issues of the sample in the remainder of this section.
-
-## Trends
-
-We draw several observations from our encoding of the included studies. We first focus on two driving questions: What challenges did investigators set out to solve? How did their approaches meet these challenges? We then comment on the connectedness of the included studies and the potential for recombination.
-See Table \ref{tab:composite} for details on approaches taken by the synthesized studies.
-
-(See [this sheet](https://docs.google.com/spreadsheets/d/1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs/).)
+In addition to their remit, we coded several aspects of the design of each study, including the source and type of data and the clinical task the model performed (Table \ref{tab:synthesis}), as well as the specific methodology and terminology adopted (Table \ref{tab:composite}).
+In the following subsections, we take a closer look at these design elements.
 
 ```{r tab:composite, echo=FALSE, message=FALSE, warning=FALSE}
 googlesheets4::read_sheet(
@@ -256,9 +248,9 @@ googlesheets4::read_sheet(
   )
 ```
 
-### Application domain
+## Application domain
 
-While all included studies were reported in scientific and medical journals, the vast majority were oriented toward clinical practice rather than medical research. For example, a 2006 study specifically evaluated the usefulness of CBR-based explanations for the purpose of decision support [@Doyle2006]. This was part of a much larger literature on CBR systems that was included here despite relying on NN prediction because it used a non-traditional voting scheme to generate recommendations. A more recent study took essentially the same focus with respect to a proposed clinical risk prediction model, which amounted to CBR with a novel weighting scheme on predictors informed by expert consensus [@Fang2021a]. In both cases a prototype implementation was deployed in an experimental setting for evaluation.
+While all included studies were reported in scientific and medical journals, the vast majority were oriented toward clinical practice rather than medical research. For example, a 2006 study specifically evaluated the usefulness of CBR-based explanations for the purpose of decision support [@Doyle2006]. This study was part of a much larger literature on CBR systems and was included here despite relying on NN prediction because it used a non-traditional voting scheme to generate recommendations. A more recent study took essentially the same focus with respect to a proposed clinical risk prediction model, which amounted to CBR with a novel weighting scheme on predictors informed by expert consensus [@Fang2021a]. In both cases a prototype implementation was deployed in an experimental setting for evaluation.
 
 The most common clinical motivations were individualized detection or diagnosis, prognosis or outcome prediction, and treatment or care recommendation. The plurality focused on prognosis or outcome prediction, often using time-to-event analysis: @Mariuzzi1997 used CBR to predict survival time from several geometric properties of breast tumors. @Lowsky2013 used CBR with non-parametric survival models on registry data to predict patient–graft survival times following kidney transplantation. @Lee2015 and @Lee2017 used localized logistic regression and random forest modeling to predict 30-day mortality following discharge for ICU patients. @Vilhena2016a developed a CBR cycle around a clustering-informed similarity matching procedure and an artificial neural network–based classifier to identify thrombophilia patients at high risk of thrombotic episodes. And @Ma2020a took a similarity cohort–based approach to predicting length of stay for ICU patients. Also of note, from a public health perspective, @Xu2008a used CBR to predict rehabilitation time as well as disability risk for unemployed workers experiencing chronic pain.
 
@@ -268,13 +260,48 @@ While several studies emphasized the potential or actual value to decision-makin
 
 A partial exception to this focus was a 2014 study that also reported a decision support tool, in this case for early diagnosis of melanoma from clinical data and dermoscopy images [@Nicolas2014a]. While the stated objectives were analogous, specific emphasis was placed on the acquisition of new knowledge through the development of the tool, including the systematic generation of new data and creation of a clinical ontology. This study was included for its use of a collaborative classifier that drew from multiple modeling approaches. In keeping with this focus of the included literature, the stated objectives of the proposed methods were more often (or additionally) to predict outcomes or to recommend interventions than only to diagnose disease.
 
-### Method development
+The mosaic plot in Figure \ref{fig:properties} summarizes the relation between data source, clinical task, and remit.
+
+```{r fig:properties, fig.align='center', out.width="100%", echo=FALSE}
+#| fig.cap =
+#| "\\label{fig:properties}
+#| Share of studies characterized by several design elements:
+#|  data source (row),
+#|  clinical task (fill color), and
+#|  remit (opacity)."
+knitr::include_graphics("../../fig/fig-properties.png")
+```
+
+## Method development
 
 Consistent with their orientation, almost all included studies were conducted using clinical data, only occasionally together with patient-reported (2), laboratory (2), and image (1) data. We suggest three reasons for this: First, this literature traces back to the 1990s, before -omic data could be generated cost-effectively at scale. Second, CBR in particular has a strong tradition in clinical decision support, where the focus of our sample remains throughout the review period. Third, because most -omic data are highly homogeneous—all measurements are made along or can be transformed to a common scale, e.g. greyscale pixellations for X-ray images and transcripts per million for RNA-seq data—more deeply theoretical analysis techniques have been developed and come into wide use. While variations on correlation-based approaches like EHR-based phenome-wide association studies and similarity-based methods like CBR itself have been developed, more mechanistic and probabilistic tools have not become a domain standard.
 
 CBR can be understood as the opposite side of a trade-off with rule-based reasoning between model size and model complexity; @Doyle2006 describe their approach as "knowledge-light", in that "the cases do not contain explicit explanation structures; instead, explanation is achieved by comparison of the query case with retrieved cases". This means that the greatest performance and efficiency challenges in CBR have to do with the retrieval and revision phases in the R4 cycle. Several studies addressed these challenges: @Park2006, while excluded from the synthesis, were the earliest to propose that cohorts be bounded by a similarity threshold rather than by a number of cases, and this improved performance in their experiments. @CampilloGimenez2013 leveraged predictor weights obtained from logistic regression to inform the similarity calculation used in retrieval. @Lowsky2013 used non-parametric models to reduce the computational burden of revision (prediction). @Ma2020a proposed to improve efficiency along the entire R4 cycle, but in particular by only executing task-dependent steps in real time ("just-in-time learning"), and @Ng2021b and @Tang2021d partitioned multiple phases in the R4 cycle into offline and online components, only the latter of which would be performed in real time as new data are received.
 
 Other studies addressed limitations of available tools. @Lopez2011 implemented a comprehensive CBR tool in response to the lack of general-purpose software, to enable coupling with other tools as well as to expedite development, experimentation, and uptake. Several other teams also set out to develop  more interoperable clinical support tools [@Elter2007; @Liang2015; @Ng2015; @Zhang2018a].
+
+The frequency plot in Figure \ref{fig:} compares the rates at which several methodological elements are invoked in the sample.
+
+```{r fig:methods, fig.align='center', out.width="100%", echo=FALSE}
+#| fig.cap =
+#| "\\label{fig:methods}
+#| Frequency of recurring methodological elements across included studies."
+# knitr::include_graphics("../../fig/fig-methods.png")
+```
+
+In the Discussion, we discuss trends in the literature we reviewed, identify common limitations and gaps in understanding, and attempt to synthesize their methods into a general framework.
+
+# Discussion
+
+## Process
+
+The low inter-rater reliability was due, in parts, to different interpretations of some eligibility criteria by the authors, inconsistent terminology across the sample, and incomplete reporting of resources and methods in the sample. Regarding interpretation of criteria, some wording of the criteria was adjusted following discussions between the reviewing authors during full-text review to better specify an agreed-upon meaning. We will discuss the different domains, terminologies, and reporting issues of the sample in the remainder of this section.
+
+## Trends
+
+We draw several observations from our encoding of the included studies. We first focus on two driving questions: What challenges did investigators set out to solve? How did their approaches meet these challenges? We then comment on the connectedness of the included studies and the potential for recombination.
+
+**Add 1--2 paragraphs.**
 
 Because we excluded studies that used conventional NN prediction, many included studies reported new approaches to adaptation subsequent to retrieval. Very few proposed novel similarity measures, possibly because larger studies tended to be reported in separate articles detailing experiments with specific components of the process. However, this also suggests that few experimental studies have focused on the unified development of new retrieval and adaptation strategies.
 We also note that the majority of studies evaluated and compared methods using leave-one-out cross-validation (LOOCV). This is an especially appropriate technique when available data are scarce, and indeed most data sets used by included studies numbered in the hundreds of cases or fewer. This likely follows from the older age of many included studies and from their consistent primary focus on clinical data, which is more costly to collect and comes with more restrictions on its use.

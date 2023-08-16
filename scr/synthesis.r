@@ -54,16 +54,34 @@ tab_synthesis %>%
   count(Source, Task, Aim) %>%
   ggplot() +
   theme_bw() +
-  theme(panel.grid = element_blank()) +
-  geom_mosaic(
+  theme(panel.grid = element_blank(),
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank()) +
+  # force vertical axis labels to respect binnings without reference to 'Aim'
+  stat_mosaic(
     aes(x = product(Task, Source), fill = Task, weight = n),
-    # aes(x = product(Task, Source), fill = Task, alpha = Aim, weight = n),
+    divider = mosaic("v"),
+    fill = "transparent"
+  ) +
+  stat_mosaic(
+    aes(x = product(Task, Source), fill = Task, alpha = Aim, weight = n),
     divider = mosaic("v")
   ) +
-  # coord_flip() +
+  # stat_mosaic_text(
+  #   geom = "label",
+  #   aes(x = product(Aim, Task, Source), weight = n, label = n),
+  #   divider = mosaic("v")
+  # ) +
   scale_y_productlist("Source", labels = ggmosaic:::product_labels()) +
   scale_fill_brewer(type = "qual", na.value = "#000000") +
-  scale_alpha_manual(values = c(Knowledge = .5, Practice = 1))
+  scale_alpha_manual(values = c(Knowledge = .5, Practice = 1)) ->
+  properties_mosaic
+print(properties_mosaic)
+ggsave(
+  here::here("fig/fig-properties.png"), properties_mosaic,
+  width = 8, height = 4
+)
 
 # Excel file downloaded from Google Sheet:
 # https://docs.google.com/spreadsheets/d/
@@ -113,6 +131,26 @@ composite_approaches %>%
   arrange(desc(n)) %>%
   filter(! approach_types %in% drop_types) %>%
   print(n = Inf)
+# frequency plot
+composite_approaches %>%
+  filter(! approach_types %in% c("NN?", "unclear")) %>%
+  mutate(year = as.integer(str_remove(citation, "^.*, "))) %>%
+  group_by(approach_types) %>%
+  summarize(count = n(), earliest_use = min(year)) %>%
+  mutate(approach_types = fct_reorder(approach_types, earliest_use)) %>%
+  ggplot(aes(x = approach_types, y = count)) +
+  theme_bw() +
+  geom_col() +
+  scale_x_discrete(limits = rev) +
+  scale_y_continuous(
+    breaks = seq(0L, nrow(composite_approaches), 2L),
+    minor_breaks = NULL
+  ) +
+  coord_flip() +
+  labs(x = "Method", y = NULL) ->
+  method_freq
+print(method_freq)
+ggsave(here::here("fig/fig-methods.png"), method_freq, width = 8, height = 3)
 
 # similarity learning
 composite_approaches %>%
