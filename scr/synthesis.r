@@ -1,6 +1,17 @@
 library(tidyverse)
 library(ggmosaic)
 
+# add citation numbers from most recent LaTeX compilation
+here::here("docs/Manuscript/Manuscript.tex") %>%
+  read_lines() %>%
+  enframe(name = NULL, value = "line") %>%
+  filter(str_detect(line, "\\{ref-")) %>%
+  transmute(
+    number = row_number(),
+    ref = str_replace(line, "^.*\\{ref-([A-Za-z]+[0-9]{4}[a-z]*)\\}.*$", "\\1")
+  ) %>%
+  print() -> citation_numbers
+
 # scrape and format table summarizing studies included in synthesis
 # Excel file downloaded from Google Sheet:
 # https://docs.google.com/spreadsheets/d/
@@ -9,9 +20,11 @@ googlesheets4::read_sheet(
   ss = "1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo", sheet = 1L
 ) %>%
   rename_with(snakecase::to_snake_case) %>%
-  filter(is.na(synthesis)) %>% 
-  arrange(date_of_publication) %>% 
+  filter(is.na(synthesis)) %>%
+  arrange(date_of_publication) %>%
+  inner_join(citation_numbers, by = c("zotero_key" = "ref")) %>%
   transmute(
+    Number = number,
     Citation = paste0("@", zotero_key),
     Date = format(date_of_publication, "%Y %b %d"),
     Task = objective,
@@ -57,7 +70,18 @@ tab_synthesis %>%
   )) %>%
   mutate(Aim = factor(Aim, c("Knowledge", "Practice"))) %>%
   # mutate(across(c(Source, Task, Aim), fct_infreq)) %>%
-  count(Source, Task, Aim) %>%
+  # count(Source, Task, Aim) %>%
+  group_by(Source, Task, Aim) %>%
+  summarize(
+    n = n(),
+    Refs = str_c("[", str_c(sort(Number), collapse = ","), "]")
+  ) %>%
+  ungroup() %>%
+  print() ->
+  mosaic_data
+mosaic_labs <- with(mosaic_data, str_c(Aim, Task, Source, sep = "\n"))
+mosaic_refs <- mosaic_data$Refs
+mosaic_data %>%
   ggplot() +
   theme_bw() +
   theme(panel.grid = element_blank(),
@@ -66,7 +90,7 @@ tab_synthesis %>%
         axis.ticks.x = element_blank()) +
   # force vertical axis labels to respect binnings without reference to 'Aim'
   stat_mosaic(
-    aes(x = product(Task, Source), fill = Task, weight = n),
+    aes(x = product(Task, Source), fill = Task, weight = n, label = Refs),
     divider = mosaic("v"),
     fill = "transparent"
   ) +
@@ -74,12 +98,14 @@ tab_synthesis %>%
     aes(x = product(Task, Source), fill = Task, alpha = Aim, weight = n),
     divider = mosaic("v")
   ) +
-  # stat_mosaic_text(
-  #   geom = "label",
-  #   aes(x = product(Aim, Task, Source), weight = n, label = n),
-  #   divider = mosaic("v")
-  # ) +
-  scale_y_productlist("Source", labels = ggmosaic:::product_labels()) +
+  stat_mosaic_text(
+    # geom = "label",
+    aes(x = product(Aim, Task, Source), weight = n,
+        label = mosaic_refs[match(after_stat(label), mosaic_labs)]),
+    divider = mosaic("v"), size = 3
+  ) +
+  scale_y_productlist("Source") +
+  # scale_y_productlist("Source", labels = ggmosaic:::product_labels()) +
   scale_fill_brewer(type = "qual", na.value = "#000000") +
   scale_alpha_manual(values = c(Knowledge = .5, Practice = 1)) ->
   properties_mosaic

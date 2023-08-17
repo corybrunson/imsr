@@ -181,7 +181,7 @@ Another interesting pattern lay in the years of publication of the included stud
 ```{r tab:synthesis, echo=FALSE, message=FALSE, warning=FALSE}
 tab_synthesis <- readr::read_rds(here::here("tab/synthesis.rds"))
 tab_synthesis |> 
-  select(-Date) |> 
+  select(-Number, -Date) |> 
   # prevent numeric list columns from dominating the horizontal space
   mutate(across(
     c(-Citation, -Cases, -Features),
