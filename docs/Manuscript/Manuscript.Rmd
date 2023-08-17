@@ -61,7 +61,6 @@ output:
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(dplyr)
 library(stringr)
-googlesheets4::gs4_auth(email = "cornelioid@gmail.com")
 Sys.sleep(10)
 ```
 
@@ -181,7 +180,7 @@ Another interesting pattern lay in the years of publication of the included stud
 ```{r tab:synthesis, echo=FALSE, message=FALSE, warning=FALSE}
 tab_synthesis <- readr::read_rds(here::here("tab/synthesis.rds"))
 tab_synthesis |> 
-  select(-Number, -Date) |> 
+  select(Citation, Task, Aim, Source, Type, Cases, Features) |> 
   # prevent numeric list columns from dominating the horizontal space
   mutate(across(
     c(-Citation, -Cases, -Features),
@@ -212,27 +211,17 @@ In addition to their remit, we coded several aspects of the design of each study
 In the following subsections, we take a closer look at these design elements.
 
 ```{r tab:composite, echo=FALSE, message=FALSE, warning=FALSE}
-googlesheets4::read_sheet(
-  ss = "1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs", sheet = 1L
-) |>
-  rename_with(snakecase::to_snake_case) |>
-  filter(is.na(synthesis)) |> 
-  # mutate(zotero_key = str_split(zotero_key, "; ")) |> 
-  # tidyr::unnest(zotero_key) |> 
+composite_studies <- read_rds(here::here("tab/composite.rds"))
+composite_studies |> 
   transmute(
-    # Citation = paste0("@", zotero_key),
+    # Citation = str_c("@", Citation),
     Citation = sapply(
-      str_split(zotero_key, "; "),
-      function(s) str_c("[", str_c("@", s, collapse = "; "), "]")
+      str_split(Citation, "; "),
+      function(s) str_c("@", s, collapse = "; ")
     ),
-    Elements = str_remove_all(approach_type_s, "\\[|\\]"),
-    Terminology = term_s#,
-    # Outcomes = outcome
+    Elements = str_replace_all(Elements, ",", ";"),
+    Terminology
   ) |> 
-  mutate(Elements = str_replace_all(Elements, ",", ";")) |> 
-  left_join(select(tab_synthesis, Citation, Date), by = "Citation") |> 
-  arrange(Date) |> 
-  select(-Date) |> 
   mutate(across(
     everything(),
     # ~ str_replace_all(., "<U+001B>", "")

@@ -25,7 +25,7 @@ googlesheets4::read_sheet(
   inner_join(citation_numbers, by = c("zotero_key" = "ref")) %>%
   transmute(
     Number = number,
-    Citation = paste0("@", zotero_key),
+    Citation = zotero_key,
     Date = format(date_of_publication, "%Y %b %d"),
     Task = objective,
     Aim = ifelse(generalizable_knowledge == "Science", "Knowledge", "Practice"),
@@ -124,16 +124,42 @@ googlesheets4::read_sheet(
   ss = "1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs", sheet = 1L
 ) %>% 
   filter(is.na(Synthesis)) %>%
-  select(seq(3L, 5L)) %>%
-  rename_with(~ str_replace(snakecase::to_snake_case(.), "_s$", "s")) %>%
-  mutate(across(c(approach_types, terms), ~ str_split(., "(;|,) *"))) %>%
+  transmute(
+    Reference = Citation,
+    # Citation = paste0("@", `Zotero key`),
+    Citation = sapply(
+      str_split(`Zotero key`, "; "),
+      function(s) str_c(s, collapse = "; ")
+    ),
+    Elements = str_remove_all(`Approach Type(s)`, "\\[|\\]"),
+    Terminology = `Term(s)`,
+    Outcomes = Outcome
+  ) |> 
+  mutate(Elements = str_replace_all(Elements, ",", ";")) |> 
+  left_join(select(tab_synthesis, Citation, Date), by = "Citation") |> 
+  arrange(Date) |> 
   print() -> composite_studies
+# write to file, to be read into document
+write_rds(composite_studies, file = here::here("tab/composite.rds"))
 
 # years of publication
 composite_studies %>%
-  transmute(year = as.integer(str_remove(citation, "^.*, "))) %>%
-  ggplot(aes(x = year)) +
-  geom_bar() +
+  # only first of any multiple reports of same study
+  # mutate(across(c(Reference, Citation), ~ str_remove(., ";.*$"))) %>%
+  # un-nest multiple reports of same study
+  mutate(across(c(Reference, Citation), ~ str_split(., "; *"))) %>%
+  unnest(c(Reference, Citation)) %>%
+  mutate(Year = as.integer(str_remove(Reference, "^.*, "))) %>%
+  left_join(citation_numbers, by = c("Citation" = "ref")) %>%
+  # select(Citation, Year) %>% print(n = Inf)
+  group_by(Year) %>%
+  summarize(
+    Count = n(),
+    Refs = str_c("[", str_c(sort(number), collapse = ",\n"), "]")
+  ) %>%
+  ggplot(aes(x = Year, y = Count, label = Refs)) +
+  geom_col() +
+  geom_text(vjust = 1, size = 3, color = "white") +
   theme_bw() +
   theme(
     panel.grid.major.x = element_blank(),
@@ -147,9 +173,15 @@ ggsave(here::here("fig/fig-years.png"), year_plot, width = 5, height = 2)
 
 # approach types
 composite_studies %>%
-  select(citation, approach_types) %>%
-  unnest(approach_types) %>%
-  mutate(approach_types = str_remove_all(approach_types, "^\\[|\\]$")) %>%
+  # un-nest multiple reports of same study
+  mutate(across(c(Reference, Citation), ~ str_split(., "; *"))) %>%
+  unnest(c(Reference, Citation)) %>%
+  mutate(across(c(Elements, Terminology), ~ str_split(., "(;|,) *"))) %>%
+  select(Citation, Reference, Elements) %>%
+  mutate(across(c(Reference, Citation), ~ str_remove(., ";.*$"))) %>%
+  left_join(citation_numbers, by = c("Citation" = "ref")) %>%
+  select(-Citation) %>%
+  unnest(Elements) %>%
   print() -> composite_approaches
 # approaches to ignore (check whether each study has one unignored)
 drop_types <- c(
@@ -159,49 +191,40 @@ drop_types <- c(
 )
 # frequency table
 composite_approaches %>%
-  count(approach_types) %>%
+  count(Elements) %>%
   arrange(desc(n)) %>%
-  filter(! approach_types %in% drop_types) %>%
+  filter(! Elements %in% drop_types) %>%
   print(n = Inf)
 # frequency plot
 composite_approaches %>%
-  filter(! approach_types %in% c("NN?", "unclear")) %>%
-  mutate(year = as.integer(str_remove(citation, "^.*, "))) %>%
-  group_by(approach_types) %>%
-  summarize(count = n(), earliest_use = min(year)) %>%
-  mutate(approach_types = fct_reorder(approach_types, earliest_use)) %>%
-  ggplot(aes(x = approach_types, y = count)) +
-  theme_bw() +
+  filter(! Elements %in% c("NN?", "unclear")) %>%
+  mutate(year = as.integer(str_remove(Reference, "^.*, "))) %>%
+  group_by(Elements) %>%
+  summarize(
+    count = n(),
+    earliest_use = min(year),
+    refs = str_c("[", str_c(sort(number), collapse = ","), "]")
+  ) %>%
+  mutate(Elements = fct_reorder(Elements, earliest_use)) %>%
+  ggplot(aes(x = Elements, y = count, label = refs)) +
+  theme_bw() + theme(panel.grid.major.y = element_blank()) +
   geom_col() +
+  geom_text(hjust = 1, size = 3, color = "white") +
   scale_x_discrete(limits = rev) +
   scale_y_continuous(
     breaks = seq(0L, nrow(composite_approaches), 2L),
     minor_breaks = NULL
   ) +
   coord_flip() +
-  labs(x = "Method", y = NULL) ->
+  labs(x = NULL, y = NULL) ->
   method_freq
 print(method_freq)
 ggsave(here::here("fig/fig-methods.png"), method_freq, width = 8, height = 3)
 
-# similarity learning
-composite_approaches %>%
-  filter(str_detect(approach_types, "similarity learning")) %>%
-  select(citation) %>%
-  inner_join(composite_approaches, by = "citation") %>%
-  filter(! str_detect(approach_types, "similarity learning"))
-# modeling on similarity cohorts
-composite_approaches %>%
-  filter(str_detect(approach_types, "modeling on similarity cohorts")) %>%
-  select(citation) %>%
-  inner_join(composite_approaches, by = "citation") %>%
-  filter(! str_detect(approach_types, "modeling on similarity cohorts"))
-
 # terms
 composite_studies %>%
-  select(citation, terms) %>%
+  select(citation = Citation, terms = Terminology) %>%
   unnest(terms) %>%
-  mutate(terms = str_remove_all(terms, "^\\[|\\]$")) %>%
   print() -> composite_terms
 # frequency table
 composite_terms %>%
