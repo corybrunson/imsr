@@ -55,7 +55,7 @@ googlesheets4::read_sheet(
   )) ->
   tab_synthesis
 # write to file, to be read into document
-write_rds(tab_synthesis, file = here::here("tab/synthesis.rds"))
+write_rds(tab_synthesis, file = here::here("data/synthesis.rds"))
 
 # mosaic plot of task, aim, and source
 tab_synthesis %>%
@@ -140,7 +140,7 @@ googlesheets4::read_sheet(
   arrange(Date) |> 
   print() -> composite_studies
 # write to file, to be read into document
-write_rds(composite_studies, file = here::here("tab/composite.rds"))
+write_rds(composite_studies, file = here::here("data/composite.rds"))
 
 # years of publication
 composite_studies %>%
@@ -169,7 +169,7 @@ composite_studies %>%
   labs(x = NULL, y = NULL) ->
   year_plot
 print(year_plot)
-ggsave(here::here("fig/fig-years.png"), year_plot, width = 5, height = 2)
+ggsave(here::here("fig/fig-years.png"), year_plot, width = 6, height = 2)
 
 # approach types
 composite_studies %>%
@@ -236,4 +236,9 @@ composite_terms %>%
   arrange(desc(n), terms) %>%
   print(n = Inf)
 
-# 
+# save ID column for studies described by multiple citations
+composite_studies |> 
+  transmute(Citation = str_split(Citation, "; "), ID = row_number()) |> 
+  unnest(Citation) |> 
+  print(n = Inf) -> citation_id
+write_rds(citation_id, here::here("data/citations.rds"))
