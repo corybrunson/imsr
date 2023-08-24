@@ -1,6 +1,28 @@
 library(tidyverse)
 library(ggmosaic)
 
+#' Read data.
+
+# journals of references in previous reviews
+sr_journals <- read_xlsx(here::here("data/SR-journals.xlsx"))
+
+# scrape and format table summarizing studies included in synthesis
+# Excel file downloaded from Google Sheet:
+# https://docs.google.com/spreadsheets/d/
+# 1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo/
+properties_inclusion <- googlesheets4::read_sheet(
+  ss = "1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo", sheet = 1L
+)
+
+# Excel file downloaded from Google Sheet:
+# https://docs.google.com/spreadsheets/d/
+# 1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs/
+# here::here("data/IMSR composite techniques.xlsx") %>%
+#   readxl::read_xlsx() %>%
+composite_techniques <- googlesheets4::read_sheet(
+  ss = "1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs", sheet = 1L
+)
+
 # add citation numbers from most recent LaTeX compilation
 here::here("docs/Manuscript/Manuscript.tex") %>%
   read_lines() %>%
@@ -12,13 +34,53 @@ here::here("docs/Manuscript/Manuscript.tex") %>%
   ) %>%
   print() -> citation_numbers
 
-# scrape and format table summarizing studies included in synthesis
-# Excel file downloaded from Google Sheet:
-# https://docs.google.com/spreadsheets/d/
-# 1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo/
-googlesheets4::read_sheet(
-  ss = "1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo", sheet = 1L
-) %>%
+#' Print summaries.
+
+# journal frequencies of previous reviews' references
+sr_journals %>%
+  mutate(journal = str_remove(journal, "^[0-9]{4} *")) %>%
+  mutate(journal = str_remove(journal, "^[0-9]{1,2}[a-z]{2} *")) %>%
+  mutate(journal = str_remove(journal, " *\\([A-Z0-9]+\\)$")) %>%
+  mutate(journal = tolower(journal)) %>%
+  group_by(journal) %>%
+  count() %>%
+  drop_na() %>%
+  arrange(desc(n)) %>%
+  filter(n > 2L) %>%
+  print(n = Inf)
+
+# journal frequencies of synthesized studies
+properties_inclusion |> 
+  select(journal = Journal) |> 
+  mutate(journal = str_remove(journal, "^[0-9]{4} *")) %>%
+  mutate(journal = str_remove(journal, "^[0-9]{1,2}[a-z]{2} *")) %>%
+  mutate(journal = str_remove(journal, " *\\([A-Z0-9]+\\)$")) %>%
+  mutate(journal = tolower(journal)) %>%
+  group_by(journal) %>%
+  count() %>%
+  drop_na() %>%
+  arrange(desc(n)) %>%
+  print(n = Inf)
+
+# terms
+composite_studies %>%
+  select(citation = Citation, terms = Terminology) %>%
+  unnest(terms) %>%
+  print() -> composite_terms
+# frequency table
+composite_terms %>%
+  mutate(terms = tolower(terms)) %>%
+  mutate(terms = str_replace(terms, "modeling", "model")) %>%
+  mutate(terms = str_replace(terms, "sampling", "sample")) %>%
+  mutate(terms = str_replace(terms, "cbr", "case-based reasoning")) %>%
+  count(terms) %>%
+  arrange(desc(n), terms) %>%
+  print(n = Inf)
+
+#' Prepare tables.
+
+# synthesis table
+properties_inclusion %>%
   rename_with(snakecase::to_snake_case) %>%
   filter(is.na(synthesis)) %>%
   arrange(date_of_publication) %>%
@@ -56,6 +118,36 @@ googlesheets4::read_sheet(
   tab_synthesis
 # write to file, to be read into document
 write_rds(tab_synthesis, file = here::here("data/synthesis.rds"))
+
+# methodological table
+composite_techniques %>% 
+  filter(is.na(Synthesis)) %>%
+  transmute(
+    Reference = Citation,
+    # Citation = paste0("@", `Zotero key`),
+    Citation = sapply(
+      str_split(`Zotero key`, "; "),
+      function(s) str_c(s, collapse = "; ")
+    ),
+    Elements = str_remove_all(`Approach Type(s)`, "\\[|\\]"),
+    Terminology = `Term(s)`,
+    Outcomes = Outcome
+  ) |> 
+  mutate(Elements = str_replace_all(Elements, ",", ";")) |> 
+  left_join(select(tab_synthesis, Citation, Date), by = "Citation") |> 
+  arrange(Date) |> 
+  print() -> composite_studies
+# write to file, to be read into document
+write_rds(composite_studies, file = here::here("data/composite.rds"))
+
+# save ID column for studies described by multiple citations
+composite_studies |> 
+  transmute(Citation = str_split(Citation, "; "), ID = row_number()) |> 
+  unnest(Citation) |> 
+  print(n = Inf) -> citation_id
+write_rds(citation_id, here::here("data/citations.rds"))
+
+#' Prepare plots.
 
 # mosaic plot of task, aim, and source
 tab_synthesis %>%
@@ -115,33 +207,6 @@ ggsave(
   width = 8, height = 4
 )
 
-# Excel file downloaded from Google Sheet:
-# https://docs.google.com/spreadsheets/d/
-# 1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs/
-# here::here("data/IMSR composite techniques.xlsx") %>%
-#   readxl::read_xlsx() %>%
-googlesheets4::read_sheet(
-  ss = "1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs", sheet = 1L
-) %>% 
-  filter(is.na(Synthesis)) %>%
-  transmute(
-    Reference = Citation,
-    # Citation = paste0("@", `Zotero key`),
-    Citation = sapply(
-      str_split(`Zotero key`, "; "),
-      function(s) str_c(s, collapse = "; ")
-    ),
-    Elements = str_remove_all(`Approach Type(s)`, "\\[|\\]"),
-    Terminology = `Term(s)`,
-    Outcomes = Outcome
-  ) |> 
-  mutate(Elements = str_replace_all(Elements, ",", ";")) |> 
-  left_join(select(tab_synthesis, Citation, Date), by = "Citation") |> 
-  arrange(Date) |> 
-  print() -> composite_studies
-# write to file, to be read into document
-write_rds(composite_studies, file = here::here("data/composite.rds"))
-
 # years of publication
 composite_studies %>%
   # only first of any multiple reports of same study
@@ -159,7 +224,7 @@ composite_studies %>%
   ) %>%
   ggplot(aes(x = Year, y = Count, label = Refs)) +
   geom_col() +
-  geom_text(vjust = 1, size = 3, color = "white") +
+  # geom_text(vjust = 1, size = 3, color = "white") +
   theme_bw() +
   theme(
     panel.grid.major.x = element_blank(),
@@ -196,6 +261,17 @@ composite_approaches %>%
   filter(! Elements %in% drop_types) %>%
   print(n = Inf)
 # frequency plot
+mid_newline <- function(s) {
+  p_mid <- map2_int(
+    str_locate_all(s, ","), str_count(s, ","),
+    ~ if (nrow(.x) < 4L) NA_integer_ else .x[ceiling((.y + 1) / 2), 1L]
+  )
+  map2_chr(
+    s, p_mid,
+    ~ if (is.na(.y)) .x else
+      str_c(str_sub(.x, end = .y), "\n  ", str_sub(.x, start = .y + 1L))
+  )
+}
 composite_approaches %>%
   filter(! Elements %in% c("NN?", "unclear")) %>%
   mutate(year = as.integer(str_remove(Reference, "^.*, "))) %>%
@@ -206,10 +282,13 @@ composite_approaches %>%
     refs = str_c("[", str_c(sort(number), collapse = ","), "]")
   ) %>%
   mutate(Elements = fct_reorder(Elements, earliest_use)) %>%
+  mutate(refs = mid_newline(str_c(" ", refs))) |> 
   ggplot(aes(x = Elements, y = count, label = refs)) +
   theme_bw() + theme(panel.grid.major.y = element_blank()) +
   geom_col() +
-  geom_text(hjust = 1, size = 3, color = "white") +
+  geom_text(hjust = 0, size = 3) +
+  expand_limits(y = c(NA_real_, 17)) +
+  # geom_text(hjust = 1, size = 3, color = "white") +
   scale_x_discrete(limits = rev) +
   scale_y_continuous(
     breaks = seq(0L, nrow(composite_approaches), 2L),
@@ -220,25 +299,3 @@ composite_approaches %>%
   method_freq
 print(method_freq)
 ggsave(here::here("fig/fig-methods.png"), method_freq, width = 8, height = 3)
-
-# terms
-composite_studies %>%
-  select(citation = Citation, terms = Terminology) %>%
-  unnest(terms) %>%
-  print() -> composite_terms
-# frequency table
-composite_terms %>%
-  mutate(terms = tolower(terms)) %>%
-  mutate(terms = str_replace(terms, "modeling", "model")) %>%
-  mutate(terms = str_replace(terms, "sampling", "sample")) %>%
-  mutate(terms = str_replace(terms, "cbr", "case-based reasoning")) %>%
-  count(terms) %>%
-  arrange(desc(n), terms) %>%
-  print(n = Inf)
-
-# save ID column for studies described by multiple citations
-composite_studies |> 
-  transmute(Citation = str_split(Citation, "; "), ID = row_number()) |> 
-  unnest(Citation) |> 
-  print(n = Inf) -> citation_id
-write_rds(citation_id, here::here("data/citations.rds"))
