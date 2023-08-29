@@ -1030,18 +1030,26 @@ methodology {[}21,25{]}, individualized mortality prediction for ICU
 patients {[}14,16{]} and the use of more explanatory models to
 prioritize predictors or treatments for chronic disease {[}15,34,35{]}.
 
-These programs used significantly varying terminology for common
-concepts, and in particular no common term is in use for what we here
-refer to as localized modeling; authors described this kind of method as
-``targeted prognosis'' {[}11{]}, ``transductive inference'' {[}21{]},
-``personalized decision support'' {[}14{]}, ``personalized (predictive)
-models'' {[}26, in contrast to ``local models,''15,17,32{]}, and
-``precision cohort'' analysis {[}17,34,35{]}. We find uses of
-``targeted'', ``personalized'', and ``precision'' generic and imprecise
-to this approach, while transductive inference is an established term
-for a broader set of methods in ML. Because local naturally contrasts
-with global, we propose ``localized models'' as a suitable term for this
-counterpart to globally-fitted models.
+These programs used varying terminology for common concepts, and no
+common term is in use for what we here refer to as localized modeling;
+authors described their approaches as ``targeted prognosis'' {[}11{]},
+``transductive inference'' {[}21{]}, ``personalized decision support''
+{[}14{]}, ``personalized (predictive) models'' {[}26, in contrast to
+``local models,''15,17,32{]}, and ``precision cohort'' analysis
+{[}17,34,35{]}. We find uses of ``targeted'', ``personalized'', and
+``precision'' generic and imprecise to this approach, while transductive
+inference is an established term for a broader set of methods in ML.
+Because \emph{local} naturally contrasts with \emph{global}, we propose
+``localized models'' as a suitable term for this counterpart to
+globally-fitted models.\footnote{As one reviewer pointed out, the
+  terminology of local and global is also used in the unrelated context
+  of federated ML to distinguish models trained using data stored in a
+  single storage device (local) from their aggregations (global)
+  {[}39,40{]}. The prospects for federated architecture to more
+  effectively implement similarity cohort--based models are intriguing,
+  and would require some reconciliation of terms. At present, however,
+  we feel that these research areas are sufficiently disjoint to avoid
+  confusion in practice.}
 
 \hypertarget{synthesis-1}{%
 \subsection{Synthesis}\label{synthesis-1}}
@@ -1049,13 +1057,13 @@ counterpart to globally-fitted models.
 The 25 studies included in our synthesis used composite techniques that
 we organized into two major types. One type, similarity learning, was
 used in 8 studies that tie in to the much larger literature on metric
-learning {[}39{]}. These techniques are designed to detect structure in
+learning {[}41{]}. These techniques are designed to detect structure in
 data, especially associations between predictors and responses, and to
 use this structure to inform the definition of a patient similarity
 measure. Seven studies used response values in training data sets to
 supervise similarity learning while two used unsupervised learning
 (Table \ref{tab:composite}). Based on the key properties of metric
-learning algorithms identified by {[}40{]}, most learned measures were
+learning algorithms identified by {[}42{]}, most learned measures were
 non-linear while some were local, and some were optimized globally while
 others locally. However, not all qualified as metric learning, since the
 resulting measures would not necessarily satisfy the triangle
@@ -1081,7 +1089,7 @@ retrieve relevant cases and generate a prediction, using
 back-propagation on the rules' parameters. Their method was used in
 several later studies returned by our search, which are not discussed
 here because they did not originate the technique. {[}28{]} explicitly
-appeal to a supervised distance metric learning technique {[}41{]} to
+appeal to a supervised distance metric learning technique {[}43{]} to
 obtain a similarity measure on their set of dermoscopy and confocal
 images that most effectively separates malignant from benign melanoma
 tumors. We will discuss the remaining uses of supervised similarity
@@ -1092,7 +1100,7 @@ construction. This was an adaptive step taken by {[}13{]} to optimize
 the predictive performance of models fitted to cohorts retrieved using a
 fixed similarity rather than count threshold, a counterpart to
 conventional CBR they called ``statistical CBR''.\footnote{Drawing from
-  {[}42{]}, we suggest the term ``combinatorial CBR'' for the
+  {[}44{]}, we suggest the term ``combinatorial CBR'' for the
   then-conventional approach using similarity cohorts of fixed
   cardinality.} The step used a heuristic procedure to locate a
 similarity threshold that (locally) maximizes predictive accuracy on the
@@ -1872,26 +1880,41 @@ Neighbour Algorithm} with {Logistic Regression} in the {Prediction} of
 {Patients}' {Registration} on the {Renal Transplant Waiting List}. PLOS
 ONE 2013;8:e71991. \url{https://doi.org/10.1371/journal.pone.0071991}.}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Yang2006}{}}%
+\leavevmode\vadjust pre{\hypertarget{ref-Moshawrab2023}{}}%
 \CSLLeftMargin{{[}39{]} }%
+\CSLRightInline{Moshawrab M, Adda M, Bouzouane A, Ibrahim H, Raad A.
+Reviewing {Federated Machine Learning} and {Its Use} in {Diseases
+Prediction}. Sensors 2023;23:2112.
+\url{https://doi.org/10.3390/s23042112}.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Brauneck2023}{}}%
+\CSLLeftMargin{{[}40{]} }%
+\CSLRightInline{Brauneck A, Schmalhorst L, Majdabadi MMK, Bakhtiari M,
+Völker U, Baumbach J, et al. Federated {Machine Learning},
+{Privacy-Enhancing Technologies}, and {Data Protection Laws} in {Medical
+Research}: {Scoping Review}. Journal of Medical Internet Research
+2023;25:e41588. \url{https://doi.org/10.2196/41588}.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Yang2006}{}}%
+\CSLLeftMargin{{[}41{]} }%
 \CSLRightInline{Yang L. Distance {Metric Learning}: {A Comprehensive
 Survey}. PhD thesis. Michigan State University, 2006.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Bellet2014}{}}%
-\CSLLeftMargin{{[}40{]} }%
+\CSLLeftMargin{{[}42{]} }%
 \CSLRightInline{Bellet A, Habrard A, Sebban M. A {Survey} on {Metric
 Learning} for {Feature Vectors} and {Structured Data} 2014.
 \url{https://doi.org/10.48550/arXiv.1306.6709}.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Xing2002}{}}%
-\CSLLeftMargin{{[}41{]} }%
+\CSLLeftMargin{{[}43{]} }%
 \CSLRightInline{Xing E, Jordan M, Russell SJ, Ng A. Distance {Metric
 Learning} with {Application} to {Clustering} with {Side-Information}.
 Advances in {Neural Information Processing Systems}, vol. 15, {MIT
 Press}; 2002.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Goyal2008}{}}%
-\CSLLeftMargin{{[}42{]} }%
+\CSLLeftMargin{{[}44{]} }%
 \CSLRightInline{Goyal N, Lifshits Y, Schütze H. Disorder inequality: A
 combinatorial approach to nearest neighbor search. Proceedings of the
 2008 {International Conference} on {Web Search} and {Data Mining}, {New
