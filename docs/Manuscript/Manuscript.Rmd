@@ -319,6 +319,15 @@ knitr::include_graphics("../../fig/fig-methods.png")
 
 In the Discussion, we discuss trends in the literature we reviewed, identify common limitations and gaps in understanding, and attempt to synthesize their methods into a general framework.
 
+## Identified needs
+
+The study authors focused their recommendations and their own plans for future work mostly on technical improvements and evaluations [@Mariuzzi1997; @Yearwood1997a].
+Urged improvements included full or partial automation of user-dependent steps such as predictor selection [@Mariuzzi1997; @Yearwood1997a], similarity learning [@Mariuzzi1997; @Wang2019], and parameter optimization [@Song2006c; @Lee2017]; extensions to new data structures [@Lopez2011a], data types [@Liang2015a; @Verma2015a; @Malykh2018a], and reasoning systems [@Nicolas2014a]; and the use of more advanced model components to improve accuracy or efficiency [@Lowsky2013; @Lee2015; @Liang2015a; @Zhang2018a].
+Authors also urged validations and independent evaluations using larger or more comprehensive data sets [@Elter2007a; @Xu2008a; @Verma2015a; @Ng2015], using data aggregated from multiple health systems [@Lee2015; @Lee2017; @Tang2021c; @Ng2021b], and in other care settings or disease contexts [@Song2006c; @Zhang2018a; @Tang2021c; @Ng2021b].
+Less common were calls to strengthen the connection between the methods and the users.
+Some authors urged the incorporation of (human-derived) domain knowledge into the data or models [@Yearwood1997a; @Wang2019]. Others suggested new uses of their modeling approaches: to measure feature importance [@Wyns2004a], to make models more expressive [@Lee2015], and to combine information obtained both from global and from localized models [@Ng2015].
+Most of this incremental work was indeed carried out by later researchers whose output appears in our sample.
+
 # Discussion
 
 ## Process
