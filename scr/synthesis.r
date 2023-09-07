@@ -4,7 +4,7 @@ library(ggmosaic)
 #' Read data.
 
 # journals of references in previous reviews
-sr_journals <- read_xlsx(here::here("data/SR-journals.xlsx"))
+sr_journals <- readxl::read_xlsx(here::here("data/SR-journals.xlsx"))
 
 # scrape and format table summarizing studies included in synthesis
 # Excel file downloaded from Google Sheet:
@@ -33,49 +33,6 @@ here::here("docs/Manuscript/Manuscript.tex") %>%
     ref = str_replace(line, "^.*\\{ref-([A-Za-z]+[0-9]{4}[a-z]*)\\}.*$", "\\1")
   ) %>%
   print() -> citation_numbers
-
-#' Print summaries.
-
-# journal frequencies of previous reviews' references
-sr_journals %>%
-  mutate(journal = str_remove(journal, "^[0-9]{4} *")) %>%
-  mutate(journal = str_remove(journal, "^[0-9]{1,2}[a-z]{2} *")) %>%
-  mutate(journal = str_remove(journal, " *\\([A-Z0-9]+\\)$")) %>%
-  mutate(journal = tolower(journal)) %>%
-  group_by(journal) %>%
-  count() %>%
-  drop_na() %>%
-  arrange(desc(n)) %>%
-  filter(n > 2L) %>%
-  print(n = Inf)
-
-# journal frequencies of synthesized studies
-properties_inclusion |> 
-  select(journal = Journal) |> 
-  mutate(journal = str_remove(journal, "^[0-9]{4} *")) %>%
-  mutate(journal = str_remove(journal, "^[0-9]{1,2}[a-z]{2} *")) %>%
-  mutate(journal = str_remove(journal, " *\\([A-Z0-9]+\\)$")) %>%
-  mutate(journal = tolower(journal)) %>%
-  group_by(journal) %>%
-  count() %>%
-  drop_na() %>%
-  arrange(desc(n)) %>%
-  print(n = Inf)
-
-# terms
-composite_studies %>%
-  select(citation = Citation, terms = Terminology) %>%
-  unnest(terms) %>%
-  print() -> composite_terms
-# frequency table
-composite_terms %>%
-  mutate(terms = tolower(terms)) %>%
-  mutate(terms = str_replace(terms, "modeling", "model")) %>%
-  mutate(terms = str_replace(terms, "sampling", "sample")) %>%
-  mutate(terms = str_replace(terms, "cbr", "case-based reasoning")) %>%
-  count(terms) %>%
-  arrange(desc(n), terms) %>%
-  print(n = Inf)
 
 #' Prepare tables.
 
@@ -114,8 +71,8 @@ properties_inclusion %>%
     everything(),
     # ~ stringr::str_replace_all(., "<U+001B>", "")
     textclean::replace_non_ascii
-  )) ->
-  tab_synthesis
+  )) %>%
+  print() -> tab_synthesis
 # write to file, to be read into document
 write_rds(tab_synthesis, file = here::here("data/synthesis.rds"))
 
@@ -132,20 +89,114 @@ composite_techniques %>%
     Elements = str_remove_all(`Approach Type(s)`, "\\[|\\]"),
     Terminology = `Term(s)`,
     Outcomes = Outcome
-  ) |> 
-  mutate(Elements = str_replace_all(Elements, ",", ";")) |> 
-  left_join(select(tab_synthesis, Citation, Date), by = "Citation") |> 
-  arrange(Date) |> 
+  ) %>% 
+  mutate(Elements = str_replace_all(Elements, ",", ";")) %>% 
+  left_join(select(tab_synthesis, Citation, Date), by = "Citation") %>% 
+  arrange(Date) %>% 
   print() -> composite_studies
 # write to file, to be read into document
 write_rds(composite_studies, file = here::here("data/composite.rds"))
 
 # save ID column for studies described by multiple citations
-composite_studies |> 
-  transmute(Citation = str_split(Citation, "; "), ID = row_number()) |> 
-  unnest(Citation) |> 
+composite_studies %>% 
+  transmute(Citation = str_split(Citation, "; "), ID = row_number()) %>% 
+  unnest(Citation) %>% 
   print(n = Inf) -> citation_id
 write_rds(citation_id, here::here("data/citations.rds"))
+
+# table of evaluations and comparisons
+eval_comp_incl <- c(
+  "Wyns2004a", "Song2006c", "Elter2007a", "Xu2008a", "Kasabov2010",
+  "Liang2015a", "CampilloGimenez2012a", "Malykh2018a", "Zhang2018a",
+  "Nicolas2014a", "Ma2020a",# "Tang2021c",
+  "Park2006", "Lowsky2013", "Ng2015", "Lee2015", "Lee2017", "Wang2019"
+)
+properties_inclusion %>%
+  rename_with(snakecase::to_snake_case) %>%
+  filter(zotero_key %in% eval_comp_incl) %>%
+  transmute(
+    zotero_key, date_of_publication,
+    proposal = proposed_methods,
+    evaluation = evaluation_comparison_approach,
+    measure = performance_measure,
+    performance = performance_values
+  ) %>%
+  # break `performance` into nested data with task, method, value
+  mutate(performance = str_split(performance, "\n")) %>% unnest(performance) %>%
+  separate(col = performance, into = c("task", "results"), sep = ": ") %>%
+  mutate(results = str_split(results, "; ")) %>% unnest(results) %>%
+  mutate(results = str_remove(results, " \\(.*\\)$")) %>%
+  separate(col = results, into = c("method", "performance"), sep = ", ") %>%
+  # remove flagged ('original') comparators
+  filter(! str_detect(performance, "\\*$")) %>%
+  # ensure consistent formatting
+  mutate(performance = ifelse(
+    measure == "Accuracy" & ! str_detect(performance, "\\%$"),
+    str_c(format(as.double(performance) * 100, trim = TRUE), "%"),
+    performance
+  )) |> 
+  # sort by date, citation, and appearance of method
+  mutate(order = as.integer(interaction(
+    date_of_publication, zotero_key, row_number(), lex.order = TRUE
+  ))) %>%
+  # put proposals and comparators in separate columns, carriage-returned
+  mutate(proposal = str_split(proposal, ", ")) %>%
+  mutate(role = map2(
+    method, proposal,
+    ~ if (.x %in% .y) "proposal" else "comparator"
+  )) %>%
+  unite(col = "results", method, performance, sep = ": ") %>%
+  group_by(across(-c(order, results))) %>%
+  summarize(order = min(order), results = list(results)) %>%
+  ungroup() %>%
+  arrange(order) %>%
+  select(-order) %>%
+  print() -> tab_eval_comp
+# write to file, to be read into document
+write_rds(tab_eval_comp, file = here::here("data/eval-comp.rds"))
+
+#' Print summaries.
+
+# journal frequencies of previous reviews' references
+sr_journals %>%
+  mutate(journal = str_remove(journal, "^[0-9]{4} *")) %>%
+  mutate(journal = str_remove(journal, "^[0-9]{1,2}[a-z]{2} *")) %>%
+  mutate(journal = str_remove(journal, " *\\([A-Z0-9]+\\)$")) %>%
+  mutate(journal = tolower(journal)) %>%
+  group_by(journal) %>%
+  count() %>%
+  drop_na() %>%
+  arrange(desc(n)) %>%
+  filter(n > 2L) %>%
+  print(n = Inf)
+
+# journal frequencies of synthesized studies
+properties_inclusion %>% 
+  select(journal = Journal) %>% 
+  mutate(journal = str_remove(journal, "^[0-9]{4} *")) %>%
+  mutate(journal = str_remove(journal, "^[0-9]{1,2}[a-z]{2} *")) %>%
+  mutate(journal = str_remove(journal, " *\\([A-Z0-9]+\\)$")) %>%
+  mutate(journal = tolower(journal)) %>%
+  group_by(journal) %>%
+  count() %>%
+  drop_na() %>%
+  arrange(desc(n)) %>%
+  print(n = Inf)
+
+# terms
+composite_studies %>%
+  select(citation = Citation, terms = Terminology) %>%
+  unnest(terms) %>%
+  print() -> composite_terms
+# frequency table
+composite_terms %>%
+  mutate(terms = tolower(terms)) %>%
+  mutate(terms = str_replace(terms, "modeling", "model")) %>%
+  mutate(terms = str_replace(terms, "sampling", "sample")) %>%
+  mutate(terms = str_replace(terms, "cbr", "case-based reasoning")) %>%
+  count(terms) %>%
+  arrange(desc(n), terms) %>%
+  print(n = Inf)
 
 #' Prepare plots.
 
@@ -282,7 +333,7 @@ composite_approaches %>%
     refs = str_c("[", str_c(sort(number), collapse = ","), "]")
   ) %>%
   mutate(Elements = fct_reorder(Elements, earliest_use)) %>%
-  mutate(refs = mid_newline(str_c(" ", refs))) |> 
+  mutate(refs = mid_newline(str_c(" ", refs))) %>% 
   ggplot(aes(x = Elements, y = count, label = refs)) +
   theme_bw() + theme(panel.grid.major.y = element_blank()) +
   geom_col() +

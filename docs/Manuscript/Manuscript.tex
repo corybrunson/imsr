@@ -98,6 +98,7 @@ authoryear]{elsarticle} %review=doublespace preprint=single 5p=2 column
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
+\usepackage{lscape} \newcommand{\landscapebegin}{\begin{landscape}} \newcommand{\landscapeend}{\end{landscape}}
 
 
 
@@ -474,16 +475,16 @@ set of 43 studies that inspired the review.
 \subsection{Coding}\label{coding}}
 
 Following the selection sources aligning with our review, we collected
-characteristics of included studies (Section \ref{sec:availability}).
-The features included bibliographic fields (date of publication,
-journal, authors, title, keywords, DOI), study goals (objective,
-generalizable knowledge, evaluation, clinical/medical domain), data sets
-(data source, type of data, range of data, number of cases/incidences,
-number of predictors/features), and methodological choices (types of
-similarity measure, families of adaptation step/statistical model,
-method(s) compared against, evaluation/performance/comparison measures
-(\& their values), name given to modeling approach). We used these data
-to detect and visualize trends amongst the included studies.
+characteristics of included studies (Section \ref{sec:data}). The
+features included bibliographic fields (date of publication, journal,
+authors, title, keywords, DOI), study goals (objective, generalizable
+knowledge, evaluation, clinical/medical domain), data sets (data source,
+type of data, range of data, number of cases/incidences, number of
+predictors/features), and methodological choices (types of similarity
+measure, families of adaptation step/statistical model, method(s)
+compared against, evaluation/performance/comparison measures (\& their
+values), name given to modeling approach). We used these data to detect
+and visualize trends amongst the included studies.
 
 \hypertarget{synthesis}{%
 \subsection{Synthesis}\label{synthesis}}
@@ -538,13 +539,13 @@ the review and synthesis.
 properties}\label{bibliographic-and-methodological-properties}}
 
 The 25 included studies were analyzed based on 20 characteristics (see
-Section \ref{sec:availability}), and we report and describe some
-observations here (Table \ref{tab:synthesis}). The studies were
-published in a variety of journals, with some of greater frequency,
-though no single journal published more than 3. The journal
-\emph{Evolving Systems} published 2 of the included studies,
-\emph{Artificial Intelligence in Medicine} published 3, and
-\emph{Hindawi - Journal of Healthcare Engineering} published 3.
+Section \ref{sec:data}), and we report and describe some observations
+here (Table \ref{tab:synthesis}). The studies were published in a
+variety of journals, with some of greater frequency, though no single
+journal published more than 3. The journal \emph{Evolving Systems}
+published 2 of the included studies, \emph{Artificial Intelligence in
+Medicine} published 3, and \emph{Hindawi - Journal of Healthcare
+Engineering} published 3.
 
 Another interesting pattern lay in the years of publication of the
 included studies (Figure \ref{fig:year}). While they stretch back to the
@@ -844,20 +845,22 @@ between data source, clinical task, and aim.
 \hypertarget{rationales}{%
 \subsection{Rationales}\label{rationales}}
 
+\label{sec:rationales}
+
 The included studies hypothesized, asserted, or assumed several benefits
 of localized modeling specific to clinical and medical settings and
-advantages over other modeling approaches (see Section
-\ref{sec:availability}). The most common was that the restriction to
-similar or relevant past cases would improve predictive performance for
-the index case {[}11,15,16,26{]}. In particular, {[}14{]} hypothesized
-and confirmed that the value of each past case would be positively
-related to its similarity to the index case, an assumption built in to
-the weighting schemes of other approaches. {[}12{]} made a different
-case, that the fewer parametric assumptions and complications of a
-CBR-style model would allow for greater accuracy. Additionally, several
-investigators asserted that the use of localized cohorts befit the
-clinical focus on the individual patient rather than the population,
-without reference to model performance {[}21,23{]}.
+advantages over other modeling approaches (see Section \ref{sec:data}).
+The most common was that the restriction to similar or relevant past
+cases would improve predictive performance for the index case
+{[}11,15,16,26{]}. In particular, {[}14{]} hypothesized and confirmed
+that the value of each past case would be positively related to its
+similarity to the index case, an assumption built in to the weighting
+schemes of other approaches. {[}12{]} made a different case, that the
+fewer parametric assumptions and complications of a CBR-style model
+would allow for greater accuracy. Additionally, several investigators
+asserted that the use of localized cohorts befit the clinical focus on
+the individual patient rather than the population, without reference to
+model performance {[}21,23{]}.
 
 In an interesting contrast, {[}34{]} and {[}35{]} argued that their
 localized approach using the larger and more heterogeneous populations
@@ -888,26 +891,8 @@ simultaneous optimization of cohort and feature selection with model
 parameterization; their TWNFI approach combines localization with
 regularization.
 
-\hypertarget{method-development}{%
-\subsection{Method development}\label{method-development}}
-
-\textbf{Move part of this paragraph to Discussion.}
-
-Consistent with their orientation, almost all included studies were
-conducted using clinical data, only occasionally together with
-patient-reported (2), laboratory (2), and image (1) data. We suggest
-three reasons for this: First, this literature traces back to the 1990s,
-before -omic data could be generated cost-effectively at scale. Second,
-CBR in particular has a strong tradition in clinical decision support,
-where the focus of our sample remains throughout the review period.
-Third, because most -omic data are highly homogeneous---all measurements
-are made along or can be transformed to a common scale, e.g.~greyscale
-pixellations for X-ray images and transcripts per million for RNA-seq
-data---more deeply theoretical analysis techniques have been developed
-and come into wide use. While variations on correlation-based approaches
-like EHR-based phenome-wide association studies and similarity-based
-methods like CBR itself have been developed, more mechanistic and
-probabilistic tools have not become a domain standard.
+\hypertarget{challenges}{%
+\subsection{Challenges}\label{challenges}}
 
 CBR can be understood as the opposite side of a trade-off with
 rule-based reasoning between model size and model complexity; {[}36{]}
@@ -953,8 +938,36 @@ In the Discussion, we discuss trends in the literature we reviewed,
 identify common limitations and gaps in understanding, and attempt to
 synthesize their methods into a general framework.
 
+\hypertarget{performance-assessments}{%
+\subsection{Performance assessments}\label{performance-assessments}}
+
+\label{sec:performance}
+
+Most included studies quantitatively compared the predictive performance
+of their proposed method(s) to one or more comparators. What we took to
+be the signature results are collated in Table \ref{tab:performance} in
+the Appendix. Note that we exercised some judgment in classifying
+methods as proposals and comparators, as in some cases all methods were
+original but only some showcased main ideas. It would be impractical to
+meta-analyze these numbers due to the great variety of settings,
+problems, data types, and choices involved.
+
+However, we do observe one clear pattern: Of the proposed methods that
+most evidently outperformed their comparators (Kohonen + CBR {[}20{]},
+TWNFI {[}18{]}, GSA {[}26{]}, CBR + rules (+ DML) {[}28{]}, Gaussian
+process regression {[}30{]}, JITL-ELM {[}32{]}), all except the last are
+hybrids of localized modeling (in some cases CBR) with other techniques,
+often metric learning. Though {[}27{]} and {[}15{]} report exceptions,
+the pattern suggests the importance of the similarity measure to the
+retrieval step. Meanwhile, when proposed approaches targeted cohort
+demarcation or choice of predictive model (statistical CBR {[}13{]};
+individualized logistic regression, decision tree, and random forest
+{[}14,16{]}), they did not consistently outperform comparators.
+
 \hypertarget{identified-needs}{%
 \subsection{Identified needs}\label{identified-needs}}
+
+\label{sec:needs}
 
 The study authors focused their recommendations and their own plans for
 future work mostly on technical improvements and evaluations
@@ -974,11 +987,23 @@ models {[}17,19{]}. Others suggested new uses of their modeling
 approaches: to measure feature importance {[}20{]}, to make models more
 expressive {[}14{]}, and to combine information obtained both from
 global and from localized models {[}15{]}. Most of this incremental work
-was indeed carried out by later researchers whose output appears in our
-sample.
+was indeed carried out in later investigations in our sample.
+
+\hypertarget{public-availability}{%
+\subsection{Public availability}\label{public-availability}}
+
+\label{sec:availability}
+
+\textbf{Discuss public availability of code or implementations.}
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
+
+We draw several observations from our encoding of the included studies.
+We first focus on two driving questions: What challenges did
+investigators set out to solve? How did their approaches meet these
+challenges? We then comment on the connectedness of the included studies
+and the potential for recombination.
 
 \hypertarget{process}{%
 \subsection{Process}\label{process}}
@@ -993,16 +1018,24 @@ better specify an agreed-upon meaning. We will discuss the different
 domains, terminologies, and reporting issues of the sample in the
 remainder of this section.
 
-\hypertarget{trends}{%
-\subsection{Trends}\label{trends}}
+\hypertarget{study-designs}{%
+\subsection{Study designs}\label{study-designs}}
 
-We draw several observations from our encoding of the included studies.
-We first focus on two driving questions: What challenges did
-investigators set out to solve? How did their approaches meet these
-challenges? We then comment on the connectedness of the included studies
-and the potential for recombination.
-
-\textbf{Add 1--2 paragraphs.}
+Consistent with their orientation, almost all included studies were
+conducted using clinical data, only occasionally together with
+patient-reported (2), laboratory (2), and image (1) data. We suggest
+three reasons for this: First, this literature traces back to the 1990s,
+before -omic data could be generated cost-effectively at scale. Second,
+CBR in particular has a strong tradition in clinical decision support,
+where the focus of our sample remains throughout the review period.
+Third, because most -omic data are highly homogeneous---all measurements
+are made along or can be transformed to a common scale, e.g.~greyscale
+pixellations for X-ray images and transcripts per million for RNA-seq
+data---more deeply theoretical analysis techniques have been developed
+and come into wide use. While variations on correlation-based approaches
+like EHR-based phenome-wide association studies and similarity-based
+methods like CBR itself have been developed, more mechanistic and
+probabilistic tools have not become a domain standard.
 
 Because we excluded studies that used conventional NN prediction, many
 included studies reported new approaches to adaptation subsequent to
@@ -1089,8 +1122,8 @@ retrieve relevant cases and generate a prediction, using
 back-propagation on the rules' parameters. Their method was used in
 several later studies returned by our search, which are not discussed
 here because they did not originate the technique. {[}28{]} explicitly
-appeal to a supervised distance metric learning technique {[}43{]} to
-obtain a similarity measure on their set of dermoscopy and confocal
+appeal to a supervised distance metric learning (DML) technique {[}43{]}
+to obtain a similarity measure on their set of dermoscopy and confocal
 images that most effectively separates malignant from benign melanoma
 tumors. We will discuss the remaining uses of supervised similarity
 learning shortly.
@@ -1228,6 +1261,54 @@ similarity, though most uniform cohort sizes were tuned. Some earlier
 studies tuned generalized regression models, but more recent studies
 have not.
 
+\hypertarget{directions-and-expectations}{%
+\subsection{Directions and
+expectations}\label{directions-and-expectations}}
+
+As discussed in Section \ref{sec:rationales}, most studies were premised
+on the potential predictive value of localized models. As cautioned in
+Section \ref{sec:performance}, not all experiments affirmed this
+premise. Most of those that did involved using metric learning to
+improve retrieval and sometimes iterative optimization of the metric and
+of the localized model. Some studies showcased results using a variety
+of such specializations {[}15,27,30{]}. However, because these advanced
+implementations were mostly compared against their precursors or
+commonplace alternatives, we cannot speak to their performance or any
+trade-offs with respect to each other. This would be a worthy goal of
+future work, though it might be limited by the lack of open-source code
+or public implementations (Section \ref{sec:availability}).
+
+While most studies identified outstanding technical needs (Section
+\ref{sec:needs}), few emphasized the need to assess human-focused
+qualities like user interface and user experience, interpretability,
+meaningfulness, or trust. Most studies also identified interpretability
+as an advantage of localized models, though none evaluated model
+interpretability and few proposed new interpretative uses. Lack of trust
+in ML tools is a long-recognized problem that direct intepretability of
+model components could help alleviate, but this is more often assumed
+than demonstrated. One valuable direction for future work would be to
+compare the ability of non-technical investigators or users to draw
+correct inferences from these and other interpretable methods and their
+levels of confidence in those inferences.
+
+We posit that an essential component of such ``soft'' performance goals
+is the ability of the user community to exert some control over the
+models. Given the impact on performance of the choice or optimization of
+the similarity measure, an important target for user input would be the
+importance of certain variables in the calculation of similarity, with
+an understanding of how it can impact not only the performance of the
+predictions but also the cohort retrieved for the model. For one
+example, a user may want to minimize the weight of rare diseases in
+medical history in order to retrieve a population with more such cases
+in order to better measure their associated risk to the outcome. In
+contrast, they may want to increase the weight of the indicating
+diagnosis in order to allow fewer patients from similar but distinct
+populations to influence the model. For another example, a user may want
+to down-weight socioeconomic variables like race--ethnicity in order to
+ensure a more diverse modeling cohort. Future purely quantitative work
+could assess whether similarity-tuning can achieve these ends more
+flexibly than strict inclusion/exclusion criteria.
+
 \hypertarget{conclusions}{%
 \subsection{Conclusions}\label{conclusions}}
 
@@ -1270,10 +1351,10 @@ The authors received no specific funding or other support for this work.
 
 The authors declare that they have no competing interests.
 
-\hypertarget{data-and-code-availability}{%
-\section{Data and code availability}\label{data-and-code-availability}}
+\hypertarget{data-and-code}{%
+\section{Data and code}\label{data-and-code}}
 
-\label{sec:availability}
+\label{sec:data}
 
 Search results are publicly available in a Zotero group library. Data
 collected or encoded for included studies are publicly available in two
@@ -1603,6 +1684,207 @@ sections of the included entries.
 Because we could not predict the scope of methodological approaches we
 would encounter, we did not prepare specific analyses or syntheses
 \emph{a priori}.
+
+\hypertarget{performance-evaluations-and-comparisons}{%
+\subsection{Performance evaluations and
+comparisons}\label{performance-evaluations-and-comparisons}}
+
+\begin{landscape}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1224}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.0714}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1633}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.2398}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.0969}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.2092}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.0969}}@{}}
+\caption{\label{tab:performance}Evaluations of proposed methods and
+comparisons to alternative methods. (See original studies for full names
+and descriptions.)}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Citation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Measure
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Problem
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Proposals
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Comparators
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Citation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Measure
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Problem
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Proposals
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Comparators
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+{[}20{]} & Accuracy & Arthritis & Kohonen + CBR & 75.60\%\hspace{6em} &
+Kohonen mapping & 54.70\%\hspace{6em} \\
+& & & & \hspace{6em} & CBR & 60.40\%\hspace{6em} \\
+& & & & \hspace{6em} & Quest & 50.90\%\hspace{6em} \\
+& & & & \hspace{6em} & backpropagation & 54.70\%\hspace{6em} \\
+{[}13{]} & & Dermatology & Statistical CBR & 96.57\%\hspace{6em} & CBR &
+95.43\%\hspace{6em} \\
+& & & & \hspace{6em} & C5.0 & 93.71\%\hspace{6em} \\
+& & & & \hspace{6em} & CART & 92.00\%\hspace{6em} \\
+& & & & \hspace{6em} & LR & 91.14\%\hspace{6em} \\
+& & & & \hspace{6em} & NN & 88.29\%\hspace{6em} \\
+& & Heart & Statistical CBR & 83.70\%\hspace{6em} & LR &
+84.44\%\hspace{6em} \\
+& & & & \hspace{6em} & NN & 82.22\%\hspace{6em} \\
+& & & & \hspace{6em} & CBR & 81.85\%\hspace{6em} \\
+& & & & \hspace{6em} & CART & 76.67\%\hspace{6em} \\
+& & & & \hspace{6em} & C5.0 & 76.30\%\hspace{6em} \\
+& & Breast & Statistical CBR & 96.96\%\hspace{6em} & NN &
+97.50\%\hspace{6em} \\
+& & & & \hspace{6em} & CBR & 96.61\%\hspace{6em} \\
+& & & & \hspace{6em} & LR & 96.61\%\hspace{6em} \\
+& & & & \hspace{6em} & C5.0 & 94.29\%\hspace{6em} \\
+& & & & \hspace{6em} & CART & 92.14\%\hspace{6em} \\
+& & Diabetes & Statistical CBR & 76.32\%\hspace{6em} & LR &
+77.11\%\hspace{6em} \\
+& & & & \hspace{6em} & CBR & 73.16\%\hspace{6em} \\
+& & & & \hspace{6em} & C5.0 & 73.15\%\hspace{6em} \\
+& & & & \hspace{6em} & CART & 72.89\%\hspace{6em} \\
+& & & & \hspace{6em} & NN & 65.39\%\hspace{6em} \\
+& & Liver & Statistical CBR & 66.76\%\hspace{6em} & CART &
+67.94\%\hspace{6em} \\
+& & & & \hspace{6em} & LR & 67.35\%\hspace{6em} \\
+& & & & \hspace{6em} & C5.0 & 66.47\%\hspace{6em} \\
+& & & & \hspace{6em} & CBR & 60.88\%\hspace{6em} \\
+& & & & \hspace{6em} & NN & 55.59\%\hspace{6em} \\
+{[}21{]} & RMSE & GFR & TWNFI & 7.08\hspace{6em} & MDRD &
+7.74\hspace{6em} \\
+& & & & \hspace{6em} & MLP & 8.38\hspace{6em} \\
+& & & & \hspace{6em} & ANFIS & 7.40\hspace{6em} \\
+& & & & \hspace{6em} & DENFIS & 7.22\hspace{6em} \\
+& & & & \hspace{6em} & TNFI & 7.28\hspace{6em} \\
+{[}22{]} & AUROC & mammography mass region & CBR & 0.885\hspace{6em} &
+DT & 0.872\hspace{6em} \\
+& & & & \hspace{6em} & ANN & 0.882\hspace{6em} \\
+{[}23{]} & Accuracy & Return-to-work & CBR & 62.5\%\hspace{6em} & LR &
+71.2\%\hspace{6em} \\
+{[}18{]} & & Colon cancer diagnosis & TWNFI & 91.9\%\hspace{6em} & MLR
+(Personalized) & 82.3\%\hspace{6em} \\
+& & & & \hspace{6em} & SVM (Personalized) & 90.3\%\hspace{6em} \\
+& & & & \hspace{6em} & WKNN & 90.3\%\hspace{6em} \\
+& & Crohn's disease risk & TWNFI & 82.45\%\hspace{6em} & &
+\hspace{6em} \\
+{[}26{]} & & Colon cancer & knnGSA & 85.48\%\hspace{6em} & SVM &
+82.14\%\hspace{6em} \\
+& & & svmGSA & 87.10\%\hspace{6em} & ECF & 72.30\%\hspace{6em} \\
+& & & & \hspace{6em} & KNN & 82.14\%\hspace{6em} \\
+& & & & \hspace{6em} & WKNN & 82.14\%\hspace{6em} \\
+& & Leukemia & knnGSA & 97.22\%\hspace{6em} & SVM &
+95.83\%\hspace{6em} \\
+& & & svmGSA & 97.22\%\hspace{6em} & ECF & 94.44\%\hspace{6em} \\
+& & & & \hspace{6em} & KNN & 94.44\%\hspace{6em} \\
+& & & & \hspace{6em} & WKNN & 94.44\%\hspace{6em} \\
+& & Lymphoma & knnGSA & 94.81\%\hspace{6em} & SVM &
+93.51\%\hspace{6em} \\
+& & & svmGSA & 94.81\%\hspace{6em} & ECF & 92.21\%\hspace{6em} \\
+& & & & \hspace{6em} & KNN & 93.51\%\hspace{6em} \\
+& & & & \hspace{6em} & WKNN & 93.51\%\hspace{6em} \\
+& & Lung cancer & knnGSA & 98.34\%\hspace{6em} & SVM &
+95.31\%\hspace{6em} \\
+& & & svmGSA & 98.90\%\hspace{6em} & ECF & 92.87\%\hspace{6em} \\
+& & & & \hspace{6em} & KNN & 96.60\%\hspace{6em} \\
+& & & & \hspace{6em} & WKNN & 95.50\%\hspace{6em} \\
+{[}12{]} & Relative IPEC & Graft survival & MKNN & 0.973\hspace{6em} &
+RSF & 0.957\hspace{6em} \\
+{[}27{]} & AUROC & Waitlist registration, complete & CBR + Wj &
+89.8\%\hspace{6em} & LR & 92.0\%\hspace{6em} \\
+& & & CBR + Wk & 90.7\%\hspace{6em} & Standalone CBR &
+90.4\%\hspace{6em} \\
+& & & CBR + Wj + Wk & 87.4\%\hspace{6em} & & \hspace{6em} \\
+& & Waitlist registration, stepwise & CBR + Wj & 82.7\%\hspace{6em} & LR
+& 92.1\%\hspace{6em} \\
+& & & CBR + Wk & 86.2\%\hspace{6em} & Standalone CBR &
+91.4\%\hspace{6em} \\
+& & & CBR + Wj + Wk & 88.5\%\hspace{6em} & & \hspace{6em} \\
+{[}28{]} & Accuracy & Nevus & Collaborative + rules & 98\%\hspace{6em} &
+Dermoscopy CBR & 92\%\hspace{6em} \\
+& & & Collaborative + rules + DML & 100\%\hspace{6em} & Confocal CBR &
+96\%\hspace{6em} \\
+& & & & \hspace{6em} & Collaborative & 95\%\hspace{6em} \\
+{[}15{]} & AUROC & Diabetes onset & Personalized LR
+(LSML+FeatureFiltering) & 0.624\hspace{6em} & KNN & 0.617\hspace{6em} \\
+& & & Personalized LR (LSML) & 0.619\hspace{6em} & Global LR &
+0.611\hspace{6em} \\
+& & & Personalized LR (Euclidean) & 0.614\hspace{6em} & &
+\hspace{6em} \\
+& & & Personalized LR (Random) & 0.602\hspace{6em} & & \hspace{6em} \\
+{[}14{]} & & 30-day mortality & Individualized LR & 0.830\hspace{6em} &
+Individualized DC & 0.797\hspace{6em} \\
+& & & Individualized DT & 0.753\hspace{6em} & & \hspace{6em} \\
+{[}16{]} & & & Individualized LR & 0.824\hspace{6em} & Individualized DC
+& 0.801\hspace{6em} \\
+& & & Individualized DT & 0.779\hspace{6em} & & \hspace{6em} \\
+& & & Individualized RF & 0.839\hspace{6em} & & \hspace{6em} \\
+& & & Individualized CSRF & 0.832\hspace{6em} & & \hspace{6em} \\
+{[}31{]} & Accuracy & J13/pneumonia & Case-based NN & 81.6\%\hspace{6em}
+& & \hspace{6em} \\
+& & K80.1/gallbladder & Case-based NN & 76.7\%\hspace{6em} & &
+\hspace{6em} \\
+& & H25.1/age-related cataract & Case-based NN & 94.9\%\hspace{6em} & &
+\hspace{6em} \\
+& & H26.2/complicated cataract & Case-based NN & 91.4\%\hspace{6em} & &
+\hspace{6em} \\
+& & 167.4/encephalopathy & Case-based NN & 72.4\%\hspace{6em} & &
+\hspace{6em} \\
+& & 167.9/CBD & Case-based NN & 75.4\%\hspace{6em} & & \hspace{6em} \\
+& & N20.1/ureter & Case-based NN & 58.7\%\hspace{6em} & &
+\hspace{6em} \\
+{[}30{]} & AUROC & Cognitive impairment & Gaussian process regression
+with custom kernel & 0.92\hspace{6em} & linear regression without
+regularization & 0.81\hspace{6em} \\
+& & & & \hspace{6em} & LASSO regression & 0.85\hspace{6em} \\
+& & & & \hspace{6em} & ridge regression & 0.87\hspace{6em} \\
+& & & & \hspace{6em} & RF & 0.90\hspace{6em} \\
+& & & & \hspace{6em} & gradient boosting regression tree &
+0.91\hspace{6em} \\
+& & & & \hspace{6em} & XGBoost & 0.91\hspace{6em} \\
+& & & & \hspace{6em} & kernel support vector regressor &
+0.92\hspace{6em} \\
+& & Parkinson's disease & Gaussian process regression with custom kernel
+& 0.875\hspace{6em} & linear regression without regularization &
+0.820\hspace{6em} \\
+& & & & \hspace{6em} & ridge regression & 0.798\hspace{6em} \\
+& & & & \hspace{6em} & RF & 0.734\hspace{6em} \\
+& & & & \hspace{6em} & gradient boosting regression tree &
+0.825\hspace{6em} \\
+& & & & \hspace{6em} & kernel support vector regressor &
+0.778\hspace{6em} \\
+{[}17{]} & & Diabetes & Personalized RF & 0.90\hspace{6em} & &
+\hspace{6em} \\
+& & & Personalized KNN & 0.82\hspace{6em} & & \hspace{6em} \\
+& & & Personalized LR & 0.89\hspace{6em} & & \hspace{6em} \\
+{[}32{]} & & Discharge at 10 days & One-class JITL-ELM &
+0.8510\hspace{6em} & ELM & 0.4973\hspace{6em} \\
+& & & & \hspace{6em} & JITL-ELM & 0.2014\hspace{6em} \\
+& & & & \hspace{6em} & One-class ELM & 0.7588\hspace{6em} \\
+& & & & \hspace{6em} & One-class SVM & 0.4647\hspace{6em} \\
+\end{longtable}
+
+\end{landscape}
 
 \hypertarget{references}{%
 \section*{References}\label{references}}

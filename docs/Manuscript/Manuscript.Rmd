@@ -56,14 +56,19 @@ output:
     latex_engine: xelatex
     # citation_package: natbib
     citation_package: "default"
+header-includes:
+  \usepackage{lscape}
+  \newcommand{\landscapebegin}{\begin{landscape}}
+  \newcommand{\landscapeend}{\end{landscape}}
+
 ---
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-library(dplyr)
-library(stringr)
+library(tidyverse)
 Sys.sleep(10)
 tab_synthesis <- readr::read_rds(here::here("data/synthesis.rds"))
 composite_studies <- readr::read_rds(here::here("data/composite.rds"))
+tab_eval_comp <- readr::read_rds(here::here("data/eval-comp.rds"))
 citation_id <- readr::read_rds(here::here("data/citations.rds"))
 ```
 
@@ -154,7 +159,7 @@ Finally, one author (JCB) applied the same review process to the seed set of 43 
 
 ## Coding
 
-Following the selection sources aligning with our review, we collected characteristics of included studies (Section \ref{sec:availability}). The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, evaluation/performance/comparison measures (& their values), name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
+Following the selection sources aligning with our review, we collected characteristics of included studies (Section \ref{sec:data}). The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, evaluation/performance/comparison measures (& their values), name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
 
 ## Synthesis
 
@@ -184,7 +189,7 @@ We then reviewed 43 studies comprising a seed set that inspired this review. Aft
 
 ## Bibliographic and methodological properties
 
-The 25 included studies were analyzed based on 20 characteristics (see Section \ref{sec:availability}), and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, and _Hindawi - Journal of Healthcare Engineering_ published 3.
+The 25 included studies were analyzed based on 20 characteristics (see Section \ref{sec:data}), and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, and _Hindawi - Journal of Healthcare Engineering_ published 3.
 
 Another interesting pattern lay in the years of publication of the included studies (Figure \ref{fig:year}). While they stretch back to the late 1990s, they have become more common, which suggests that this is still an active, though not rapidly expanding, methodological approach. We note that, while CBR in health and medicine originated as early as 1990, these studies did emerge early on once CBR had established itself. So the idea has been "in the air" for as long as CBR has been in use.
 
@@ -283,8 +288,9 @@ knitr::include_graphics("../../fig/fig-properties.png")
 ```
 
 ## Rationales
+\label{sec:rationales}
 
-The included studies hypothesized, asserted, or assumed several benefits of localized modeling specific to clinical and medical settings and advantages over other modeling approaches (see Section \ref{sec:availability}).
+The included studies hypothesized, asserted, or assumed several benefits of localized modeling specific to clinical and medical settings and advantages over other modeling approaches (see Section \ref{sec:data}).
 The most common was that the restriction to similar or relevant past cases would improve predictive performance for the index case [@Mariuzzi1997; @Liang2015a; @Ng2015; @Lee2017]. In particular, @Lee2015 hypothesized and confirmed that the value of each past case would be positively related to its similarity to the index case, an assumption built in to the weighting schemes of other approaches. @Lowsky2013 made a different case, that the fewer parametric assumptions and complications of a CBR-style model would allow for greater accuracy.
 Additionally, several investigators asserted that the use of localized cohorts befit the clinical focus on the individual patient rather than the population, without reference to model performance [@Song2006c; @Xu2008a].
 
@@ -298,11 +304,7 @@ The other frequent advantage attributed to localized modeling was interpretabili
 
 The remaining coded rationales were for augmentations or hybridizations of then-conventional CBR, most of which defended the use of other tools to improve performance via cohort selection [@CampilloGimenez2012a; @Nicolas2014a; @Vilhena2016a] or to make models and outputs more interpretable [@Lopez2011a; @Wang2019]. @Liang2015a argued for simultaneous optimization of cohort and feature selection with model parameterization; their TWNFI approach combines localization with regularization.
 
-## Method development
-
-**Move part of this paragraph to Discussion.**
-
-Consistent with their orientation, almost all included studies were conducted using clinical data, only occasionally together with patient-reported (2), laboratory (2), and image (1) data. We suggest three reasons for this: First, this literature traces back to the 1990s, before -omic data could be generated cost-effectively at scale. Second, CBR in particular has a strong tradition in clinical decision support, where the focus of our sample remains throughout the review period. Third, because most -omic data are highly homogeneous—all measurements are made along or can be transformed to a common scale, e.g. greyscale pixellations for X-ray images and transcripts per million for RNA-seq data—more deeply theoretical analysis techniques have been developed and come into wide use. While variations on correlation-based approaches like EHR-based phenome-wide association studies and similarity-based methods like CBR itself have been developed, more mechanistic and probabilistic tools have not become a domain standard.
+## Challenges
 
 CBR can be understood as the opposite side of a trade-off with rule-based reasoning between model size and model complexity; @Doyle2006a describe their approach as "knowledge-light", in that "the cases do not contain explicit explanation structures; instead, explanation is achieved by comparison of the query case with retrieved cases". This means that the greatest performance and efficiency challenges in CBR have to do with the retrieval and revision phases in the R4 cycle. Several studies addressed these challenges: @Park2006, while excluded from the synthesis, were the earliest to propose that cohorts be bounded by a similarity threshold rather than by a number of cases, and this improved performance in their experiments. @CampilloGimenez2013 leveraged predictor weights obtained from logistic regression to inform the similarity calculation used in retrieval. @Lowsky2013 used non-parametric models to reduce the computational burden of revision (prediction). @Ma2020a proposed to improve efficiency along the entire R4 cycle, but in particular by only executing task-dependent steps in real time ("just-in-time learning"), and @Ng2021b and @Tang2021c partitioned multiple phases in the R4 cycle into offline and online components, only the latter of which would be performed in real time as new data are received.
 
@@ -319,26 +321,41 @@ knitr::include_graphics("../../fig/fig-methods.png")
 
 In the Discussion, we discuss trends in the literature we reviewed, identify common limitations and gaps in understanding, and attempt to synthesize their methods into a general framework.
 
+## Performance assessments
+\label{sec:performance}
+
+Most included studies quantitatively compared the predictive performance of their proposed method(s) to one or more comparators. What we took to be the signature results are collated in Table \ref{tab:performance} in the Appendix. Note that we exercised some judgment in classifying methods as proposals and comparators, as in some cases all methods were original but only some showcased main ideas.
+It would be impractical to meta-analyze these numbers due to the great variety of settings, problems, data types, and choices involved.
+
+However, we do observe one clear pattern: Of the proposed methods that most evidently outperformed their comparators (Kohonen + CBR [@Wyns2004a], TWNFI [@Song2006c, @Kasabov2010], GSA [@Liang2015a], CBR + rules (+ DML) [@Nicolas2014a], Gaussian process regression [@Zhang2018a], JITL-ELM [@Ma2020a]), all except the last are hybrids of localized modeling (in some cases CBR) with other techniques, often metric learning. Though @CampilloGimenez2012a and [@Ng2015] report exceptions, the pattern suggests the importance of the similarity measure to the retrieval step.
+Meanwhile, when proposed approaches targeted cohort demarcation or choice of predictive model (statistical CBR [@Park2006]; individualized logistic regression, decision tree, and random forest [@Lee2015; @Lee2017]), they did not consistently outperform comparators.
+
 ## Identified needs
+\label{sec:needs}
 
 The study authors focused their recommendations and their own plans for future work mostly on technical improvements and evaluations [@Mariuzzi1997; @Yearwood1997a].
 Urged improvements included full or partial automation of user-dependent steps such as predictor selection [@Mariuzzi1997; @Yearwood1997a], similarity learning [@Mariuzzi1997; @Wang2019], and parameter optimization [@Song2006c; @Lee2017]; extensions to new data structures [@Lopez2011a], data types [@Liang2015a; @Verma2015a; @Malykh2018a], and reasoning systems [@Nicolas2014a]; and the use of more advanced model components to improve accuracy or efficiency [@Lowsky2013; @Lee2015; @Liang2015a; @Zhang2018a].
 Authors also urged validations and independent evaluations using larger or more comprehensive data sets [@Elter2007a; @Xu2008a; @Verma2015a; @Ng2015], using data aggregated from multiple health systems [@Lee2015; @Lee2017; @Tang2021c; @Ng2021b], and in other care settings or disease contexts [@Song2006c; @Zhang2018a; @Tang2021c; @Ng2021b].
 Less common were calls to strengthen the connection between the methods and the users.
 Some authors urged the incorporation of (human-derived) domain knowledge into the data or models [@Yearwood1997a; @Wang2019]. Others suggested new uses of their modeling approaches: to measure feature importance [@Wyns2004a], to make models more expressive [@Lee2015], and to combine information obtained both from global and from localized models [@Ng2015].
-Most of this incremental work was indeed carried out by later researchers whose output appears in our sample.
+Most of this incremental work was indeed carried out in later investigations in our sample.
+
+## Public availability
+\label{sec:availability}
+
+**Discuss public availability of code or implementations.**
 
 # Discussion
+
+We draw several observations from our encoding of the included studies. We first focus on two driving questions: What challenges did investigators set out to solve? How did their approaches meet these challenges? We then comment on the connectedness of the included studies and the potential for recombination.
 
 ## Process
 
 The low inter-rater reliability was due, in parts, to different interpretations of some eligibility criteria by the authors, inconsistent terminology across the sample, and incomplete reporting of resources and methods in the sample. Regarding interpretation of criteria, some wording of the criteria was adjusted following discussions between the reviewing authors during full-text review to better specify an agreed-upon meaning. We will discuss the different domains, terminologies, and reporting issues of the sample in the remainder of this section.
 
-## Trends
+## Study designs
 
-We draw several observations from our encoding of the included studies. We first focus on two driving questions: What challenges did investigators set out to solve? How did their approaches meet these challenges? We then comment on the connectedness of the included studies and the potential for recombination.
-
-**Add 1--2 paragraphs.**
+Consistent with their orientation, almost all included studies were conducted using clinical data, only occasionally together with patient-reported (2), laboratory (2), and image (1) data. We suggest three reasons for this: First, this literature traces back to the 1990s, before -omic data could be generated cost-effectively at scale. Second, CBR in particular has a strong tradition in clinical decision support, where the focus of our sample remains throughout the review period. Third, because most -omic data are highly homogeneous—all measurements are made along or can be transformed to a common scale, e.g. greyscale pixellations for X-ray images and transcripts per million for RNA-seq data—more deeply theoretical analysis techniques have been developed and come into wide use. While variations on correlation-based approaches like EHR-based phenome-wide association studies and similarity-based methods like CBR itself have been developed, more mechanistic and probabilistic tools have not become a domain standard.
 
 Because we excluded studies that used conventional NN prediction, many included studies reported new approaches to adaptation subsequent to retrieval. Very few proposed novel similarity measures, possibly because larger studies tended to be reported in separate articles detailing experiments with specific components of the process. However, this also suggests that few experimental studies have focused on the unified development of new retrieval and adaptation strategies.
 We also note that the majority of studies evaluated and compared methods using leave-one-out cross-validation (LOOCV). This is an especially appropriate technique when available data are scarce, and indeed most data sets used by included studies numbered in the hundreds of cases or fewer. This likely follows from the older age of many included studies and from their consistent primary focus on clinical data, which is more costly to collect and comes with more restrictions on its use.
@@ -357,7 +374,7 @@ The 25 studies included in our synthesis used composite techniques that we organ
 
 ### Similarity learning and threshold optimization
 
-The similarity learning approaches took a variety of forms. Several studies used unsupervised similarity learning, for example the Mahalanobis distance [@Lowsky2013] and the Kolmogorov entropy-based distance [@Elter2007a]. In particular, @Yearwood1997a defined similarity as a weighted sum of differences in predictor values and used linear regression to optimize the weights for the predictive accuracy of the cohort they retrieve. Others used supervised learning: @Song2006c proposed an iterative algorithm to optimize a set of fuzzy inference rules used to retrieve relevant cases and generate a prediction, using back-propagation on the rules’ parameters. Their method was used in several later studies returned by our search, which are not discussed here because they did not originate the technique. @Nicolas2014a explicitly appeal to a supervised distance metric learning technique [@Xing2002] to obtain a similarity measure on their set of dermoscopy and confocal images that most effectively separates malignant from benign melanoma tumors. We will discuss the remaining uses of supervised similarity learning shortly.
+The similarity learning approaches took a variety of forms. Several studies used unsupervised similarity learning, for example the Mahalanobis distance [@Lowsky2013] and the Kolmogorov entropy-based distance [@Elter2007a]. In particular, @Yearwood1997a defined similarity as a weighted sum of differences in predictor values and used linear regression to optimize the weights for the predictive accuracy of the cohort they retrieve. Others used supervised learning: @Song2006c proposed an iterative algorithm to optimize a set of fuzzy inference rules used to retrieve relevant cases and generate a prediction, using back-propagation on the rules’ parameters. Their method was used in several later studies returned by our search, which are not discussed here because they did not originate the technique. @Nicolas2014a explicitly appeal to a supervised distance metric learning (DML) technique [@Xing2002] to obtain a similarity measure on their set of dermoscopy and confocal images that most effectively separates malignant from benign melanoma tumors. We will discuss the remaining uses of supervised similarity learning shortly.
 
 Distinct from but related to similarity learning was supervised cohort construction. This was an adaptive step taken by @Park2006 to optimize the predictive performance of models fitted to cohorts retrieved using a fixed similarity rather than count threshold, a counterpart to conventional CBR they called "statistical CBR".[^combinatorial] The step used a heuristic procedure to locate a similarity threshold that (locally) maximizes predictive accuracy on the training set. This is analogous to optimizing the neighborhood size parameter in NN predictive modeling, so we will not discuss it further except to mention that the authors found statistical CBR to outperform conventional CBR on several data sets. @CampilloGimenez2012a combined these learning techniques: They used logistic regression on the training set to obtain weights for the predictors (by predicting the binary outcome of kidney transplant waitlist registration) and for the cases (by predicting agreement of outcome between an index case and other training cases), and they used exhaustion to optimize the size of the retrieved cohort for the accuracy of the NN model using the previously optimized weights.
 
@@ -388,6 +405,22 @@ knitr::include_graphics("../../fig/fig-typology.pdf")
 
 Each step can be unsupervised supervised: Unsupervised similarity measures include discrete measures like the Levenshtein distance and continuous measures like cosine similarity, while supervised measures include the Mahalanobis distance and random forest proximity as well as several composite measures with weights calculated from the data. Most retrieval steps obtained cohorts with a uniform size (cardinality) or similarity threshold, and the remaining were likewise only informed by predictors; thus, while a retrieval step could in principle be supervised, in this sample none were. Almost all models were supervised, being that most performed predictive tasks, though @Mariuzzi1997 modeled only survival rates within localized cohorts. Meanwhile, each step can be optimized in a ML fashion by having its parameters tuned to improve performance. We found no studies that tuned the calculation of similarity, though most uniform cohort sizes were tuned. Some earlier studies tuned generalized regression models, but more recent studies have not.
 
+## Directions and expectations
+
+As discussed in Section \ref{sec:rationales}, most studies were premised on the potential predictive value of localized models.
+As cautioned in Section \ref{sec:performance}, not all experiments affirmed this premise. Most of those that did involved using metric learning to improve retrieval and sometimes iterative optimization of the metric and of the localized model.
+Some studies showcased results using a variety of such specializations [@CampilloGimenez2012a; @Ng2015; @Zhang2018a]. However, because these advanced implementations were mostly compared against their precursors or commonplace alternatives, we cannot speak to their performance or any trade-offs with respect to each other.
+This would be a worthy goal of future work, though it might be limited by the lack of open-source code or public implementations (Section \ref{sec:availability}).
+
+While most studies identified outstanding technical needs (Section \ref{sec:needs}), few emphasized the need to assess human-focused qualities like user interface and user experience, interpretability, meaningfulness, or trust.
+Most studies also identified interpretability as an advantage of localized models, though none evaluated model interpretability and few proposed new interpretative uses.
+Lack of trust in ML tools is a long-recognized problem that direct intepretability of model components could help alleviate, but this is more often assumed than demonstrated.
+One valuable direction for future work would be to compare the ability of non-technical investigators or users to draw correct inferences from these and other interpretable methods and their levels of confidence in those inferences.
+
+We posit that an essential component of such "soft" performance goals is the ability of the user community to exert some control over the models.
+Given the impact on performance of the choice or optimization of the similarity measure, an important target for user input would be the importance of certain variables in the calculation of similarity, with an understanding of how it can impact not only the performance of the predictions but also the cohort retrieved for the model. For one example, a user may want to minimize the weight of rare diseases in medical history in order to retrieve a population with more such cases in order to better measure their associated risk to the outcome. In contrast, they may want to increase the weight of the indicating diagnosis in order to allow fewer patients from similar but distinct populations to influence the model. For another example, a user may want to down-weight socioeconomic variables like race--ethnicity in order to ensure a more diverse modeling cohort.
+Future purely quantitative work could assess whether similarity-tuning can achieve these ends more flexibly than strict inclusion/exclusion criteria.
+
 ## Conclusions
 
 We propose the term _localized modeling_ to encompass an approach derived from CBR in which parameterized models are fitted in a standardized way to nearest neighborhoods of past or training cases according to a measure of patient similarity. We conducted a systematic search for studies that apply localized models to tasks involving health data and synthesized these largely independently developed approaches into a general framework. While the search was limited by low inter-rater reliability and failure to recover several motivating examples, the included studies used many of the same underlying tools to build, optimize, and evaluate their methods. We therefore believe that our framework can serve to taxonomize ongoing work of this type and inform the development of customizable implementations. Indeed, the availability of increasing computational power, the diversity of tasks to which these models were applied and of technical specifications they employed, and the apparent lack of any multi-group research program to date suggest great potential for growth. Whereas precious few of the reviewed studies used these models, for any task other than prediction, despite widespread suspicion among clinicians of "black-box" models and growing interest in interpretable alternatives, we recommend that future work put greater emphasis on the development and validation of interpretable localized models and on their reception by communities of medical research and clinical practice.
@@ -404,8 +437,8 @@ The authors received no specific funding or other support for this work.
 
 The authors declare that they have no competing interests.
 
-# Data and code availability
-\label{sec:availability}
+# Data and code
+\label{sec:data}
 
 Search results are publicly available in a Zotero group library.
 Data collected or encoded for included studies are publicly available in two Google Sheets.
@@ -591,5 +624,78 @@ We decided after concluding full-text review to perform one round of citation-tr
 ## Analysis and synthesis
 
 Because we could not predict the scope of methodological approaches we would encounter, we did not prepare specific analyses or syntheses _a priori_.
+
+## Performance evaluations and comparisons
+
+\landscapebegin
+
+```{r tab:performance, echo=FALSE, message=FALSE, warning=FALSE}
+# TODO: Place vertical separators between major columns.
+tab_eval_comp |> 
+  pivot_wider(
+    id_cols = c(zotero_key, date_of_publication, measure, task),
+    names_from = role, values_from = results
+  ) |> 
+  arrange(date_of_publication) |> 
+  mutate(len = map2_int(proposal, comparator, ~ max(length(.x), length(.y)))) |> 
+  mutate(across(c(proposal, comparator), ~ map2(., len, \(x, y) x[seq(y)]))) |> 
+  unnest(c(proposal, comparator)) |> 
+  separate(proposal, c("proposal", " "), sep = ": ") |> 
+  separate(comparator, c("comparator", "  "), sep = ": ") |> 
+  # use abbreviations throughout
+  mutate(across(
+    c(proposal, comparator),
+    ~ str_replace(., "[Ll]ogistic [Rr]egression", "LR")
+  )) |> 
+  mutate(across(
+    c(proposal, comparator),
+    ~ ifelse(. == "Logistic", "LR", .)
+  )) |> 
+  mutate(across(
+    c(proposal, comparator),
+    ~ str_replace(., "[Rr]andom [Ff]orest", "RF")
+  )) |> 
+  mutate(across(
+    c(proposal, comparator),
+    ~ str_replace(., "[Kk][\\- ][Nn]earest [Nn]eighbor(s){0,1}", "KNN")
+  )) |> 
+  mutate(across(
+    c(proposal, comparator),
+    ~ str_replace(., "([Aa]rtificial ){0,1}[Nn]eural [Nn]et(work){0,1}", "NN")
+  )) |> 
+  mutate(across(
+    c(proposal, comparator),
+    ~ str_replace(., "[Oo]ne-class", "One-class")
+  )) |> 
+  mutate(across(
+    c(proposal, ` `, comparator, `  `),
+    ~ ifelse(is.na(.), "", .)
+  )) |> 
+  transmute(
+    Citation = str_c("[@", zotero_key, "]"),
+    Measure = measure, Problem = task,
+    Proposals = proposal, ` `,
+    # insert blank column to separate right- and left-justified entries
+    # `   ` = "",
+    Comparators = comparator, `  `
+  ) |> 
+  mutate(across(
+    c(Citation, Measure, Problem),
+    ~ ifelse(is.na(lag(.)) | . != lag(.), ., "")
+  )) |>
+  # prevent numeric list columns from dominating the horizontal space
+  # mutate(across(c(Proposals, Comparators), ~ str_c("\\hspace{3em}", .))) |> 
+  mutate(across(c(` `, `  `), ~ str_c(., "\\hspace{6em}"))) |> 
+  knitr::kable(
+    align = "llllrlr",
+    caption = paste0(
+      "\\label{tab:performance}",
+      "Evaluations of proposed methods and comparisons to alternative methods.",
+      " (See original studies for full names and descriptions.)"
+    )
+  )
+```
+
+\landscapeend
 
 # References {-}
