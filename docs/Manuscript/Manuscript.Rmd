@@ -20,16 +20,16 @@ address:
     address: Laboratory for Systems Medicine, University of Florida, P.O. Box 100225 JHMHC, Gainesville, FL 32610-0225
 abstract: |
   Background:
-  Applications of classical case-based reasoning (CBR) to clinical and health tasks have given rise to a family of techniques in which an (often conventional) model is fitted to a subset of labeled cases, selected for relevance or similarity to an unlabeled case to which the model is applied. These localized models, as we propose to call them, may perform as well as "black-box" models while retaining direct interpretations. Their adoption has been hindered by fragmented development and implementation challenges. Our goal in this scoping review was to describe the clinical and health applications of localized models to date and to derive a general framework for their design and evaluation.
+  Applications of classical case-based reasoning (CBR) to clinical and health tasks have given rise to a family of techniques in which a statistical model is fitted to a subset of labeled cases, selected for relevance or similarity to an unlabeled case to which the model is applied. These localized models, as we propose to call them, may perform as well as "black-box" models while retaining direct interpretations. Their adoption has been hindered by fragmented development and implementation challenges. Our goal in this scoping review was to describe the clinical and health applications of localized models to date and to derive a general framework for their design and evaluation.
   
   Methods:
   We searched four electronic bibliographic platforms (PubMed, Web of Science, Academic Search Premier, and MathSciNet) during 2021 July 19–22. We screened and reviewed entries based on four criteria intended to specify applications of localized models to tasks involving analysis of clinical or health data. Two authors divided title/abstract screening and collaboratively reviewed screened entries for inclusion. We also screened and reviewed a seed set that inspired the review and traced methodological citations from included entries. We discussed and summarized settings, tasks, and tools; identified and tabulated themes; and synthesized the methods into a general framework. We received no specific funding for this work.
   
   Results:
-  Of 1,309 search results, 328 were reviewed. Of these, combined with 43 publications that seeded the review and 1 obtained by citation tracking, 25 were included in the review and methodological synthesis. The specificity of several search terms was poor, and inter-rater reliability was low. Entries were published from 1997 to 2021, with half of these since 2015. The most common tasks were prognosis and diagnosis, with only few recent studies focusing on care recommendation. The studies overwhelmingly focused on clinical data, occasionally also including laboratory and image-derived data. Only three studies used localized models for any task other than prediction, most recently to identify significant determinants behind recommendation outputs. Several studies commented on memory and runtime costs, and four proposed partial solutions to them. While most techniques were not replicated and did not cite predecessors, a general technique that specializes to most of those encountered was straightforward to describe.
+  Of 1,309 search results, 328 were reviewed. Of these, combined with 43 publications that seeded the review and 1 obtained by citation tracking, 25 were included in the review and methodological synthesis. The specificity of several search terms was poor, and inter-rater reliability was low. Entries were published from 1997 to 2021, with half of these since 2015. The most common tasks were prognosis and diagnosis. The studies overwhelmingly focused on clinical data, occasionally including laboratory and image-derived data. Only three studies applied localized models to tasks other than prediction. Several studies commented on memory and runtime costs, and four proposed partial solutions. While few methods were reused and no results were reproduced, a general technique that specializes to most of those encountered was straightforward to describe.
   
   Conclusions:
-  Localized models hold promise to improve the performance of models used in clinical decision support tools while maintaining interpretability, provided their computational limitations can be overcome. Our search undoubtedly failed to capture all studies that used methods of this kind, but those reviewed and synthesized exhibit consistent enough design to be reproduced by a general-purpose tool. We hope that our review and synthesis will assist the development of more efficient implementations suitable for integration into practice.
+  Localized models have potential to improve the performance of models used in clinical decision support tools while maintaining interpretability, provided computational hurdles can be overcome. Our search undoubtedly failed to capture all studies that used methods of this kind, but those we found follow a consistent enough design to be reproduced by a general-purpose tool. We hope that our review and synthesis will spur future work on efficiency, reproducibility, and user interactions and needs.
 keywords: 
   - case-based reasoning
   - localized modeling
@@ -74,12 +74,14 @@ citation_id <- readr::read_rds(here::here("data/citations.rds"))
 
 # Introduction
 
-Clinical decision support (CDS) systems have been a fixture of artificial intelligence (AI) research since inception. As machine learning (ML) emerged, clinical modeling tasks became some of the most common and celebrated applications. A technique core to clinical applications of both AI and ML is _similarity-matching_, which relies on a _patient similarity measure_[^psm] to extract a cohort of past or training cases used to inform the diagnosis, prognosis, or care of a new or test case. Similarity-matching powers the retrieval step of most case-based reasoning (CBR) systems and provides the neighborhoods from which nearest neighbor (NN) models derive predictions. Whereas NN predictions are generated automatically via averaging (regression) or voting (classification), traditional CBR tools return the retrieved cases to the user to inform human decision-making.
+Clinical decision support (CDS) systems have been a fixture of artificial intelligence (AI) research since inception. As machine learning (ML) emerged, clinical modeling tasks became some of the most common and celebrated applications. A technique core to clinical applications of both AI and ML is _similarity-matching_, which relies on a _patient similarity measure_[^psm] to extract a cohort of past or training cases used to inform the diagnosis, prognosis, or care of a new or test case. Similarity-matching powers the retrieval step of most case-based reasoning (CBR) systems and provides the neighborhoods from which nearest neighbor (NN) models derive predictions. Whereas NN predictions are generated automatically via averaging (regression) or voting (classification), traditional CBR tools return the retrieved cases to inform human decision-making.
 
 [^psm]: Similarity measures between more granular units of analysis, such as encounters and decision points, are often still referred to as patient similarity measures.
 
-We discuss in this review a hybrid computational approach we call _localized modeling_ that borrows elements from both clinical application areas and appears to have been introduced independently several times. The approach fits ML models, including regularized families of generalized regression models (GLMs), to cohorts retrieved via similarity matching. Whereas CBR and NN prediction use patient similarity to obtain an ideally homogeneous subpopulation matched to the index case, in localized modeling one seeks a relevant yet heterogeneous subpopulation, each member of which deviates slightly from the index case. In principle, this allows interpretable models like GLMs to identify and measure the effects of determining factors that are specific to the index case.
+We discuss in this review a hybrid computational approach we call _localized modeling_ (see Section \ref{sec:coherence}) that appears to have been introduced independently several times. The approach fits ML models, including regularized families of generalized regression models (GLMs), to cohorts retrieved via similarity matching. Whereas CBR and NN prediction use patient similarity to obtain an ideally homogeneous subpopulation matched to the index case, in localized modeling one seeks a relevant yet heterogeneous subpopulation, each member of which may deviate from the index case.
+A prediction or inference is then obtained from a model fitted to this _similarity cohort_.
 The use of similarity cohorts distinguishes localized modeling from classical GLMs that still dominate analysis in clinical trials and comparative effectiveness research, as well as from many cutting-edge ML models that are fitted to whole populations, while the cohorts' heterogeneity and its utility to the model distinguish the approach from CBR.
+In principle, this allows interpretable models like GLMs to identify and measure the effects of determining factors that are specific to the index case.
 In the reviewed studies, localized modeling shows some promise toward simultaneously achieving the performance improvements of ML and the interpretability of classical models.
 
 <!--
@@ -88,45 +90,49 @@ In multivariate settings, because similarity decreases with difference along eac
 
 One memorable aspiration of clinical informatics was the "green button" that would, in response to a query, automatically retrieve patient data from an institution’s records with which to conduct on-demand retrospective studies for an individual patient @Longhurst2014. Localized modeling has recently been put forth as one answer to this appeal. Studies using localized models have been limited by computational cost—a naïve implementation involves fitting, optimizing, and evaluating a model on a separate population for each training case—and recent studies have described algorithms and implementations designed to reduce this cost. As greater access to health data, informatical knowledge, algorithmic efficiency, and computational power continue to spur innovation in CDS, we may expect localized modeling to become more accessible and efficient, its advantages better understood, and its disadvantages ameliorated.
 
-The motivation for this scoping review is to describe the settings in and problems with which localized models have been tasked to date, and to synthesize existing methods into a general framework. Along the way, we attempt to reconcile terminology, summarize evaluation techniques, propose needed follow-up work, and recommend best practices.
+The motivation for this scoping review is to describe the settings in and problems with which localized models have been tasked to date, and to synthesize existing methods into a general framework. Along the way, we attempt to reconcile terminology, summarize motivations and evaluations, and propose valuable follow-up work.
 
 ## Related work
 
-Clinical CBR emerged among rule-based approaches and other AI tools in the development of expert systems [@Aamodt1994]. Early implementations realized a general workflow described as "the four REs", later the "R4 cycle" [@Aamodt1994; @Begum2011]: Given a new case (or problem), the system retrieves one or more past cases (solved problems) from a corpus, reuses these to generate an understanding of (solution to) the new case, revises this understanding to better fit the new case (sometimes called "adaptation"), and retains the new case and its eventual understanding in the corpus to be retrieved and reused in future. In contrast to rule-based systems, which are variable-based and generally interpretable as a single rule applied to all new cases, case-based systems provide case-specific interpretations in the form of a number of more fully understood reference cases. While the similarity measure used in the retrieval step need not be changed as the corpus grows, proposed measures have been diverse, contested, and rarely systematically compared.
+Clinical CBR emerged among rule-based approaches and other AI tools in the development of expert systems [@Aamodt1994]. Early implementations realized a general workflow described as "the four REs", later the "R4 cycle" [@Aamodt1994; @Begum2011]: Given a new case (or problem), the system _retrieves_ one or more past cases (solved problems) from a corpus, _reuses_ these to generate an understanding of (solution to) the new case, _revises_ this understanding (solution) to better fit the new case (sometimes called "adaptation"), and _retains_ the new case and its eventual understanding (solution) in the corpus to be retrieved and reused in future. In contrast to rule-based systems, which are variable-based and generally interpretable as a single rule applied to all new cases, case-based systems provide case-specific interpretations in the form of a number of more fully understood reference cases. While the similarity measure used in the retrieval step need not be changed as the corpus grows, proposed measures have been diverse, contested, and rarely systematically compared.
 
-@Kolodner1992 distinguished two styles of CBR: problem-solving, which is more procedural and used when objectives are more clearly defined, and interpretative, which provides categorizations and justifications for possible solutions. A similar dichotomy is commonly used to distinguish the performance criterion for the usefulness of predictive models from the interpretability criterion for their usability. In these terms, localized models are highly procedural: The step of fitting a predictive model to a retrieved cohort can be understood as an automated adaptive strategy [@Begum2011], and the parameters that govern cohort retrieval can be tuned alongside model hyperparameters in a ML workflow. Accordingly, localized models have been primarily used for and evaluated on their ability to more accurately predict classes or outcomes. Nevertheless, as some more recent applications have begun to show, they can be used to draw inferences about the importance of different risk factors to specific individuals. **Distinguish between interpretable model components like effect estimates and informative but not directly interpretable importance measures as are commonly computed for 'black-box' models.** While the patient similarity measure used to retrieve each cohort may be complicated, the cohort itself can be directly inspected by the user. Provided the model family fitted to the cohorts is interpretable, the localized model as a whole inherits this property. Thus, localized models may embody both styles of CBR.
+@Kolodner1992 distinguished two styles of CBR: problem-solving, which is more procedural and used when objectives are more clearly defined, and interpretative, which provides categorizations and justifications for possible solutions. A similar dichotomy is commonly used to distinguish the performance criterion for the usefulness of predictive models from the interpretability criterion for their usability. In these terms, localized models are highly procedural: The step of fitting a predictive model to a retrieved cohort can be understood as an automated adaptive strategy [@Begum2011], and the parameters that govern cohort retrieval can be tuned alongside model hyperparameters in a ML workflow. Accordingly, localized models have been primarily used for and evaluated on their ability to predict classes or outcomes.
+Nevertheless, as some recent applications have begun to show, they can be used to draw inferences about the importance of different risk factors to specific individuals.
+While most ML models come equipped with measures of feature importance and model-agnostic tools can generate explanations for model predictions, these quantifications are not directly interpretable model components analogous to the split nodes of a decision tree (DT) or the effect estimates of a GLM.
+While the patient similarity measure used to retrieve each cohort may be complicated, the cohort itself can be directly inspected by the user. Provided the model family fitted to the cohorts is interpretable, the localized model as a whole inherits this property. Thus, localized models may embody both styles of CBR.
 
-We refer the interested reader to several previous reviews of CBR in medicine [@Gierl1998; @Begum2011; @Choudhury2016], of measures of patient similarity [@Dai2020], and of uses of patient similarity in predictive models [@Welch2013; @Sharafoddini2017; @Parimbelli2018]. While the reviews of CBR focus on applications using health data, the patient similarity reviews encompass many additional types of data (various molecular -omics, genetic tests, medical images, laboratory tests, patient preferences, patient-reported outcomes, tracking devices, social media) and survey a much broader scope of models (exploratory analysis via dimension reduction and cluster analysis; risk evaluation and outcome prediction; clinical decision support and software tools). For the present review, we are interested in how similarity matching on patient-level health data is used to construct local cohorts for predictive modeling.
+We refer the interested reader to several previous reviews of CBR in medicine [@Gierl1998; @Begum2011; @Choudhury2016], of measures of patient similarity [@Dai2020], and of uses of patient similarity in predictive models [@Welch2013; @Sharafoddini2017; @Parimbelli2018]. While the reviews of CBR focus on applications using health data, the patient similarity reviews encompass many additional types of data (various molecular -omics, genetic tests, medical images, laboratory tests, patient preferences, patient-reported outcomes, tracking devices, social media) and survey a much broader scope of models (exploratory analysis via dimension reduction and cluster analysis; risk evaluation and outcome prediction; clinical decision support and software tools). For the present review, we are interested in how similarity matching on patient-level health data is used to construct local cohorts for predictive or inferential modeling.
 
 ## Objectives
 
 Our goals in this review are (1) to describe applications to date of similarity-based localized models using patient-level health data and (2) to provide a general framework for the design and evaluation of such localized models. Our selection of relevant papers from the search corpus will be based on the following inclusion/exclusion criteria:
 
-* Pulls case-level data from a corpus of past cases with known response values\newline
+* Uses case-level data from a corpus of past cases with known responses\newline
 (response may be outcome, diagnosis, subtype, etc.)
 * Defines a numeric multivariate case similarity measure\newline
-(include integer-valued measures)
-* Uses the similarity measure to select cohorts for index cases from the corpus\newline
+(allow integer-valued measures)
+* Uses the similarity measure to retrieve cohorts for index cases from the corpus\newline
 (for example, based on a training–testing partition)
-* Fits statistical models to cohorts from which to draw inferences about index cases\newline
-(outcome predictions count, survival estimates, risk factor effect estimates, model evaluation statistics, etc.)
+* Fits statistical models to cohorts from which to make predictions or draw inferences about index cases\newline
+(outcome predictions, survival estimates, risk factor contributions, model evaluation statistics, etc.)
 
-We expected the general framework to boil down to three choices: A patient similarity measure, a cohort selection process, and a statistical model family. Such a general method would be straightforward, if laborious, to implement, and specializations of it would account for the majority of real-world applications. A general implementation based on this method would allow researchers to expedite every step of the analysis process, including selection, optimization, and evaluation, and enable sensitivity, robustness, and multiverse analyses that help identify the most consequential choices along the way.
+We expected the general framework to come down to three choices: A patient similarity measure, a cohort selection process, and a statistical model family. Such a general method would be straightforward, if laborious, to implement, and specializations of it would account for the majority of real-world applications. A general implementation based on this method would allow researchers to expedite every step of the analysis process, including selection, optimization, and evaluation, and enable sensitivity, robustness, and multiverse analyses that help identify the most consequential choices along the way.
 
 # Methods
 
-We describe the steps of our review in detail in the Appendix.
-We also note deviations from plans and the reasons for them.
+Here we describe our review process, including deviations from plans and the reasons for them.
+More details are included in Section \label{sec:appendix-selection}.
 
 ## PRISMA checklist
 
+**Correct "n = PubMed" in PRISMA diagram.**
 We include a PRISMA checklist as Supplemental Table 1 and a PRISMA abstract checklist as Supplemental Table 2.
-Because we focus on methodologies rather than approaches, we deviate in some ways from PRISMA guidelines. In particular, many items of the checklist, involving bias assessment and quantitative synthesis, are intended for meta-analyses and, therefore, did not apply to this study.
+Because we focus on methodologies rather than conceptual approaches or evidence, we deviate in some ways from PRISMA guidelines. In particular, those items of the checklist involving bias assessment and quantitative synthesis are intended for meta-analyses so did not apply to this study.
 Because we are not aware of any standard procedures for conducting reviews and syntheses of methodology, no protocol was prepared for this study.
 
 ## Search
 
-We derived the eligibility criteria itemized in the Introduction from a seed set of previously read studies. Based on these criteria, we formulated search strings for five platforms: PubMed, Web of Science, Academic Search Premier, Google Scholar, and MathSciNet. We finalized the PubMed search first, then adapted it to the other platforms (Sections \ref{sec:appendix-search}).
+We derived the eligibility criteria itemized in the Introduction from a seed set of previously read studies. Based on these criteria, we formulated search strings for five platforms: PubMed, Web of Science, Academic Search Premier, Google Scholar, and MathSciNet. We finalized the PubMed search first, then adapted it to the other platforms (Section \ref{sec:appendix-search}).
 
 Through each platform, we searched those databases included by default.
 This means that we searched both MEDLINE and PubMed Central (PMC) through Pubmed (we did not exclude other databases, but our earliest included results post-date them) and that we searched the six indices of the Core Collection (the Science Citation Index Expanded, the Social Sciences Citation Index, the Arts & Humanities Citation Index, the Emerging Sources Citation Index, the Conference Proceedings Citation Index, and the Book Citation Index) as well as several regional databases through the Web of Science platform.
@@ -137,33 +143,36 @@ We conducted all searches over 2021 July 19–22. We tentatively excluded result
 
 ## Title/abstract screen
 
-Within Covidence, we screened titles and abstracts for relevance. We decided on four eligibility criteria to expedite the screening process. These include articles written in English for readability, original studies to strictly include primary sources with new information/conclusions, medical or clinical related settings due to the applicability of our data to this field, and alternative use of the key terms within the search string, meaning that it was clear from the title and abstract that the entry was included due to the use of one or more search terms with a different meaning than ours. Each of two authors (AC and JCB) screened roughly half of the entries. They regularly reviewed each other’s decisions to improve consistency. In cases of uncertainty, an entry would be included.
+Within Covidence, we screened titles and abstracts for relevance. We decided on four eligibility criteria to expedite the screening process.
+Articles must be written in English, for readability; they must be original studies, to exclude secondary sources with duplicate information; their use settings must be medical, clinical, or related, to keep our review topical; and it must not be clear that their use of our search terms was different from our intended meaning.
+Each of two authors (AC and JCB) screened roughly half of the entries. They regularly reviewed each other’s decisions to improve consistency. In cases of uncertainty, entries were included.
 
 ## Full text review
+\label{sec:full-text}
 
 We set out 4 criteria for full-text review to restrict to studies that used some form of localized modeling on health data:
 
 * Pulls case-level data from a corpus of past cases with known classes or outcomes
 * Defines a numeric multivariate case similarity measure
 * Uses the similarity measure to select cohorts for index cases from the corpus
-* Fits statistical models to cohorts to make inferences about index cases
+* Fits statistical models to cohorts to make predictions or inferences about index cases
 
 Note that classical CBR satisfies the first and third criteria by definition and in most cases will satisfy the second.
 
-In Covidence, two authors (AC and JCB) independently evaluated each manuscript for the four eligibility criteria. The first criterion that a manuscript failed was designated the reason for exclusion. An antecedent criterion was used to exclude manuscripts that did not report the results of original studies involving real-world experiments or empirical data, for example surveys of prior work and proposals of frameworks. In cases of disagreement between the authors on the reason for exclusion, the first criterion was adopted. The authors arrived at agreement on inclusion or exclusion through discussion. We calculated inter-rater reliability to evaluate our screening and review process.
+In Covidence, two authors (AC and JCB) independently evaluated each manuscript for these eligibility criteria. The first criterion that a manuscript failed was designated the reason for exclusion. An antecedent criterion was used to exclude manuscripts that did not report the results of original studies involving real-world experiments or empirical data, for example surveys of prior work and proposals of frameworks. In cases of disagreement between the authors on the reason for exclusion, the first criterion was adopted. The authors arrived at agreement on inclusion or exclusion through discussion. We calculated inter-rater reliability to evaluate our screening and review process.
 
 During full text review, we decided to expand the conception of statistical models (fourth criterion): Rather than restricting to models that are fit and evaluated in separate steps, we chose to allow simple statistical summaries such as mean survival [@Mariuzzi1997] and survival curves [@Lowsky2013]. These approaches were novel to CBR and presage later developments, so were helpful to understanding the development of localized modeling.
-However, this then admitted studies that applied conventional nearest neighbors prediction: Each retrieved cohort consisted of the $k$ most similar cases to the index case, and the response for the index case was predicted to be either the mean (continuous response) or the plurality (discrete response) of the responses of the cohort. A review of all studies that use nearest neighbors prediction, even in the clinical domain, would be impractical. Because our focus is on novel approaches that combine similarity-based retrieval and statistical modeling of retrieved cohorts, we chose to exclude those studies whose approach was equivalent to nearest neighbors prediction using a conventional similarity measure.
+However, this then admitted studies that applied conventional nearest neighbors prediction: Each retrieved cohort consisted of the $k$ most similar cases to the index case, and the response for the index case was predicted to be either the mean (continuous response) or the plurality (discrete response) of the cohort's responses. A review of all studies that use nearest neighbors prediction would be impractical. Because our focus is on novel approaches that combine similarity-based retrieval and statistical modeling of retrieved cohorts, we chose to exclude those studies whose approach was equivalent to nearest neighbors prediction using a conventional similarity measure.
 
 Finally, one author (JCB) applied the same review process to the seed set of 43 studies that inspired the review.
 
 ## Coding
 
-Following the selection sources aligning with our review, we collected characteristics of included studies (Section \ref{sec:data}). The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, evaluation/performance/comparison measures (& their values), name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
+Following the selection sources aligning with our review, we collected characteristics of included studies (Section \ref{sec:data}). The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, performance measures, results of evaluations and comparisons, name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
 
 ## Synthesis
 
-Rather than an evidence synthesis characteristic of most systematic reviews, we here pursue a methodology synthesis to harmonize possibly independent research efforts that have converged on a common modeling technique. The goal will be to describe a unified framework for localized models that can be used to guide future study designs and implementations as well as more systematically evaluate variations on the theme and measure the dependence of results on modeling choices.
+Rather than an evidence synthesis characteristic of most systematic reviews, we here pursue a methodology synthesis to harmonize largely independent research efforts that have converged on a common modeling technique. The goal will be to describe a unified framework for localized models that can be used to guide future study designs and implementations as well as more systematically evaluate variations on the theme and measure the dependence of results on modeling choices.
 
 # Results
 
@@ -185,13 +194,15 @@ knitr::include_graphics("../../fig/fig-prisma.pdf")
 There were 60 disagreements over inclusion versus exclusion.
 Inter-rater reliability was low, at 82% relative to a 72% probability of random agreement.
 
-We then reviewed 43 studies comprising a seed set that inspired this review. After removing duplicates and screening for eligibility, we were left with 6 additional studies [@Park2006; @Lowsky2013; @Lee2015; @Ng2015; @Lee2017; @Wang2019], 1 of which was excluded from the synthesis for using nearest neighbors prediction. Finally, citations in reference lists from the 43 + 328 = 371 studies assessed for eligibility led us to identify 1 additional study that met our criteria [@Kasabov2010]. This left us with 19 + 1 + 5 = 25 studies included in the review and synthesis.
+We then reviewed 43 studies comprising a seed set that inspired this review. After removing duplicates and screening for eligibility, we were left with 6 additional studies [@Park2006; @Lowsky2013; @Lee2015; @Ng2015; @Lee2017; @Wang2019], 1 of which was excluded from the synthesis for using NN prediction. Finally, reference tracking from the 43 + 328 = 371 studies assessed for eligibility led us to identify 1 additional study that met our criteria [@Kasabov2010]. This left us with 19 + 1 + 5 = 25 studies included in the review and synthesis.
 
 ## Bibliographic and methodological properties
 
+**Update numbers below, perhaps dynamically.**
+
 The 25 included studies were analyzed based on 20 characteristics (see Section \ref{sec:data}), and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, and _Hindawi - Journal of Healthcare Engineering_ published 3.
 
-Another interesting pattern lay in the years of publication of the included studies (Figure \ref{fig:year}). While they stretch back to the late 1990s, they have become more common, which suggests that this is still an active, though not rapidly expanding, methodological approach. We note that, while CBR in health and medicine originated as early as 1990, these studies did emerge early on once CBR had established itself. So the idea has been "in the air" for as long as CBR has been in use.
+Another interesting pattern lay in the years of publication (Figure \ref{fig:year}). While they trace back to the late 1990s, they have become more common, which suggests that this is an active, though not rapidly expanding, methodological approach. We note that, while CBR in health and medicine originated as early as 1990, these studies did emerge early on once CBR had established itself. So the idea has been "in the air" for as long as CBR has been in use.
 
 ```{r tab:synthesis, echo=FALSE, message=FALSE, warning=FALSE}
 tab_synthesis |> 
@@ -230,7 +241,7 @@ tab_synthesis |>
 knitr::include_graphics("../../fig/fig-years.png")
 ```
 
-Another dominant characteristic of included studies is their broader remit. We categorized studies as "knowledge" or "practice" based on whether their aim was to produce generalizable knowledge or to improve practice. We classified 7 of the 25 studies as "knowledge", making the majority of studies from a "practice" standpoint. These studies aimed primarily to provide providers with tools to use in clinic or to improve outcomes for patients currently receiving care.
+Another dominant characteristic of included studies is their broader remit. We categorized studies as "knowledge" or "practice" based on whether their aim was to produce generalizable knowledge or to improve practice. We classified 7 of the 25 studies as "knowledge", making the majority of studies from a "practice" standpoint. These studies aimed to provide tools for use in clinic or to improve outcomes.
 
 Lastly, we observed a commonality among 6 of the 25 included studies in having evaluated methods using leave-one-out cross-validation (LOOCV). The purpose of this measure is to estimate the overall performance of certain factors when used to make predictions, particularly utilized on smaller data sets, where models benefit greatly from larger training sets and additional model fitting is less costly.
 
@@ -292,7 +303,7 @@ knitr::include_graphics("../../fig/fig-properties.png")
 
 The included studies hypothesized, asserted, or assumed several benefits of localized modeling specific to clinical and medical settings and advantages over other modeling approaches (see Section \ref{sec:data}).
 The most common was that the restriction to similar or relevant past cases would improve predictive performance for the index case [@Mariuzzi1997; @Liang2015a; @Ng2015; @Lee2017]. In particular, @Lee2015 hypothesized and confirmed that the value of each past case would be positively related to its similarity to the index case, an assumption built in to the weighting schemes of other approaches. @Lowsky2013 made a different case, that the fewer parametric assumptions and complications of a CBR-style model would allow for greater accuracy.
-Additionally, several investigators asserted that the use of localized cohorts befit the clinical focus on the individual patient rather than the population, without reference to model performance [@Song2006c; @Xu2008a].
+Additionally, several investigators asserted that the use of localized cohorts befit the clinical focus on the individual patient rather than the population, without reference to performance [@Song2006c; @Xu2008a].
 
 In an interesting contrast, @Tang2021c and @Ng2021b argued that their localized approach using the larger and more heterogeneous populations covered by EHR-derived data could better capture the messy and diverse lessons of everyday practice, as a counterpart to guidelines based on randomized controlled trials.
 Their emphasis on the enabling role of EHRs to power methods well-suited to large, structured data repositories was shared by several others [@CampilloGimenez2012a; @Nicolas2014a; @Verma2015a; @Lee2017].
@@ -300,16 +311,15 @@ Their emphasis on the enabling role of EHRs to power methods well-suited to larg
 
 The other frequent advantage attributed to localized modeling was interpretability.
 @Elter2007a and @Nicolas2014a emphasized the value of the detailed past cases, available to the user, on which predictions are based. This "self-explanation capability" made outputs more intelligible to physicians in the CDS setting.
-@Ng2015 additional pointed out that localized GLMs yield localized effect estimates, which may help investigators identify individually relevant risk factors.
+@Ng2015 additionally pointed out that localized GLMs yield localized effect estimates, which may help investigators identify individually relevant risk factors.
 
 The remaining coded rationales were for augmentations or hybridizations of then-conventional CBR, most of which defended the use of other tools to improve performance via cohort selection [@CampilloGimenez2012a; @Nicolas2014a; @Vilhena2016a] or to make models and outputs more interpretable [@Lopez2011a; @Wang2019]. @Liang2015a argued for simultaneous optimization of cohort and feature selection with model parameterization; their TWNFI approach combines localization with regularization.
 
 ## Challenges
 
-CBR can be understood as the opposite side of a trade-off with rule-based reasoning between model size and model complexity; @Doyle2006a describe their approach as "knowledge-light", in that "the cases do not contain explicit explanation structures; instead, explanation is achieved by comparison of the query case with retrieved cases". This means that the greatest performance and efficiency challenges in CBR have to do with the retrieval and revision phases in the R4 cycle. Several studies addressed these challenges: @Park2006, while excluded from the synthesis, were the earliest to propose that cohorts be bounded by a similarity threshold rather than by a number of cases, and this improved performance in their experiments. @CampilloGimenez2013 leveraged predictor weights obtained from logistic regression to inform the similarity calculation used in retrieval. @Lowsky2013 used non-parametric models to reduce the computational burden of revision (prediction). @Ma2020a proposed to improve efficiency along the entire R4 cycle, but in particular by only executing task-dependent steps in real time ("just-in-time learning"), and @Ng2021b and @Tang2021c partitioned multiple phases in the R4 cycle into offline and online components, only the latter of which would be performed in real time as new data are received.
+CBR can be understood as the opposite side of a trade-off with rule-based reasoning between model size and model complexity; @Doyle2006a describe their approach as "knowledge-light", in that "the cases do not contain explicit explanation structures; instead, explanation is achieved by comparison of the query case with retrieved cases". This means that the greatest performance and efficiency challenges in CBR have to do with the retrieval and revision phases in the R4 cycle. Several studies addressed these challenges: @Park2006, while excluded from the synthesis, were the earliest to propose that cohorts be bounded by a similarity threshold rather than by a number of cases, and this improved performance in their experiments. @CampilloGimenez2013 leveraged predictor weights obtained from logistic regression to inform the similarity calculation used in retrieval. @Lowsky2013 used non-parametric models to reduce the computational burden of revision (prediction). @Ma2020a proposed to improve efficiency along the entire R4 cycle, but in particular by only executing task-dependent steps in real time ("just-in-time learning", JITL), and @Ng2021b and @Tang2021c partitioned multiple phases in the R4 cycle into offline and online components, only the latter of which would be performed in real time as new data are received.
 
 Other studies addressed limitations of available tools. @Lopez2011a implemented a comprehensive CBR tool in response to the lack of general-purpose software, to enable coupling with other tools as well as to expedite development, experimentation, and uptake. Several other teams also set out to develop  more interoperable clinical support tools [@Elter2007a; @Liang2015a; @Ng2015; @Zhang2018a].
-
 The frequency plot in Figure \ref{fig:methods} compares the rates at which several methodological elements are invoked in the sample.
 
 ```{r fig:methods, fig.align='center', out.width="100%", echo=FALSE}
@@ -319,36 +329,38 @@ The frequency plot in Figure \ref{fig:methods} compares the rates at which sever
 knitr::include_graphics("../../fig/fig-methods.png")
 ```
 
-In the Discussion, we discuss trends in the literature we reviewed, identify common limitations and gaps in understanding, and attempt to synthesize their methods into a general framework.
-
 ## Performance assessments
 \label{sec:performance}
 
 Most included studies quantitatively compared the predictive performance of their proposed method(s) to one or more comparators. What we took to be the signature results are collated in Table \ref{tab:performance} in the Appendix. Note that we exercised some judgment in classifying methods as proposals and comparators, as in some cases all methods were original but only some showcased main ideas.
 It would be impractical to meta-analyze these numbers due to the great variety of settings, problems, data types, and choices involved.
 
-However, we do observe one clear pattern: Of the proposed methods that most evidently outperformed their comparators (Kohonen + CBR [@Wyns2004a], TWNFI [@Song2006c, @Kasabov2010], GSA [@Liang2015a], CBR + rules (+ DML) [@Nicolas2014a], Gaussian process regression [@Zhang2018a], JITL-ELM [@Ma2020a]), all except the last are hybrids of localized modeling (in some cases CBR) with other techniques, often metric learning. Though @CampilloGimenez2012a and [@Ng2015] report exceptions, the pattern suggests the importance of the similarity measure to the retrieval step.
+We do observe one clear pattern: All of the proposed methods that most evidently outperformed their comparators (Kohonen + CBR [@Wyns2004a], TWNFI [@Song2006c, @Kasabov2010], gravitational search algorithms (GSA) [@Liang2015a], CBR + rules (+ DML) [@Nicolas2014a], Gaussian process regression [@Zhang2018a], JITL-ELM [@Ma2020a]) are hybrids of localized modeling (in some cases CBR) with other techniques, often DML. Though @CampilloGimenez2012a and [@Ng2015] report non-superior performance by such hybrids, the pattern suggests the importance of the similarity measure to the retrieval step.
 Meanwhile, when proposed approaches targeted cohort demarcation or choice of predictive model (statistical CBR [@Park2006]; individualized logistic regression, decision tree, and random forest [@Lee2015; @Lee2017]), they did not consistently outperform comparators.
 
 ## Identified needs
 \label{sec:needs}
 
 The study authors focused their recommendations and their own plans for future work mostly on technical improvements and evaluations [@Mariuzzi1997; @Yearwood1997a].
-Urged improvements included full or partial automation of user-dependent steps such as predictor selection [@Mariuzzi1997; @Yearwood1997a], similarity learning [@Mariuzzi1997; @Wang2019], and parameter optimization [@Song2006c; @Lee2017]; extensions to new data structures [@Lopez2011a], data types [@Liang2015a; @Verma2015a; @Malykh2018a], and reasoning systems [@Nicolas2014a]; and the use of more advanced model components to improve accuracy or efficiency [@Lowsky2013; @Lee2015; @Liang2015a; @Zhang2018a].
+Urged improvements included full or partial automation of predictor selection [@Mariuzzi1997; @Yearwood1997a], similarity learning [@Mariuzzi1997; @Wang2019], and parameter optimization [@Song2006c; @Lee2017]; extensions to new data structures [@Lopez2011a], data types [@Liang2015a; @Verma2015a; @Malykh2018a], and reasoning systems [@Nicolas2014a]; and the use of more advanced model components to improve accuracy or efficiency [@Lowsky2013; @Lee2015; @Liang2015a; @Zhang2018a].
 Authors also urged validations and independent evaluations using larger or more comprehensive data sets [@Elter2007a; @Xu2008a; @Verma2015a; @Ng2015], using data aggregated from multiple health systems [@Lee2015; @Lee2017; @Tang2021c; @Ng2021b], and in other care settings or disease contexts [@Song2006c; @Zhang2018a; @Tang2021c; @Ng2021b].
+
 Less common were calls to strengthen the connection between the methods and the users.
 Some authors urged the incorporation of (human-derived) domain knowledge into the data or models [@Yearwood1997a; @Wang2019]. Others suggested new uses of their modeling approaches: to measure feature importance [@Wyns2004a], to make models more expressive [@Lee2015], and to combine information obtained both from global and from localized models [@Ng2015].
 Most of this incremental work was indeed carried out in later investigations in our sample.
 
-## Public availability
-\label{sec:availability}
+## Reproducibility
+\label{sec:reproducibility}
 
 **Discuss public availability of code or implementations.**
 **Methods, results, and inferential reproducibility [@Matarese2022].**
 
 # Discussion
 
-We draw several observations from our encoding of the included studies. We first focus on two driving questions: What challenges did investigators set out to solve? How did their approaches meet these challenges? We then comment on the connectedness of the included studies and the potential for recombination.
+After commenting briefly on our review process, we draw several observations from our encoding of the included studies.
+We first focus on their methodological choices and innovations, then on their conventions and language.
+We spend most of the section discussing the differences and commonalities of the techniques used, toward a general method that encompasses most or all cases.
+We then suggest some avenues for future studies and conclude with our key takeaways.
 
 ## Process
 
@@ -362,6 +374,7 @@ Because we excluded studies that used conventional NN prediction, many included 
 We also note that the majority of studies evaluated and compared methods using leave-one-out cross-validation (LOOCV). This is an especially appropriate technique when available data are scarce, and indeed most data sets used by included studies numbered in the hundreds of cases or fewer. This likely follows from the older age of many included studies and from their consistent primary focus on clinical data, which is more costly to collect and comes with more restrictions on its use.
 
 ## Coherence
+\label{sec:coherence}
 
 The motivational and methodological unity of these studies does not reflect a unified research program. Besides the lack of any primary journal of record, we observed collaborations only among the authors of smaller contiguous programs, including applications of the TWNFI methodology [@Song2006c; @Verma2015a], individualized mortality prediction for ICU patients [@Lee2015; @Lee2017] and the use of more explanatory models to prioritize predictors or treatments for chronic disease [@Ng2015; @Tang2021c; @Ng2021b].
 
@@ -371,17 +384,21 @@ These programs used varying terminology for common concepts, and no common term 
 
 ## Synthesis
 
-The 25 studies included in our synthesis used composite techniques that we organized into two major types. One type, similarity learning, was used in 8 studies that tie in to the much larger literature on metric learning [@Yang2006]. These techniques are designed to detect structure in data, especially associations between predictors and responses, and to use this structure to inform the definition of a patient similarity measure. Seven studies used response values in training data sets to supervise similarity learning while two used unsupervised learning (Table \ref{tab:composite}). Based on the key properties of metric learning algorithms identified by @Bellet2014, most learned measures were non-linear while some were local, and some were optimized globally while others locally. However, not all qualified as metric learning, since the resulting measures would not necessarily satisfy the triangle inequality. Each then used its similarity measure to retrieve training cases relevant to each testing case. Once retrieved, most took a standard NN approach to generating predictions from the cohort; two exceptions [@Vilhena2016a; @Tang2021c] proceeded to fit predictive models to the retrieved cohorts and are discussed below.
+The 25 studies included in our synthesis used composite techniques that we organized into two major types. One type, _similarity learning_, was used in 8 studies that tie in to the much larger literature on DML [@Yang2006].
+The other, _cohort thresholding_, focused on choosing or optimizing the manner in which cohorts were demarcated using the similarity measure.
 
 ### Similarity learning and threshold optimization
 
-The similarity learning approaches took a variety of forms. Several studies used unsupervised similarity learning, for example the Mahalanobis distance [@Lowsky2013] and the Kolmogorov entropy-based distance [@Elter2007a]. In particular, @Yearwood1997a defined similarity as a weighted sum of differences in predictor values and used linear regression to optimize the weights for the predictive accuracy of the cohort they retrieve. Others used supervised learning: @Song2006c proposed an iterative algorithm to optimize a set of fuzzy inference rules used to retrieve relevant cases and generate a prediction, using back-propagation on the rules’ parameters. Their method was used in several later studies returned by our search, which are not discussed here because they did not originate the technique. @Nicolas2014a explicitly appeal to a supervised distance metric learning (DML) technique [@Xing2002] to obtain a similarity measure on their set of dermoscopy and confocal images that most effectively separates malignant from benign melanoma tumors. We will discuss the remaining uses of supervised similarity learning shortly.
+The similarity learning approaches took a variety of forms.
+These techniques are designed to detect structure in data, especially associations between predictors and responses, and to use this structure to inform the definition of a patient similarity measure. Seven studies used response values in training data sets to supervise similarity learning while two used unsupervised learning (Table \ref{tab:composite}). Based on the key properties of DML algorithms identified by @Bellet2014, most learned measures were non-linear while some were locally learned, and some were optimized globally while others locally. Not all qualified as DML, since the resulting measures would not necessarily satisfy the triangle inequality. Each used its similarity measure to retrieve training cases relevant to each testing case. Once retrieved, most took a standard NN approach to generating predictions; two exceptions [@Vilhena2016a; @Tang2021c] fit predictive models to the retrieved cohorts.
+
+Several studies used unsupervised similarity learning, for example the Mahalanobis distance [@Lowsky2013] and the Kolmogorov entropy-based distance [@Elter2007a]. In particular, @Yearwood1997a defined similarity as a weighted sum of differences in predictor values and used linear regression to optimize the weights for the predictive accuracy of the cohort they retrieve. Others used supervised learning: @Song2006c proposed an iterative algorithm to optimize a set of fuzzy inference rules used to retrieve relevant cases and generate a prediction, using back-propagation on the rules’ parameters. Their method was used in several later studies returned by our search, which are not discussed here because they did not originate the technique. @Nicolas2014a explicitly appeal to a supervised distance metric learning (DML) technique [@Xing2002] to obtain a similarity measure on their set of dermoscopy and confocal images that most effectively separates malignant from benign melanoma tumors. We will discuss the remaining uses of supervised similarity learning shortly.
 
 Distinct from but related to similarity learning was supervised cohort construction. This was an adaptive step taken by @Park2006 to optimize the predictive performance of models fitted to cohorts retrieved using a fixed similarity rather than count threshold, a counterpart to conventional CBR they called "statistical CBR".[^combinatorial] The step used a heuristic procedure to locate a similarity threshold that (locally) maximizes predictive accuracy on the training set. This is analogous to optimizing the neighborhood size parameter in NN predictive modeling, so we will not discuss it further except to mention that the authors found statistical CBR to outperform conventional CBR on several data sets. @CampilloGimenez2012a combined these learning techniques: They used logistic regression on the training set to obtain weights for the predictors (by predicting the binary outcome of kidney transplant waitlist registration) and for the cases (by predicting agreement of outcome between an index case and other training cases), and they used exhaustion to optimize the size of the retrieved cohort for the accuracy of the NN model using the previously optimized weights.
 
 [^combinatorial]: Drawing from @Goyal2008, we suggest the term "combinatorial CBR" for the then-conventional approach using similarity cohorts of fixed cardinality.
 
-As noted above, these instances of similarity learning fit into a much larger literature on metric learning, which has seen widespread use in health informatics and modeling. That these studies satisfied our review criteria is due to the novelty of the techniques at the time of publication and the detailed attention paid to their techniques by the authors. It also reflects a limitation of our study and of the literature we set out to retrieve: We are aware of no standard terms in use to identify the family of techniques that fit statistical models to similarity-based cohorts. The retrieved studies whose use of such techniques alone satisfied our criteria variably termed them individualized, personalized, local, and patient-specific models, among other terms (Table \ref{tab:composite}). We prefer the term localized models, which is both sensitive and specific to uses of a similarity or distance measure to retrieve a cohort to which a model is fit: It includes some properly included techniques we did not have in mind [@Vilhena2016a] yet excludes other techniques commonly referred to as individualized, personalized, or precision.
+As noted above, these instances of similarity learning fit into a much larger literature on DML, which has seen widespread use in health informatics and modeling. That these studies satisfied our review criteria is due to the novelty of the techniques at the time of publication and the detailed attention paid to their techniques by the authors. It also reflects a limitation of our study and of the literature we set out to retrieve: We are aware of no standard terms in use to identify the family of techniques that fit statistical models to similarity-based cohorts. The retrieved studies whose use of such techniques alone satisfied our criteria variably termed them individualized, personalized, local, and patient-specific models, among other terms (Table \ref{tab:composite}). We prefer the term localized models, which is both sensitive and specific to uses of a similarity or distance measure to retrieve a cohort to which a model is fit: It includes some properly included techniques we did not have in mind [@Vilhena2016a] yet excludes other techniques commonly referred to as individualized, personalized, or precision.
 
 ### Localized models
 
@@ -395,7 +412,7 @@ With the exception of the descriptive survival models of @Mariuzzi1997, only one
 
 ### A general framework
 
-This relatively small sample exhibited a wide range of approaches, both technically and conceptually. Discussion of the technical diversity of these approaches has been summarized above and published in greater detail in previous reviews [@Choudhury2016; @Sharafoddini2017; @Parimbelli2018], and we focus here on the conceptual. The design of a localized modeling approach can be decomposed into three largely independent choices: (1) how to measure the similarity between cases, (2) how to retrieve a cohort of cases similar to an index case, and (3) how to generate a prediction or other statistical insight for the index case from the similarity cohort. The choices are the _similarity measure_, the _retrieval step_, and the _statistical model_, respectively. These are diagrammed in Figure \ref{fig:framework}.
+This relatively small sample exhibited a wide range of approaches, both technically and conceptually. Discussion of the technical diversity of these approaches has been summarized above and published in greater detail in previous reviews [@Choudhury2016; @Sharafoddini2017; @Parimbelli2018], and we focus here on the conceptual. The design of a localized modeling approach can be decomposed into three largely independent choices: (1) how to measure the similarity between cases, (2) how to retrieve a cohort of cases similar to an index case, and (3) how to generate a prediction or other statistical insight for the index case from the similarity cohort. The choices are the _similarity measure_, the _cohort retrieval_, and the _statistical model_, respectively. These are diagrammed in Figure \ref{fig:framework}.
 
 ```{r fig:framework, fig.align='center', out.width="80%", echo=FALSE}
 #| fig.cap =
@@ -404,14 +421,14 @@ This relatively small sample exhibited a wide range of approaches, both technica
 knitr::include_graphics("../../fig/fig-typology.pdf")
 ```
 
-Each step can be unsupervised supervised: Unsupervised similarity measures include discrete measures like the Levenshtein distance and continuous measures like cosine similarity, while supervised measures include the Mahalanobis distance and random forest proximity as well as several composite measures with weights calculated from the data. Most retrieval steps obtained cohorts with a uniform size (cardinality) or similarity threshold, and the remaining were likewise only informed by predictors; thus, while a retrieval step could in principle be supervised, in this sample none were. Almost all models were supervised, being that most performed predictive tasks, though @Mariuzzi1997 modeled only survival rates within localized cohorts. Meanwhile, each step can be optimized in a ML fashion by having its parameters tuned to improve performance. We found no studies that tuned the calculation of similarity, though most uniform cohort sizes were tuned. Some earlier studies tuned generalized regression models, but more recent studies have not.
+Each step can be unsupervised supervised: Unsupervised similarity measures include discrete measures like the Levenshtein distance and continuous measures like cosine similarity, while supervised measures include the Mahalanobis distance and random forest proximity as well as several composite measures with weights calculated from the data. Most retrieval steps obtained cohorts with a uniform size (cardinality) or similarity threshold, and the remaining were likewise only informed by predictors; thus, while a retrieval step could in principle be supervised, in this sample none were. Almost all models were supervised, being that most performed predictive tasks, though @Mariuzzi1997 modeled only survival rates within localized cohorts. Meanwhile, each step can be optimized in a ML fashion by having its parameters tuned to improve performance. We found no studies that tuned the calculation of similarity, though most uniform cohort sizes were tuned. Some earlier studies tuned generalized regression models, but more recent studies did not.
 
 ## Directions and expectations
 
 As discussed in Section \ref{sec:rationales}, most studies were premised on the potential predictive value of localized models.
 As cautioned in Section \ref{sec:performance}, not all experiments affirmed this premise. Most of those that did involved using metric learning to improve retrieval and sometimes iterative optimization of the metric and of the localized model.
 Some studies showcased results using a variety of such specializations [@CampilloGimenez2012a; @Ng2015; @Zhang2018a]. However, because these advanced implementations were mostly compared against their precursors or commonplace alternatives, we cannot speak to their performance or any trade-offs with respect to each other.
-This would be a worthy goal of future work, though it might be limited by the lack of open-source code or public implementations (Section \ref{sec:availability}).
+This would be a worthy goal of future work, though it might be limited by the lack of open-source code or public implementations (Section \ref{sec:reproducibility}).
 
 While most studies identified outstanding technical needs (Section \ref{sec:needs}), few emphasized the need to assess human-focused qualities like user interface and user experience, interpretability, meaningfulness, or trust.
 Most studies also identified interpretability as an advantage of localized models, though none evaluated model interpretability and few proposed new interpretative uses.
@@ -596,24 +613,21 @@ These totaled 1,422 sources from all platforms. We organized the full results in
 ## Screening process
 \label{sec:appendix-screening}
 
-**Write this section!**
+Most deduplication was done automatically in Covidence. As full-text review was done in Zotero, some additional duplicates were noticed and merged.
 
-1. Deduplication (Covidence)
-    a. Specific to that source: title, creator, URL, DOI
-    b. May overlap: journal, publication date, ISSN
-2. Title
+When abstracts were not obtained by search or by Covidence, we attempted to find them online using DOIs; when an abstract could not be found, screening was based on the title alone. We decided to screen titles and abstracts conservatively, rejecting only studies that were clearly outside the scope of our review. The reasons for rejection were four, as discussed in the main text:
     a. Exclude non clinical/non medical setting
     b. Must be in English
     c. Must be original study (not reviews, surveys, opinion, news)
     d. Exclude if search term clearly has different meaning than intended
-3. Abstract
-4. Full Text
-    a. Study criteria (inclusion/exclusion)
+(Two examples of (d) are the use of the term "personalized model" to refer in some cases to parameterized models tuned to individual patient measurements and in others to patient-centered models of care.) Studies that passed title/abstract screen were exported to Zotero.
 
 ## Selection process
 \label{sec:appendix-selection}
 
-Our selection of relevant papers from the search corpus will be based on the following inclusion/exclusion criteria:
+Some PDFs were obtained using Zotero from a university workstation, and the remaining were obtained through university library services. The review process is detailed in Section \label{sec:full-text}.
+
+Our selection of relevant papers from the search corpus was based on the following inclusion/exclusion criteria:
 
 * Uses labeled case-level (empirical) data set 
 * Defines a continuous-valued multivariate case similarity measure
@@ -630,8 +644,9 @@ Because we could not predict the scope of methodological approaches we would enc
 
 \landscapebegin
 
+**TODO: Place vertical separators between major columns.**
+
 ```{r tab:performance, echo=FALSE, message=FALSE, warning=FALSE}
-# TODO: Place vertical separators between major columns.
 tab_eval_comp |> 
   pivot_wider(
     id_cols = c(zotero_key, date_of_publication, measure, task),
