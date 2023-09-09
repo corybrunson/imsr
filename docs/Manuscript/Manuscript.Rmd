@@ -121,11 +121,10 @@ We expected the general framework to come down to three choices: A patient simil
 # Methods
 
 Here we describe our review process, including deviations from plans and the reasons for them.
-More details are included in Section \label{sec:appendix-selection}.
+More details are included in Section \ref{sec:appendix-selection}.
 
 ## PRISMA checklist
 
-**Correct "n = PubMed" in PRISMA diagram.**
 We include a PRISMA checklist as Supplemental Table 1 and a PRISMA abstract checklist as Supplemental Table 2.
 Because we focus on methodologies rather than conceptual approaches or evidence, we deviate in some ways from PRISMA guidelines. In particular, those items of the checklist involving bias assessment and quantitative synthesis are intended for meta-analyses so did not apply to this study.
 Because we are not aware of any standard procedures for conducting reviews and syntheses of methodology, no protocol was prepared for this study.
@@ -198,9 +197,7 @@ We then reviewed 43 studies comprising a seed set that inspired this review. Aft
 
 ## Bibliographic and methodological properties
 
-**Update numbers below, perhaps dynamically.**
-
-The 25 included studies were analyzed based on 20 characteristics (see Section \ref{sec:data}), and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, and _Hindawi - Journal of Healthcare Engineering_ published 3.
+The `r nrow(tab_synthesis)` included studies were analyzed based on 20 characteristics (see Section \ref{sec:data}), and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, _Hindawi - Journal of Healthcare Engineering_ published 3, and _PLOS One_ published 2.
 
 Another interesting pattern lay in the years of publication (Figure \ref{fig:year}). While they trace back to the late 1990s, they have become more common, which suggests that this is an active, though not rapidly expanding, methodological approach. We note that, while CBR in health and medicine originated as early as 1990, these studies did emerge early on once CBR had established itself. So the idea has been "in the air" for as long as CBR has been in use.
 
@@ -625,7 +622,7 @@ When abstracts were not obtained by search or by Covidence, we attempted to find
 ## Selection process
 \label{sec:appendix-selection}
 
-Some PDFs were obtained using Zotero from a university workstation, and the remaining were obtained through university library services. The review process is detailed in Section \label{sec:full-text}.
+Some PDFs were obtained using Zotero from a university workstation, and the remaining were obtained through university library services. The review process is detailed in Section \ref{sec:full-text}.
 
 Our selection of relevant papers from the search corpus was based on the following inclusion/exclusion criteria:
 
@@ -695,8 +692,12 @@ tab_eval_comp |>
     # `   ` = "",
     Comparators = comparator, `  `
   ) |> 
+  mutate(Measure = ifelse(
+    is.na(lag(Measure)) | Measure != lag(Measure) | Citation != lag(Citation),
+    Measure, ""
+  )) |> 
   mutate(across(
-    c(Citation, Measure, Problem),
+    c(Citation, Problem),
     ~ ifelse(is.na(lag(.)) | . != lag(.), ., "")
   )) |>
   # prevent numeric list columns from dominating the horizontal space

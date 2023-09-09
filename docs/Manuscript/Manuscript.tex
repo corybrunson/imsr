@@ -207,25 +207,25 @@ are generated automatically via averaging (regression) or voting
 inform human decision-making.
 
 We discuss in this review a hybrid computational approach we call
-\emph{localized modeling} that appears to have been introduced
-independently several times. The approach fits ML models, including
-regularized families of generalized regression models (GLMs), to cohorts
-retrieved via similarity matching. Whereas CBR and NN prediction use
-patient similarity to obtain an ideally homogeneous subpopulation
-matched to the index case, in localized modeling one seeks a relevant
-yet heterogeneous subpopulation, each member of which may deviate from
-the index case. A prediction or inference is then obtained from a model
-fitted to this \emph{similarity cohort}. The use of similarity cohorts
-distinguishes localized modeling from classical GLMs that still dominate
-analysis in clinical trials and comparative effectiveness research, as
-well as from many cutting-edge ML models that are fitted to whole
-populations, while the cohorts' heterogeneity and its utility to the
-model distinguish the approach from CBR. In principle, this allows
-interpretable models like GLMs to identify and measure the effects of
-determining factors that are specific to the index case. In the reviewed
-studies, localized modeling shows some promise toward simultaneously
-achieving the performance improvements of ML and the interpretability of
-classical models.
+\emph{localized modeling} (see Section \ref{sec:coherence}) that appears
+to have been introduced independently several times. The approach fits
+ML models, including regularized families of generalized regression
+models (GLMs), to cohorts retrieved via similarity matching. Whereas CBR
+and NN prediction use patient similarity to obtain an ideally
+homogeneous subpopulation matched to the index case, in localized
+modeling one seeks a relevant yet heterogeneous subpopulation, each
+member of which may deviate from the index case. A prediction or
+inference is then obtained from a model fitted to this \emph{similarity
+cohort}. The use of similarity cohorts distinguishes localized modeling
+from classical GLMs that still dominate analysis in clinical trials and
+comparative effectiveness research, as well as from many cutting-edge ML
+models that are fitted to whole populations, while the cohorts'
+heterogeneity and its utility to the model distinguish the approach from
+CBR. In principle, this allows interpretable models like GLMs to
+identify and measure the effects of determining factors that are
+specific to the index case. In the reviewed studies, localized modeling
+shows some promise toward simultaneously achieving the performance
+improvements of ML and the interpretability of classical models.
 
 One memorable aspiration of clinical informatics was the ``green
 button'' that would, in response to a query, automatically retrieve
@@ -350,20 +350,19 @@ way.
 
 Here we describe our review process, including deviations from plans and
 the reasons for them. More details are included in Section
-\label{sec:appendix-selection}.
+\ref{sec:appendix-selection}.
 
 \hypertarget{prisma-checklist}{%
 \subsection{PRISMA checklist}\label{prisma-checklist}}
 
-\textbf{Correct ``n = PubMed'' in PRISMA diagram.} We include a PRISMA
-checklist as Supplemental Table 1 and a PRISMA abstract checklist as
-Supplemental Table 2. Because we focus on methodologies rather than
-conceptual approaches or evidence, we deviate in some ways from PRISMA
-guidelines. In particular, those items of the checklist involving bias
-assessment and quantitative synthesis are intended for meta-analyses so
-did not apply to this study. Because we are not aware of any standard
-procedures for conducting reviews and syntheses of methodology, no
-protocol was prepared for this study.
+We include a PRISMA checklist as Supplemental Table 1 and a PRISMA
+abstract checklist as Supplemental Table 2. Because we focus on
+methodologies rather than conceptual approaches or evidence, we deviate
+in some ways from PRISMA guidelines. In particular, those items of the
+checklist involving bias assessment and quantitative synthesis are
+intended for meta-analyses so did not apply to this study. Because we
+are not aware of any standard procedures for conducting reviews and
+syntheses of methodology, no protocol was prepared for this study.
 
 \hypertarget{search}{%
 \subsection{Search}\label{search}}
@@ -542,16 +541,14 @@ with 19 + 1 + 5 = 25 studies included in the review and synthesis.
 \subsection{Bibliographic and methodological
 properties}\label{bibliographic-and-methodological-properties}}
 
-\textbf{Update numbers below, perhaps dynamically.}
-
 The 25 included studies were analyzed based on 20 characteristics (see
 Section \ref{sec:data}), and we report and describe some observations
 here (Table \ref{tab:synthesis}). The studies were published in a
 variety of journals, with some of greater frequency, though no single
 journal published more than 3. The journal \emph{Evolving Systems}
 published 2 of the included studies, \emph{Artificial Intelligence in
-Medicine} published 3, and \emph{Hindawi - Journal of Healthcare
-Engineering} published 3.
+Medicine} published 3, \emph{Hindawi - Journal of Healthcare
+Engineering} published 3, and \emph{PLOS One} published 2.
 
 Another interesting pattern lay in the years of publication (Figure
 \ref{fig:year}). While they trace back to the late 1990s, they have
@@ -957,13 +954,13 @@ evidently outperformed their comparators (Kohonen + CBR {[}20{]}, TWNFI
 {[}18{]}, gravitational search algorithms (GSA) {[}26{]}, CBR + rules (+
 DML) {[}28{]}, Gaussian process regression {[}30{]}, JITL-ELM {[}32{]})
 are hybrids of localized modeling (in some cases CBR) with other
-techniques, often metric learning. Though {[}27{]} and {[}15{]} report
-non-superior performance by such hybrids, the pattern suggests the
-importance of the similarity measure to the retrieval step. Meanwhile,
-when proposed approaches targeted cohort demarcation or choice of
-predictive model (statistical CBR {[}13{]}; individualized logistic
-regression, decision tree, and random forest {[}14,16{]}), they did not
-consistently outperform comparators.
+techniques, often DML. Though {[}27{]} and {[}15{]} report non-superior
+performance by such hybrids, the pattern suggests the importance of the
+similarity measure to the retrieval step. Meanwhile, when proposed
+approaches targeted cohort demarcation or choice of predictive model
+(statistical CBR {[}13{]}; individualized logistic regression, decision
+tree, and random forest {[}14,16{]}), they did not consistently
+outperform comparators.
 
 \hypertarget{identified-needs}{%
 \subsection{Identified needs}\label{identified-needs}}
@@ -998,17 +995,18 @@ investigations in our sample.
 \label{sec:reproducibility}
 
 \textbf{Discuss public availability of code or implementations.}
-\textbf{Methods, results, and inferential reproducibility
-{[}\textbf{Matarese2022?}{]}.}
+\textbf{Methods, results, and inferential reproducibility {[}39{]}.}
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
-We draw several observations from our encoding of the included studies.
-We first focus on two driving questions: What challenges did
-investigators set out to solve? How did their approaches meet these
-challenges? We then comment on the connectedness of the included studies
-and the potential for recombination.
+After commenting briefly on our review process, we draw several
+observations from our encoding of the included studies. We first focus
+on their methodological choices and innovations, then on their
+conventions and language. We spend most of the section discussing the
+differences and commonalities of the techniques used, toward a general
+method that encompasses most or all cases. We then suggest some avenues
+for future studies and conclude with our key takeaways.
 
 \hypertarget{process}{%
 \subsection{Process}\label{process}}
@@ -1060,6 +1058,8 @@ costly to collect and comes with more restrictions on its use.
 \hypertarget{coherence}{%
 \subsection{Coherence}\label{coherence}}
 
+\label{sec:coherence}
+
 The motivational and methodological unity of these studies does not
 reflect a unified research program. Besides the lack of any primary
 journal of record, we observed collaborations only among the authors of
@@ -1083,13 +1083,13 @@ globally-fitted models.\footnote{We note, in response to one reviewer's
   comment, that for many if not most models used in ML, excepting GLMs,
   a predictor may play a different and more or less important role for
   some cases than others, as quantified by importance measures or
-  model-agnostic explanations {[}39,40{]}. In this way, such models can
+  model-agnostic explanations {[}40,41{]}. In this way, such models can
   also be viewed as ``localized''. We recognize that the use of global
   and local explanations is standard. As another reviewer pointed out,
   the terminology of local and global is also used in the unrelated
   context of federated ML to distinguish models trained using data
   stored in a single storage device (local) from their aggregations
-  (global) {[}41,42{]}. The prospects for federated architecture to more
+  (global) {[}42,43{]}. The prospects for federated architecture to more
   effectively implement similarity cohort--based models are intriguing,
   and would require some reconciliation of terms. At present, we feel
   that these methods are sufficiently disjoint to avoid confusion in
@@ -1100,30 +1100,33 @@ globally-fitted models.\footnote{We note, in response to one reviewer's
 \subsection{Synthesis}\label{synthesis-1}}
 
 The 25 studies included in our synthesis used composite techniques that
-we organized into two major types. One type, similarity learning, was
-used in 8 studies that tie in to the much larger literature on metric
-learning {[}43{]}. These techniques are designed to detect structure in
-data, especially associations between predictors and responses, and to
-use this structure to inform the definition of a patient similarity
-measure. Seven studies used response values in training data sets to
-supervise similarity learning while two used unsupervised learning
-(Table \ref{tab:composite}). Based on the key properties of metric
-learning algorithms identified by {[}44{]}, most learned measures were
-non-linear while some were local, and some were optimized globally while
-others locally. However, not all qualified as metric learning, since the
-resulting measures would not necessarily satisfy the triangle
-inequality. Each then used its similarity measure to retrieve training
-cases relevant to each testing case. Once retrieved, most took a
-standard NN approach to generating predictions from the cohort; two
-exceptions {[}29,34{]} proceeded to fit predictive models to the
-retrieved cohorts and are discussed below.
+we organized into two major types. One type, \emph{similarity learning},
+was used in 8 studies that tie in to the much larger literature on DML
+{[}44{]}. The other, \emph{cohort thresholding}, focused on choosing or
+optimizing the manner in which cohorts were demarcated using the
+similarity measure.
 
 \hypertarget{similarity-learning-and-threshold-optimization}{%
 \subsubsection{Similarity learning and threshold
 optimization}\label{similarity-learning-and-threshold-optimization}}
 
-The similarity learning approaches took a variety of forms. Several
-studies used unsupervised similarity learning, for example the
+The similarity learning approaches took a variety of forms. These
+techniques are designed to detect structure in data, especially
+associations between predictors and responses, and to use this structure
+to inform the definition of a patient similarity measure. Seven studies
+used response values in training data sets to supervise similarity
+learning while two used unsupervised learning (Table
+\ref{tab:composite}). Based on the key properties of DML algorithms
+identified by {[}45{]}, most learned measures were non-linear while some
+were locally learned, and some were optimized globally while others
+locally. Not all qualified as DML, since the resulting measures would
+not necessarily satisfy the triangle inequality. Each used its
+similarity measure to retrieve training cases relevant to each testing
+case. Once retrieved, most took a standard NN approach to generating
+predictions; two exceptions {[}29,34{]} fit predictive models to the
+retrieved cohorts.
+
+Several studies used unsupervised similarity learning, for example the
 Mahalanobis distance {[}12{]} and the Kolmogorov entropy-based distance
 {[}22{]}. In particular, {[}19{]} defined similarity as a weighted sum
 of differences in predictor values and used linear regression to
@@ -1134,7 +1137,7 @@ retrieve relevant cases and generate a prediction, using
 back-propagation on the rules' parameters. Their method was used in
 several later studies returned by our search, which are not discussed
 here because they did not originate the technique. {[}28{]} explicitly
-appeal to a supervised distance metric learning (DML) technique {[}45{]}
+appeal to a supervised distance metric learning (DML) technique {[}46{]}
 to obtain a similarity measure on their set of dermoscopy and confocal
 images that most effectively separates malignant from benign melanoma
 tumors. We will discuss the remaining uses of supervised similarity
@@ -1145,7 +1148,7 @@ construction. This was an adaptive step taken by {[}13{]} to optimize
 the predictive performance of models fitted to cohorts retrieved using a
 fixed similarity rather than count threshold, a counterpart to
 conventional CBR they called ``statistical CBR''.\footnote{Drawing from
-  {[}46{]}, we suggest the term ``combinatorial CBR'' for the
+  {[}47{]}, we suggest the term ``combinatorial CBR'' for the
   then-conventional approach using similarity cohorts of fixed
   cardinality.} The step used a heuristic procedure to locate a
 similarity threshold that (locally) maximizes predictive accuracy on the
@@ -1161,8 +1164,8 @@ and they used exhaustion to optimize the size of the retrieved cohort
 for the accuracy of the NN model using the previously optimized weights.
 
 As noted above, these instances of similarity learning fit into a much
-larger literature on metric learning, which has seen widespread use in
-health informatics and modeling. That these studies satisfied our review
+larger literature on DML, which has seen widespread use in health
+informatics and modeling. That these studies satisfied our review
 criteria is due to the novelty of the techniques at the time of
 publication and the detailed attention paid to their techniques by the
 authors. It also reflects a limitation of our study and of the
@@ -1243,7 +1246,7 @@ decomposed into three largely independent choices: (1) how to measure
 the similarity between cases, (2) how to retrieve a cohort of cases
 similar to an index case, and (3) how to generate a prediction or other
 statistical insight for the index case from the similarity cohort. The
-choices are the \emph{similarity measure}, the \emph{retrieval step},
+choices are the \emph{similarity measure}, the \emph{cohort retrieval},
 and the \emph{statistical model}, respectively. These are diagrammed in
 Figure \ref{fig:framework}.
 
@@ -1270,8 +1273,8 @@ survival rates within localized cohorts. Meanwhile, each step can be
 optimized in a ML fashion by having its parameters tuned to improve
 performance. We found no studies that tuned the calculation of
 similarity, though most uniform cohort sizes were tuned. Some earlier
-studies tuned generalized regression models, but more recent studies
-have not.
+studies tuned generalized regression models, but more recent studies did
+not.
 
 \hypertarget{directions-and-expectations}{%
 \subsection{Directions and
@@ -1645,7 +1648,7 @@ screen were exported to Zotero.
 
 Some PDFs were obtained using Zotero from a university workstation, and
 the remaining were obtained through university library services. The
-review process is detailed in Section \label{sec:full-text}.
+review process is detailed in Section \ref{sec:full-text}.
 
 Our selection of relevant papers from the search corpus was based on the
 following inclusion/exclusion criteria:
@@ -1733,8 +1736,8 @@ Kohonen mapping & 54.70\%\hspace{6em} \\
 & & & & \hspace{6em} & CBR & 60.40\%\hspace{6em} \\
 & & & & \hspace{6em} & Quest & 50.90\%\hspace{6em} \\
 & & & & \hspace{6em} & backpropagation & 54.70\%\hspace{6em} \\
-{[}13{]} & & Dermatology & Statistical CBR & 96.57\%\hspace{6em} & CBR &
-95.43\%\hspace{6em} \\
+{[}13{]} & Accuracy & Dermatology & Statistical CBR &
+96.57\%\hspace{6em} & CBR & 95.43\%\hspace{6em} \\
 & & & & \hspace{6em} & C5.0 & 93.71\%\hspace{6em} \\
 & & & & \hspace{6em} & CART & 92.00\%\hspace{6em} \\
 & & & & \hspace{6em} & LR & 91.14\%\hspace{6em} \\
@@ -1774,14 +1777,14 @@ DT & 0.872\hspace{6em} \\
 & & & & \hspace{6em} & ANN & 0.882\hspace{6em} \\
 {[}23{]} & Accuracy & Return-to-work & CBR & 62.5\%\hspace{6em} & LR &
 71.2\%\hspace{6em} \\
-{[}18{]} & & Colon cancer diagnosis & TWNFI & 91.9\%\hspace{6em} & MLR
-(Personalized) & 82.3\%\hspace{6em} \\
+{[}18{]} & Accuracy & Colon cancer diagnosis & TWNFI &
+91.9\%\hspace{6em} & MLR (Personalized) & 82.3\%\hspace{6em} \\
 & & & & \hspace{6em} & SVM (Personalized) & 90.3\%\hspace{6em} \\
 & & & & \hspace{6em} & WKNN & 90.3\%\hspace{6em} \\
 & & Crohn's disease risk & TWNFI & 82.45\%\hspace{6em} & &
 \hspace{6em} \\
-{[}26{]} & & Colon cancer & knnGSA & 85.48\%\hspace{6em} & SVM &
-82.14\%\hspace{6em} \\
+{[}26{]} & Accuracy & Colon cancer & knnGSA & 85.48\%\hspace{6em} & SVM
+& 82.14\%\hspace{6em} \\
 & & & svmGSA & 87.10\%\hspace{6em} & ECF & 72.30\%\hspace{6em} \\
 & & & & \hspace{6em} & KNN & 82.14\%\hspace{6em} \\
 & & & & \hspace{6em} & WKNN & 82.14\%\hspace{6em} \\
@@ -1824,11 +1827,11 @@ Dermoscopy CBR & 92\%\hspace{6em} \\
 & & & Personalized LR (Euclidean) & 0.614\hspace{6em} & &
 \hspace{6em} \\
 & & & Personalized LR (Random) & 0.602\hspace{6em} & & \hspace{6em} \\
-{[}14{]} & & 30-day mortality & Individualized LR & 0.830\hspace{6em} &
-Individualized DC & 0.797\hspace{6em} \\
+{[}14{]} & AUROC & 30-day mortality & Individualized LR &
+0.830\hspace{6em} & Individualized DC & 0.797\hspace{6em} \\
 & & & Individualized DT & 0.753\hspace{6em} & & \hspace{6em} \\
-{[}16{]} & & & Individualized LR & 0.824\hspace{6em} & Individualized DC
-& 0.801\hspace{6em} \\
+{[}16{]} & AUROC & & Individualized LR & 0.824\hspace{6em} &
+Individualized DC & 0.801\hspace{6em} \\
 & & & Individualized DT & 0.779\hspace{6em} & & \hspace{6em} \\
 & & & Individualized RF & 0.839\hspace{6em} & & \hspace{6em} \\
 & & & Individualized CSRF & 0.832\hspace{6em} & & \hspace{6em} \\
@@ -1865,11 +1868,11 @@ regularization & 0.81\hspace{6em} \\
 0.825\hspace{6em} \\
 & & & & \hspace{6em} & kernel support vector regressor &
 0.778\hspace{6em} \\
-{[}17{]} & & Diabetes & Personalized RF & 0.90\hspace{6em} & &
+{[}17{]} & AUROC & Diabetes & Personalized RF & 0.90\hspace{6em} & &
 \hspace{6em} \\
 & & & Personalized KNN & 0.82\hspace{6em} & & \hspace{6em} \\
 & & & Personalized LR & 0.89\hspace{6em} & & \hspace{6em} \\
-{[}32{]} & & Discharge at 10 days & One-class JITL-ELM &
+{[}32{]} & AUROC & Discharge at 10 days & One-class JITL-ELM &
 0.8510\hspace{6em} & ELM & 0.4973\hspace{6em} \\
 & & & & \hspace{6em} & JITL-ELM & 0.2014\hspace{6em} \\
 & & & & \hspace{6em} & One-class ELM & 0.7588\hspace{6em} \\
@@ -2154,26 +2157,32 @@ Neighbour Algorithm} with {Logistic Regression} in the {Prediction} of
 {Patients}' {Registration} on the {Renal Transplant Waiting List}. PLOS
 ONE 2013;8:e71991. \url{https://doi.org/10.1371/journal.pone.0071991}.}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Biecek2021}{}}%
+\leavevmode\vadjust pre{\hypertarget{ref-Matarese2022}{}}%
 \CSLLeftMargin{{[}39{]} }%
+\CSLRightInline{Matarese V. Kinds of {Replicability}: {Different Terms}
+and {Different Functions}. Axiomathes 2022;32:647--70.
+\url{https://doi.org/10.1007/s10516-021-09610-2}.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Biecek2021}{}}%
+\CSLLeftMargin{{[}40{]} }%
 \CSLRightInline{Biecek P, Burzykowski T. Explanatory {Model Analysis}:
 {Explore}, {Explain}, and {Examine Predictive Models}. {New York}:
 {Chapman and Hall/CRC}; 2021.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Molnar2023}{}}%
-\CSLLeftMargin{{[}40{]} }%
+\CSLLeftMargin{{[}41{]} }%
 \CSLRightInline{Molnar C. Interpretable {Machine Learning}: {A Guide}
 for {Making Black Box Models Explainable}. 2023.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Moshawrab2023}{}}%
-\CSLLeftMargin{{[}41{]} }%
+\CSLLeftMargin{{[}42{]} }%
 \CSLRightInline{Moshawrab M, Adda M, Bouzouane A, Ibrahim H, Raad A.
 Reviewing {Federated Machine Learning} and {Its Use} in {Diseases
 Prediction}. Sensors 2023;23:2112.
 \url{https://doi.org/10.3390/s23042112}.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Brauneck2023}{}}%
-\CSLLeftMargin{{[}42{]} }%
+\CSLLeftMargin{{[}43{]} }%
 \CSLRightInline{Brauneck A, Schmalhorst L, Majdabadi MMK, Bakhtiari M,
 Völker U, Baumbach J, et al. Federated {Machine Learning},
 {Privacy-Enhancing Technologies}, and {Data Protection Laws} in {Medical
@@ -2181,25 +2190,25 @@ Research}: {Scoping Review}. Journal of Medical Internet Research
 2023;25:e41588. \url{https://doi.org/10.2196/41588}.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Yang2006}{}}%
-\CSLLeftMargin{{[}43{]} }%
+\CSLLeftMargin{{[}44{]} }%
 \CSLRightInline{Yang L. Distance {Metric Learning}: {A Comprehensive
 Survey}. PhD thesis. Michigan State University, 2006.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Bellet2014}{}}%
-\CSLLeftMargin{{[}44{]} }%
+\CSLLeftMargin{{[}45{]} }%
 \CSLRightInline{Bellet A, Habrard A, Sebban M. A {Survey} on {Metric
 Learning} for {Feature Vectors} and {Structured Data} 2014.
 \url{https://doi.org/10.48550/arXiv.1306.6709}.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Xing2002}{}}%
-\CSLLeftMargin{{[}45{]} }%
+\CSLLeftMargin{{[}46{]} }%
 \CSLRightInline{Xing E, Jordan M, Russell SJ, Ng A. Distance {Metric
 Learning} with {Application} to {Clustering} with {Side-Information}.
 Advances in {Neural Information Processing Systems}, vol. 15, {MIT
 Press}; 2002.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Goyal2008}{}}%
-\CSLLeftMargin{{[}46{]} }%
+\CSLLeftMargin{{[}47{]} }%
 \CSLRightInline{Goyal N, Lifshits Y, Schütze H. Disorder inequality: A
 combinatorial approach to nearest neighbor search. Proceedings of the
 2008 {International Conference} on {Web Search} and {Data Mining}, {New
