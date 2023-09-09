@@ -20,7 +20,7 @@ address:
     address: Laboratory for Systems Medicine, University of Florida, P.O. Box 100225 JHMHC, Gainesville, FL 32610-0225
 abstract: |
   Background:
-  Applications of classical case-based reasoning (CBR) to clinical and health tasks have given rise to a family of techniques in which an (often conventional) model is fitted to a subset of labeled cases, selected for relevance or similarity to an unlabeled case to which the model is applied. These localized models, as we propose to call them, may perform as well as "black-box" models while retaining direct interpretations. Their adoption has been hindered by fragmented development and implementation challenges. Our goal in this scoping review was to describe the clinical and health applications of localized models to date and to derive a general framework for their design and evaluation.
+  Applications of classical case-based reasoning (CBR) to clinical and health tasks have given rise to a family of techniques in which a statistical model is fitted to a subset of labeled cases, selected for relevance or similarity to an unlabeled case to which the model is applied. These localized models, as we propose to call them, may perform as well as "black-box" models while retaining direct interpretations. Their adoption has been hindered by fragmented development and implementation challenges. Our goal in this scoping review was to describe the clinical and health applications of localized models to date and to derive a general framework for their design and evaluation.
   
   Methods:
   We searched four electronic bibliographic platforms (PubMed, Web of Science, Academic Search Premier, and MathSciNet) during 2021 July 19–22. We screened and reviewed entries based on four criteria intended to specify applications of localized models to tasks involving analysis of clinical or health data. Two authors divided title/abstract screening and collaboratively reviewed screened entries for inclusion. We also screened and reviewed a seed set that inspired the review and traced methodological citations from included entries. We discussed and summarized settings, tasks, and tools; identified and tabulated themes; and synthesized the methods into a general framework. We received no specific funding for this work.
@@ -115,15 +115,17 @@ Our goals in this review are (1) to describe applications to date of similarity-
 * Fits statistical models to cohorts from which to make predictions or draw inferences about index cases\newline
 (outcome predictions, survival estimates, risk factor contributions, model evaluation statistics, etc.)
 
-We expected the general framework to boil down to three choices: A patient similarity measure, a cohort selection process, and a statistical model family. Such a general method would be straightforward, if laborious, to implement, and specializations of it would account for the majority of real-world applications. A general implementation based on this method would allow researchers to expedite every step of the analysis process, including selection, optimization, and evaluation, and enable sensitivity, robustness, and multiverse analyses that help identify the most consequential choices along the way.
+We expected the general framework to come down to three choices: A patient similarity measure, a cohort selection process, and a statistical model family. Such a general method would be straightforward, if laborious, to implement, and specializations of it would account for the majority of real-world applications. A general implementation based on this method would allow researchers to expedite every step of the analysis process, including selection, optimization, and evaluation, and enable sensitivity, robustness, and multiverse analyses that help identify the most consequential choices along the way.
 
 # Methods
 
 Our methods followed prepared plans, which we describe in detail in the Appendix.
+**Additional details are provided in Section \label{sec:appendix-selection}.**
 We also note deviations from these plans and the reasons for them.
 
 ## PRISMA checklist
 
+**Correct "n = PubMed" in PRISMA diagram.**
 We include a PRISMA checklist as Supplemental Table 1 and a PRISMA abstract checklist as Supplemental Table 2.
 Because we focus on methodologies rather than conceptual approaches or evidence, we deviate in some ways from PRISMA guidelines. In particular, those items of the checklist involving bias assessment and quantitative synthesis are intended for meta-analyses so did not apply to this study.
 Because we are not aware of any standard procedures for conducting reviews and syntheses of methodology, no protocol was prepared for this study.
@@ -146,6 +148,7 @@ Articles must be written in English, for readability; they must be original stud
 Each of two authors (AC and JCB) screened roughly half of the entries. They regularly reviewed each other’s decisions to improve consistency. In cases of uncertainty, entries were included.
 
 ## Full text review
+\label{sec:full-text}
 
 We set out 4 criteria for full-text review to restrict to studies that used some form of localized modeling on health data:
 
@@ -332,7 +335,7 @@ knitr::include_graphics("../../fig/fig-methods.png")
 Most included studies quantitatively compared the predictive performance of their proposed method(s) to one or more comparators. What we took to be the signature results are collated in Table \ref{tab:performance} in the Appendix. Note that we exercised some judgment in classifying methods as proposals and comparators, as in some cases all methods were original but only some showcased main ideas.
 It would be impractical to meta-analyze these numbers due to the great variety of settings, problems, data types, and choices involved.
 
-We do observe one clear pattern: All of the proposed methods that most evidently outperformed their comparators (Kohonen + CBR [@Wyns2004a], TWNFI [@Song2006c, @Kasabov2010], GSA [@Liang2015a], CBR + rules (+ DML) [@Nicolas2014a], Gaussian process regression [@Zhang2018a], JITL-ELM [@Ma2020a]) are hybrids of localized modeling (in some cases CBR) with other techniques, often metric learning. Though @CampilloGimenez2012a and [@Ng2015] report non-superior performance by such hybrids, the pattern suggests the importance of the similarity measure to the retrieval step.
+We do observe one clear pattern: All of the proposed methods that most evidently outperformed their comparators (Kohonen + CBR [@Wyns2004a], TWNFI [@Song2006c, @Kasabov2010], gravitational search algorithms (GSA) [@Liang2015a], CBR + rules (+ DML) [@Nicolas2014a], Gaussian process regression [@Zhang2018a], JITL-ELM [@Ma2020a]) are hybrids of localized modeling (in some cases CBR) with other techniques, often metric learning. Though @CampilloGimenez2012a and [@Ng2015] report non-superior performance by such hybrids, the pattern suggests the importance of the similarity measure to the retrieval step.
 Meanwhile, when proposed approaches targeted cohort demarcation or choice of predictive model (statistical CBR [@Park2006]; individualized logistic regression, decision tree, and random forest [@Lee2015; @Lee2017]), they did not consistently outperform comparators.
 
 ## Identified needs
@@ -601,24 +604,21 @@ These totaled 1,422 sources from all platforms. We organized the full results in
 ## Screening process
 \label{sec:appendix-screening}
 
-**Write this section!**
+Most deduplication was done automatically in Covidence. As full-text review was done in Zotero, some additional duplicates were noticed and merged.
 
-1. Deduplication (Covidence)
-    a. Specific to that source: title, creator, URL, DOI
-    b. May overlap: journal, publication date, ISSN
-2. Title
+When abstracts were not obtained by search or by Covidence, we attempted to find them online using DOIs; when an abstract could not be found, screening was based on the title alone. We decided to screen titles and abstracts conservatively, rejecting only studies that were clearly outside the scope of our review. The reasons for rejection were four, as discussed in the main text:
     a. Exclude non clinical/non medical setting
     b. Must be in English
     c. Must be original study (not reviews, surveys, opinion, news)
     d. Exclude if search term clearly has different meaning than intended
-3. Abstract
-4. Full Text
-    a. Study criteria (inclusion/exclusion)
+(Two examples of (d) are the use of the term "personalized model" to refer in some cases to parameterized models tuned to individual patient measurements and in others to patient-centered models of care.) Studies that passed title/abstract screen were exported to Zotero.
 
 ## Selection process
 \label{sec:appendix-selection}
 
-Our selection of relevant papers from the search corpus will be based on the following inclusion/exclusion criteria:
+Some PDFs were obtained using Zotero from a university workstation, and the remaining were obtained through university library services. The review process is detailed in Section \label{sec:full-text}.
+
+Our selection of relevant papers from the search corpus was based on the following inclusion/exclusion criteria:
 
 * Uses labeled case-level (empirical) data set 
 * Defines a continuous-valued multivariate case similarity measure
@@ -635,8 +635,9 @@ Because we could not predict the scope of methodological approaches we would enc
 
 \landscapebegin
 
+**TODO: Place vertical separators between major columns.**
+
 ```{r tab:performance, echo=FALSE, message=FALSE, warning=FALSE}
-# TODO: Place vertical separators between major columns.
 tab_eval_comp |> 
   pivot_wider(
     id_cols = c(zotero_key, date_of_publication, measure, task),
