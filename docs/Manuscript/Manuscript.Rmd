@@ -197,7 +197,7 @@ We then reviewed 43 studies comprising a seed set that inspired this review. Aft
 
 ## Bibliographic and methodological properties
 
-The `r nrow(tab_synthesis)` included studies were analyzed based on 20 characteristics (see Section \ref{sec:data}), and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, _Hindawi - Journal of Healthcare Engineering_ published 3, and _PLOS One_ published 2.
+The `r nrow(tab_synthesis)` included studies were analyzed based on several characteristics (see Section \ref{sec:data}), and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, _Hindawi - Journal of Healthcare Engineering_ published 3, and _PLOS One_ published 2.
 
 Another interesting pattern lay in the years of publication (Figure \ref{fig:year}). While they trace back to the late 1990s, they have become more common, which suggests that this is an active, though not rapidly expanding, methodological approach. We note that, while CBR in health and medicine originated as early as 1990, these studies did emerge early on once CBR had established itself. So the idea has been "in the air" for as long as CBR has been in use.
 
@@ -345,12 +345,7 @@ Authors also urged validations and independent evaluations using larger or more 
 Less common were calls to strengthen the connection between the methods and the users.
 Some authors urged the incorporation of (human-derived) domain knowledge into the data or models [@Yearwood1997a; @Wang2019]. Others suggested new uses of their modeling approaches: to measure feature importance [@Wyns2004a], to make models more expressive [@Lee2015], and to combine information obtained both from global and from localized models [@Ng2015].
 Most of this incremental work was indeed carried out in later investigations in our sample.
-
-## Reproducibility
-\label{sec:reproducibility}
-
-**Discuss public availability of code or implementations.**
-**Methods, results, and inferential reproducibility [@Matarese2022].**
+That said, we did not find reports of successful implementations of these tools in clinical practice. (Several excluded studies did showcase uses of CBR in practice.)
 
 # Discussion
 
@@ -368,7 +363,7 @@ The low inter-rater reliability was due, in parts, to different interpretations 
 Consistent with their orientation, almost all included studies were conducted using clinical data, only occasionally together with patient-reported (2), laboratory (2), and image (1) data. We suggest three reasons for this: First, this literature traces back to the 1990s, before -omic data could be generated cost-effectively at scale. Second, CBR in particular has a strong tradition in clinical decision support, where the focus of our sample remains throughout the review period. Third, because most -omic data are highly homogeneous—all measurements are made along or can be transformed to a common scale, e.g. greyscale pixellations for X-ray images and transcripts per million for RNA-seq data—more deeply theoretical analysis techniques have been developed and come into wide use. While variations on correlation-based approaches like EHR-based phenome-wide association studies and similarity-based methods like CBR itself have been developed, more mechanistic and probabilistic tools have not become a domain standard.
 
 Because we excluded studies that used conventional NN prediction, many included studies reported new approaches to adaptation subsequent to retrieval. Very few proposed novel similarity measures, possibly because larger studies tended to be reported in separate articles detailing experiments with specific components of the process. However, this also suggests that few experimental studies have focused on the unified development of new retrieval and adaptation strategies.
-We also note that the majority of studies evaluated and compared methods using leave-one-out cross-validation (LOOCV). This is an especially appropriate technique when available data are scarce, and indeed most data sets used by included studies numbered in the hundreds of cases or fewer. This likely follows from the older age of many included studies and from their consistent primary focus on clinical data, which is more costly to collect and comes with more restrictions on its use.
+We also note that the majority of studies evaluated and compared methods using leave-one-out cross-validation (LOOCV). This is an appropriate technique when available data are scarce, and indeed most data sets used by included studies numbered in the hundreds of cases or fewer. This likely follows from the older age of many included studies and from their consistent primary focus on clinical data, which is more costly to collect and comes with more restrictions on its use.
 
 ## Coherence
 \label{sec:coherence}
@@ -425,14 +420,18 @@ Each step can be unsupervised supervised: Unsupervised similarity measures inclu
 As discussed in Section \ref{sec:rationales}, most studies were premised on the potential predictive value of localized models.
 As cautioned in Section \ref{sec:performance}, not all experiments affirmed this premise. Most of those that did involved using metric learning to improve retrieval and sometimes iterative optimization of the metric and of the localized model.
 Some studies showcased results using a variety of such specializations [@CampilloGimenez2012a; @Ng2015; @Zhang2018a]. However, because these advanced implementations were mostly compared against their precursors or commonplace alternatives, we cannot speak to their performance or any trade-offs with respect to each other.
-This would be a worthy goal of future work, though it might be limited by the lack of open-source code or public implementations (Section \ref{sec:reproducibility}).
+This would be a worthy goal of future work.
 
 While most studies identified outstanding technical needs (Section \ref{sec:needs}), few emphasized the need to assess human-focused qualities like user interface and user experience, interpretability, meaningfulness, or trust.
-Most studies also identified interpretability as an advantage of localized models, though none evaluated model interpretability and few proposed new interpretative uses.
+Most studies identified interpretability as an advantage of localized models, though none evaluated model interpretability and few proposed new interpretative uses.
 Lack of trust in ML tools is a long-recognized problem that direct intepretability of model components could help alleviate, but this is more often assumed than demonstrated.
-One valuable direction for future work would be to compare the ability of non-technical investigators or users to draw correct inferences from these and other interpretable methods and their levels of confidence in those inferences.
+One valuable direction for future work would be to measure the utility of interpretable components in research and in clinical practice and the correctness and confidence of users in their interpretations.
 
-We posit that an essential component of such "soft" performance goals is the ability of the user community to exert some control over the models.
+The primary goal of these studies was to establish that localized models, and certain strategies within this paradigm, perform at or above the level of other predictive models or strategies.
+From a functionalist approach to reproducibility [@Matarese2022], then, later studies were broadly successful at reproducing earlier studies, and later studies provide sufficient detail to support ongoing reproduction efforts---though these might be limited by the lack of open-source code or public implementations.
+However, the immediate goal of most studes was to improve care, and an implied need, often enjoined but neither obtained nor reproduced, was a demonstration of practical use.
+
+We posit that an essential component of practical usefulness is the ability of the user community to exert some control over the models.
 Given the impact on performance of the choice or optimization of the similarity measure, an important target for user input would be the importance of certain variables in the calculation of similarity, with an understanding of how it can impact not only the performance of the predictions but also the cohort retrieved for the model. For one example, a user may want to minimize the weight of rare diseases in medical history in order to retrieve a population with more such cases in order to better measure their associated risk to the outcome. In contrast, they may want to increase the weight of the indicating diagnosis in order to allow fewer patients from similar but distinct populations to influence the model. For another example, a user may want to down-weight socioeconomic variables like race--ethnicity in order to ensure a more diverse modeling cohort.
 Future purely quantitative work could assess whether similarity-tuning can achieve these ends more flexibly than strict inclusion/exclusion criteria.
 

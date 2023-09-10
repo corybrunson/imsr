@@ -541,14 +541,15 @@ with 19 + 1 + 5 = 25 studies included in the review and synthesis.
 \subsection{Bibliographic and methodological
 properties}\label{bibliographic-and-methodological-properties}}
 
-The 25 included studies were analyzed based on 20 characteristics (see
-Section \ref{sec:data}), and we report and describe some observations
-here (Table \ref{tab:synthesis}). The studies were published in a
-variety of journals, with some of greater frequency, though no single
-journal published more than 3. The journal \emph{Evolving Systems}
-published 2 of the included studies, \emph{Artificial Intelligence in
-Medicine} published 3, \emph{Hindawi - Journal of Healthcare
-Engineering} published 3, and \emph{PLOS One} published 2.
+The 25 included studies were analyzed based on several characteristics
+(see Section \ref{sec:data}), and we report and describe some
+observations here (Table \ref{tab:synthesis}). The studies were
+published in a variety of journals, with some of greater frequency,
+though no single journal published more than 3. The journal
+\emph{Evolving Systems} published 2 of the included studies,
+\emph{Artificial Intelligence in Medicine} published 3, \emph{Hindawi -
+Journal of Healthcare Engineering} published 3, and \emph{PLOS One}
+published 2.
 
 Another interesting pattern lay in the years of publication (Figure
 \ref{fig:year}). While they trace back to the late 1990s, they have
@@ -987,15 +988,9 @@ new uses of their modeling approaches: to measure feature importance
 {[}20{]}, to make models more expressive {[}14{]}, and to combine
 information obtained both from global and from localized models
 {[}15{]}. Most of this incremental work was indeed carried out in later
-investigations in our sample.
-
-\hypertarget{reproducibility}{%
-\subsection{Reproducibility}\label{reproducibility}}
-
-\label{sec:reproducibility}
-
-\textbf{Discuss public availability of code or implementations.}
-\textbf{Methods, results, and inferential reproducibility {[}39{]}.}
+investigations in our sample. That said, we did not find reports of
+successful implementations of these tools in clinical practice. (Several
+excluded studies did showcase uses of CBR in practice.)
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
@@ -1048,12 +1043,12 @@ experiments with specific components of the process. However, this also
 suggests that few experimental studies have focused on the unified
 development of new retrieval and adaptation strategies. We also note
 that the majority of studies evaluated and compared methods using
-leave-one-out cross-validation (LOOCV). This is an especially
-appropriate technique when available data are scarce, and indeed most
-data sets used by included studies numbered in the hundreds of cases or
-fewer. This likely follows from the older age of many included studies
-and from their consistent primary focus on clinical data, which is more
-costly to collect and comes with more restrictions on its use.
+leave-one-out cross-validation (LOOCV). This is an appropriate technique
+when available data are scarce, and indeed most data sets used by
+included studies numbered in the hundreds of cases or fewer. This likely
+follows from the older age of many included studies and from their
+consistent primary focus on clinical data, which is more costly to
+collect and comes with more restrictions on its use.
 
 \hypertarget{coherence}{%
 \subsection{Coherence}\label{coherence}}
@@ -1083,13 +1078,13 @@ globally-fitted models.\footnote{We note, in response to one reviewer's
   comment, that for many if not most models used in ML, excepting GLMs,
   a predictor may play a different and more or less important role for
   some cases than others, as quantified by importance measures or
-  model-agnostic explanations {[}40,41{]}. In this way, such models can
+  model-agnostic explanations {[}39,40{]}. In this way, such models can
   also be viewed as ``localized''. We recognize that the use of global
   and local explanations is standard. As another reviewer pointed out,
   the terminology of local and global is also used in the unrelated
   context of federated ML to distinguish models trained using data
   stored in a single storage device (local) from their aggregations
-  (global) {[}42,43{]}. The prospects for federated architecture to more
+  (global) {[}41,42{]}. The prospects for federated architecture to more
   effectively implement similarity cohort--based models are intriguing,
   and would require some reconciliation of terms. At present, we feel
   that these methods are sufficiently disjoint to avoid confusion in
@@ -1102,7 +1097,7 @@ globally-fitted models.\footnote{We note, in response to one reviewer's
 The 25 studies included in our synthesis used composite techniques that
 we organized into two major types. One type, \emph{similarity learning},
 was used in 8 studies that tie in to the much larger literature on DML
-{[}44{]}. The other, \emph{cohort thresholding}, focused on choosing or
+{[}43{]}. The other, \emph{cohort thresholding}, focused on choosing or
 optimizing the manner in which cohorts were demarcated using the
 similarity measure.
 
@@ -1117,7 +1112,7 @@ to inform the definition of a patient similarity measure. Seven studies
 used response values in training data sets to supervise similarity
 learning while two used unsupervised learning (Table
 \ref{tab:composite}). Based on the key properties of DML algorithms
-identified by {[}45{]}, most learned measures were non-linear while some
+identified by {[}44{]}, most learned measures were non-linear while some
 were locally learned, and some were optimized globally while others
 locally. Not all qualified as DML, since the resulting measures would
 not necessarily satisfy the triangle inequality. Each used its
@@ -1137,7 +1132,7 @@ retrieve relevant cases and generate a prediction, using
 back-propagation on the rules' parameters. Their method was used in
 several later studies returned by our search, which are not discussed
 here because they did not originate the technique. {[}28{]} explicitly
-appeal to a supervised distance metric learning (DML) technique {[}46{]}
+appeal to a supervised distance metric learning (DML) technique {[}45{]}
 to obtain a similarity measure on their set of dermoscopy and confocal
 images that most effectively separates malignant from benign melanoma
 tumors. We will discuss the remaining uses of supervised similarity
@@ -1148,7 +1143,7 @@ construction. This was an adaptive step taken by {[}13{]} to optimize
 the predictive performance of models fitted to cohorts retrieved using a
 fixed similarity rather than count threshold, a counterpart to
 conventional CBR they called ``statistical CBR''.\footnote{Drawing from
-  {[}47{]}, we suggest the term ``combinatorial CBR'' for the
+  {[}46{]}, we suggest the term ``combinatorial CBR'' for the
   then-conventional approach using similarity cohorts of fixed
   cardinality.} The step used a heuristic procedure to locate a
 similarity threshold that (locally) maximizes predictive accuracy on the
@@ -1290,26 +1285,36 @@ of such specializations {[}15,27,30{]}. However, because these advanced
 implementations were mostly compared against their precursors or
 commonplace alternatives, we cannot speak to their performance or any
 trade-offs with respect to each other. This would be a worthy goal of
-future work, though it might be limited by the lack of open-source code
-or public implementations (Section \ref{sec:reproducibility}).
+future work.
 
 While most studies identified outstanding technical needs (Section
 \ref{sec:needs}), few emphasized the need to assess human-focused
 qualities like user interface and user experience, interpretability,
-meaningfulness, or trust. Most studies also identified interpretability
-as an advantage of localized models, though none evaluated model
+meaningfulness, or trust. Most studies identified interpretability as an
+advantage of localized models, though none evaluated model
 interpretability and few proposed new interpretative uses. Lack of trust
 in ML tools is a long-recognized problem that direct intepretability of
 model components could help alleviate, but this is more often assumed
 than demonstrated. One valuable direction for future work would be to
-compare the ability of non-technical investigators or users to draw
-correct inferences from these and other interpretable methods and their
-levels of confidence in those inferences.
+measure the utility of interpretable components in research and in
+clinical practice and the correctness and confidence of users in their
+interpretations.
 
-We posit that an essential component of such ``soft'' performance goals
-is the ability of the user community to exert some control over the
-models. Given the impact on performance of the choice or optimization of
-the similarity measure, an important target for user input would be the
+The primary goal of these studies was to establish that localized
+models, and certain strategies within this paradigm, perform at or above
+the level of other predictive models or strategies. From a functionalist
+approach to reproducibility {[}47{]}, then, later studies were broadly
+successful at reproducing earlier studies, and later studies provide
+sufficient detail to support ongoing reproduction efforts---though these
+might be limited by the lack of open-source code or public
+implementations. However, the immediate goal of most studes was to
+improve care, and an implied need, often enjoined but neither obtained
+nor reproduced, was a demonstration of practical use.
+
+We posit that an essential component of practical usefulness is the
+ability of the user community to exert some control over the models.
+Given the impact on performance of the choice or optimization of the
+similarity measure, an important target for user input would be the
 importance of certain variables in the calculation of similarity, with
 an understanding of how it can impact not only the performance of the
 predictions but also the cohort retrieved for the model. For one
@@ -2157,32 +2162,26 @@ Neighbour Algorithm} with {Logistic Regression} in the {Prediction} of
 {Patients}' {Registration} on the {Renal Transplant Waiting List}. PLOS
 ONE 2013;8:e71991. \url{https://doi.org/10.1371/journal.pone.0071991}.}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Matarese2022}{}}%
-\CSLLeftMargin{{[}39{]} }%
-\CSLRightInline{Matarese V. Kinds of {Replicability}: {Different Terms}
-and {Different Functions}. Axiomathes 2022;32:647--70.
-\url{https://doi.org/10.1007/s10516-021-09610-2}.}
-
 \leavevmode\vadjust pre{\hypertarget{ref-Biecek2021}{}}%
-\CSLLeftMargin{{[}40{]} }%
+\CSLLeftMargin{{[}39{]} }%
 \CSLRightInline{Biecek P, Burzykowski T. Explanatory {Model Analysis}:
 {Explore}, {Explain}, and {Examine Predictive Models}. {New York}:
 {Chapman and Hall/CRC}; 2021.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Molnar2023}{}}%
-\CSLLeftMargin{{[}41{]} }%
+\CSLLeftMargin{{[}40{]} }%
 \CSLRightInline{Molnar C. Interpretable {Machine Learning}: {A Guide}
 for {Making Black Box Models Explainable}. 2023.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Moshawrab2023}{}}%
-\CSLLeftMargin{{[}42{]} }%
+\CSLLeftMargin{{[}41{]} }%
 \CSLRightInline{Moshawrab M, Adda M, Bouzouane A, Ibrahim H, Raad A.
 Reviewing {Federated Machine Learning} and {Its Use} in {Diseases
 Prediction}. Sensors 2023;23:2112.
 \url{https://doi.org/10.3390/s23042112}.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Brauneck2023}{}}%
-\CSLLeftMargin{{[}43{]} }%
+\CSLLeftMargin{{[}42{]} }%
 \CSLRightInline{Brauneck A, Schmalhorst L, Majdabadi MMK, Bakhtiari M,
 Völker U, Baumbach J, et al. Federated {Machine Learning},
 {Privacy-Enhancing Technologies}, and {Data Protection Laws} in {Medical
@@ -2190,30 +2189,36 @@ Research}: {Scoping Review}. Journal of Medical Internet Research
 2023;25:e41588. \url{https://doi.org/10.2196/41588}.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Yang2006}{}}%
-\CSLLeftMargin{{[}44{]} }%
+\CSLLeftMargin{{[}43{]} }%
 \CSLRightInline{Yang L. Distance {Metric Learning}: {A Comprehensive
 Survey}. PhD thesis. Michigan State University, 2006.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Bellet2014}{}}%
-\CSLLeftMargin{{[}45{]} }%
+\CSLLeftMargin{{[}44{]} }%
 \CSLRightInline{Bellet A, Habrard A, Sebban M. A {Survey} on {Metric
 Learning} for {Feature Vectors} and {Structured Data} 2014.
 \url{https://doi.org/10.48550/arXiv.1306.6709}.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Xing2002}{}}%
-\CSLLeftMargin{{[}46{]} }%
+\CSLLeftMargin{{[}45{]} }%
 \CSLRightInline{Xing E, Jordan M, Russell SJ, Ng A. Distance {Metric
 Learning} with {Application} to {Clustering} with {Side-Information}.
 Advances in {Neural Information Processing Systems}, vol. 15, {MIT
 Press}; 2002.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Goyal2008}{}}%
-\CSLLeftMargin{{[}47{]} }%
+\CSLLeftMargin{{[}46{]} }%
 \CSLRightInline{Goyal N, Lifshits Y, Schütze H. Disorder inequality: A
 combinatorial approach to nearest neighbor search. Proceedings of the
 2008 {International Conference} on {Web Search} and {Data Mining}, {New
 York, NY, USA}: {Association for Computing Machinery}; 2008, p. 25--32.
 \url{https://doi.org/10.1145/1341531.1341538}.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Matarese2022}{}}%
+\CSLLeftMargin{{[}47{]} }%
+\CSLRightInline{Matarese V. Kinds of {Replicability}: {Different Terms}
+and {Different Functions}. Axiomathes 2022;32:647--70.
+\url{https://doi.org/10.1007/s10516-021-09610-2}.}
 
 \end{CSLReferences}
 
