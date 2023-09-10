@@ -207,25 +207,25 @@ are generated automatically via averaging (regression) or voting
 inform human decision-making.
 
 We discuss in this review a hybrid computational approach we call
-\emph{localized modeling} (see Section \ref{sec:coherence}) that appears
-to have been introduced independently several times. The approach fits
-ML models, including regularized families of generalized regression
-models (GLMs), to cohorts retrieved via similarity matching. Whereas CBR
-and NN prediction use patient similarity to obtain an ideally
-homogeneous subpopulation matched to the index case, in localized
-modeling one seeks a relevant yet heterogeneous subpopulation, each
-member of which may deviate from the index case. A prediction or
-inference is then obtained from a model fitted to this \emph{similarity
-cohort}. The use of similarity cohorts distinguishes localized modeling
-from classical GLMs that still dominate analysis in clinical trials and
-comparative effectiveness research, as well as from many cutting-edge ML
-models that are fitted to whole populations, while the cohorts'
-heterogeneity and its utility to the model distinguish the approach from
-CBR. In principle, this allows interpretable models like GLMs to
-identify and measure the effects of determining factors that are
-specific to the index case. In the reviewed studies, localized modeling
-shows some promise toward simultaneously achieving the performance
-improvements of ML and the interpretability of classical models.
+\emph{localized modeling} (see Section \ref{coherence}) that appears to
+have been introduced independently several times. The approach fits ML
+models, including regularized families of generalized regression models
+(GLMs), to cohorts retrieved via similarity matching. Whereas CBR and NN
+prediction use patient similarity to obtain an ideally homogeneous
+subpopulation matched to the index case, in localized modeling one seeks
+a relevant yet heterogeneous subpopulation, each member of which may
+deviate from the index case. A prediction or inference is then obtained
+from a model fitted to this \emph{similarity cohort}. The use of
+similarity cohorts distinguishes localized modeling from classical GLMs
+that still dominate analysis in clinical trials and comparative
+effectiveness research, as well as from many cutting-edge ML models that
+are fitted to whole populations, while the cohorts' heterogeneity and
+its utility to the model distinguish the approach from CBR. In
+principle, this allows interpretable models like GLMs to identify and
+measure the effects of determining factors that are specific to the
+index case. In the reviewed studies, localized modeling shows some
+promise toward simultaneously achieving the performance improvements of
+ML and the interpretability of classical models.
 
 One memorable aspiration of clinical informatics was the ``green
 button'' that would, in response to a query, automatically retrieve
@@ -350,7 +350,7 @@ way.
 
 Here we describe our review process, including deviations from plans and
 the reasons for them. More details are included in Section
-\ref{sec:appendix-selection}.
+\ref{selection-process}.
 
 \hypertarget{prisma-checklist}{%
 \subsection{PRISMA checklist}\label{prisma-checklist}}
@@ -372,7 +372,7 @@ seed set of previously read studies. Based on these criteria, we
 formulated search strings for five platforms: PubMed, Web of Science,
 Academic Search Premier, Google Scholar, and MathSciNet. We finalized
 the PubMed search first, then adapted it to the other platforms (Section
-\ref{sec:appendix-search}).
+\ref{search-design}).
 
 Through each platform, we searched those databases included by default.
 This means that we searched both MEDLINE and PubMed Central (PMC)
@@ -419,8 +419,6 @@ cases of uncertainty, entries were included.
 
 \hypertarget{full-text-review}{%
 \subsection{Full text review}\label{full-text-review}}
-
-\label{sec:full-text}
 
 We set out 4 criteria for full-text review to restrict to studies that
 used some form of localized modeling on health data:
@@ -479,7 +477,7 @@ set of 43 studies that inspired the review.
 \subsection{Coding}\label{coding}}
 
 Following the selection sources aligning with our review, we collected
-characteristics of included studies (Section \ref{sec:data}). The
+characteristics of included studies (Section \ref{data-and-code}). The
 features included bibliographic fields (date of publication, journal,
 authors, title, keywords, DOI), study goals (objective, generalizable
 knowledge, evaluation, clinical/medical domain), data sets (data source,
@@ -522,7 +520,7 @@ from NN prediction.
 
 }
 
-\caption{\label{fig:prisma}PRISMA-S flow chart. Lowercase letters refer to items obtained from the seed set (m), the structured search (n), and citation/reference tracking (s).}\label{fig:fig:prisma}
+\caption{PRISMA-S flow chart. Lowercase letters refer to items obtained from the seed set (m), the structured search (n), and citation/reference tracking (s).}\label{fig:prisma}
 \end{figure}
 
 There were 60 disagreements over inclusion versus exclusion. Inter-rater
@@ -542,7 +540,7 @@ with 19 + 1 + 5 = 25 studies included in the review and synthesis.
 properties}\label{bibliographic-and-methodological-properties}}
 
 The 25 included studies were analyzed based on several characteristics
-(see Section \ref{sec:data}), and we report and describe some
+(see Section \ref{data-and-code}), and we report and describe some
 observations here (Table \ref{tab:synthesis}). The studies were
 published in a variety of journals, with some of greater frequency,
 though no single journal published more than 3. The journal
@@ -669,7 +667,7 @@ Clinical\hspace{6em} & Cross-sectional\hspace{6em} & 8 & 5 \\
 
 }
 
-\caption{\label{fig:year}Number of publications in our sample each year.}\label{fig:fig:year}
+\caption{Number of publications in our sample each year.}\label{fig:year}
 \end{figure}
 
 Another dominant characteristic of included studies is their broader
@@ -842,28 +840,28 @@ between data source, clinical task, and aim.
 
 }
 
-\caption{\label{fig:properties}Share of studies characterized by several design elements: data source (row), clinical task (fill color), and remit (opacity).}\label{fig:fig:properties}
+\caption{Share of studies characterized by several design elements: data source (row), clinical task (fill color), and remit (opacity).}\label{fig:properties}
 \end{figure}
 
 \hypertarget{rationales}{%
 \subsection{Rationales}\label{rationales}}
 
-\label{sec:rationales}
+\label{rationales}
 
 The included studies hypothesized, asserted, or assumed several benefits
 of localized modeling specific to clinical and medical settings and
-advantages over other modeling approaches (see Section \ref{sec:data}).
-The most common was that the restriction to similar or relevant past
-cases would improve predictive performance for the index case
-{[}11,15,16,26{]}. In particular, {[}14{]} hypothesized and confirmed
-that the value of each past case would be positively related to its
-similarity to the index case, an assumption built in to the weighting
-schemes of other approaches. {[}12{]} made a different case, that the
-fewer parametric assumptions and complications of a CBR-style model
-would allow for greater accuracy. Additionally, several investigators
-asserted that the use of localized cohorts befit the clinical focus on
-the individual patient rather than the population, without reference to
-performance {[}21,23{]}.
+advantages over other modeling approaches (see Section
+\ref{data-and-code}). The most common was that the restriction to
+similar or relevant past cases would improve predictive performance for
+the index case {[}11,15,16,26{]}. In particular, {[}14{]} hypothesized
+and confirmed that the value of each past case would be positively
+related to its similarity to the index case, an assumption built in to
+the weighting schemes of other approaches. {[}12{]} made a different
+case, that the fewer parametric assumptions and complications of a
+CBR-style model would allow for greater accuracy. Additionally, several
+investigators asserted that the use of localized cohorts befit the
+clinical focus on the individual patient rather than the population,
+without reference to performance {[}21,23{]}.
 
 In an interesting contrast, {[}34{]} and {[}35{]} argued that their
 localized approach using the larger and more heterogeneous populations
@@ -933,13 +931,13 @@ in the sample.
 
 }
 
-\caption{\label{fig:methods}Frequency of recurring methodological elements across included studies.}\label{fig:fig:methods}
+\caption{Frequency of recurring methodological elements across included studies.}\label{fig:methods}
 \end{figure}
 
 \hypertarget{performance-assessments}{%
 \subsection{Performance assessments}\label{performance-assessments}}
 
-\label{sec:performance}
+\label{performance-assessments}
 
 Most included studies quantitatively compared the predictive performance
 of their proposed method(s) to one or more comparators. What we took to
@@ -965,8 +963,6 @@ outperform comparators.
 
 \hypertarget{identified-needs}{%
 \subsection{Identified needs}\label{identified-needs}}
-
-\label{sec:needs}
 
 The study authors focused their recommendations and their own plans for
 future work mostly on technical improvements and evaluations
@@ -1052,8 +1048,6 @@ collect and comes with more restrictions on its use.
 
 \hypertarget{coherence}{%
 \subsection{Coherence}\label{coherence}}
-
-\label{sec:coherence}
 
 The motivational and methodological unity of these studies does not
 reflect a unified research program. Besides the lack of any primary
@@ -1251,7 +1245,7 @@ Figure \ref{fig:framework}.
 
 }
 
-\caption{\label{fig:framework}General framework for localized models.}\label{fig:fig:framework}
+\caption{General framework for localized models.}\label{fig:framework}
 \end{figure}
 
 Each step can be unsupervised supervised: Unsupervised similarity
@@ -1275,9 +1269,9 @@ not.
 \subsection{Directions and
 expectations}\label{directions-and-expectations}}
 
-As discussed in Section \ref{sec:rationales}, most studies were premised
-on the potential predictive value of localized models. As cautioned in
-Section \ref{sec:performance}, not all experiments affirmed this
+As discussed in Section \ref{rationales}, most studies were premised on
+the potential predictive value of localized models. As cautioned in
+Section \ref{performance-assessments}, not all experiments affirmed this
 premise. Most of those that did involved using metric learning to
 improve retrieval and sometimes iterative optimization of the metric and
 of the localized model. Some studies showcased results using a variety
@@ -1288,7 +1282,7 @@ trade-offs with respect to each other. This would be a worthy goal of
 future work.
 
 While most studies identified outstanding technical needs (Section
-\ref{sec:needs}), few emphasized the need to assess human-focused
+\ref{identified-needs}), few emphasized the need to assess human-focused
 qualities like user interface and user experience, interpretability,
 meaningfulness, or trust. Most studies identified interpretability as an
 advantage of localized models, though none evaluated model
@@ -1374,8 +1368,6 @@ The authors declare that they have no competing interests.
 \hypertarget{data-and-code}{%
 \section{Data and code}\label{data-and-code}}
 
-\label{sec:data}
-
 Search results are publicly available in a Zotero group library. Data
 collected or encoded for included studies are publicly available in two
 Google Sheets. Code used to analyze these data and generate this
@@ -1409,8 +1401,6 @@ retrospective data?
 \hypertarget{purpose-of-review}{%
 \subsection{Purpose of review}\label{purpose-of-review}}
 
-\label{sec:appendix-purpose}
-
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
@@ -1423,10 +1413,8 @@ retrospective data?
   Provide a framework for future individualized modeling studies.
 \end{enumerate}
 
-\hypertarget{search-1}{%
-\subsection{Search}\label{search-1}}
-
-\label{sec:appendix-search}
+\hypertarget{search-design}{%
+\subsection{Search design}\label{search-design}}
 
 The procedure for formulating the search began with an evaluation of the
 research question. We highlighted specific elements within our topic of
@@ -1626,8 +1614,6 @@ a single folder for the 25 results reviewed in detail.
 \hypertarget{screening-process}{%
 \subsection{Screening process}\label{screening-process}}
 
-\label{sec:appendix-screening}
-
 Most deduplication was done automatically in Covidence. As full-text
 review was done in Zotero, some additional duplicates were noticed and
 merged.
@@ -1649,11 +1635,9 @@ screen were exported to Zotero.
 \hypertarget{selection-process}{%
 \subsection{Selection process}\label{selection-process}}
 
-\label{sec:appendix-selection}
-
 Some PDFs were obtained using Zotero from a university workstation, and
 the remaining were obtained through university library services. The
-review process is detailed in Section \ref{sec:full-text}.
+review process is detailed in Section \ref{full-text-review}.
 
 Our selection of relevant papers from the search corpus was based on the
 following inclusion/exclusion criteria:

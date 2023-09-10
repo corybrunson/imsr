@@ -78,7 +78,7 @@ Clinical decision support (CDS) systems have been a fixture of artificial intell
 
 [^psm]: Similarity measures between more granular units of analysis, such as encounters and decision points, are often still referred to as patient similarity measures.
 
-We discuss in this review a hybrid computational approach we call _localized modeling_ (see Section \ref{sec:coherence}) that appears to have been introduced independently several times. The approach fits ML models, including regularized families of generalized regression models (GLMs), to cohorts retrieved via similarity matching. Whereas CBR and NN prediction use patient similarity to obtain an ideally homogeneous subpopulation matched to the index case, in localized modeling one seeks a relevant yet heterogeneous subpopulation, each member of which may deviate from the index case.
+We discuss in this review a hybrid computational approach we call _localized modeling_ (see Section \ref{coherence}) that appears to have been introduced independently several times. The approach fits ML models, including regularized families of generalized regression models (GLMs), to cohorts retrieved via similarity matching. Whereas CBR and NN prediction use patient similarity to obtain an ideally homogeneous subpopulation matched to the index case, in localized modeling one seeks a relevant yet heterogeneous subpopulation, each member of which may deviate from the index case.
 A prediction or inference is then obtained from a model fitted to this _similarity cohort_.
 The use of similarity cohorts distinguishes localized modeling from classical GLMs that still dominate analysis in clinical trials and comparative effectiveness research, as well as from many cutting-edge ML models that are fitted to whole populations, while the cohorts' heterogeneity and its utility to the model distinguish the approach from CBR.
 In principle, this allows interpretable models like GLMs to identify and measure the effects of determining factors that are specific to the index case.
@@ -121,7 +121,7 @@ We expected the general framework to come down to three choices: A patient simil
 # Methods
 
 Here we describe our review process, including deviations from plans and the reasons for them.
-More details are included in Section \ref{sec:appendix-selection}.
+More details are included in Section \ref{selection-process}.
 
 ## PRISMA checklist
 
@@ -131,7 +131,7 @@ Because we are not aware of any standard procedures for conducting reviews and s
 
 ## Search
 
-We derived the eligibility criteria itemized in the Introduction from a seed set of previously read studies. Based on these criteria, we formulated search strings for five platforms: PubMed, Web of Science, Academic Search Premier, Google Scholar, and MathSciNet. We finalized the PubMed search first, then adapted it to the other platforms (Section \ref{sec:appendix-search}).
+We derived the eligibility criteria itemized in the Introduction from a seed set of previously read studies. Based on these criteria, we formulated search strings for five platforms: PubMed, Web of Science, Academic Search Premier, Google Scholar, and MathSciNet. We finalized the PubMed search first, then adapted it to the other platforms (Section \ref{search-design}).
 
 Through each platform, we searched those databases included by default.
 This means that we searched both MEDLINE and PubMed Central (PMC) through Pubmed (we did not exclude other databases, but our earliest included results post-date them) and that we searched the six indices of the Core Collection (the Science Citation Index Expanded, the Social Sciences Citation Index, the Arts & Humanities Citation Index, the Emerging Sources Citation Index, the Conference Proceedings Citation Index, and the Book Citation Index) as well as several regional databases through the Web of Science platform.
@@ -147,7 +147,6 @@ Articles must be written in English, for readability; they must be original stud
 Each of two authors (AC and JCB) screened roughly half of the entries. They regularly reviewed each other’s decisions to improve consistency. In cases of uncertainty, entries were included.
 
 ## Full text review
-\label{sec:full-text}
 
 We set out 4 criteria for full-text review to restrict to studies that used some form of localized modeling on health data:
 
@@ -167,7 +166,7 @@ Finally, one author (JCB) applied the same review process to the seed set of 43 
 
 ## Coding
 
-Following the selection sources aligning with our review, we collected characteristics of included studies (Section \ref{sec:data}). The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, performance measures, results of evaluations and comparisons, name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
+Following the selection sources aligning with our review, we collected characteristics of included studies (Section \ref{data-and-code}). The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, performance measures, results of evaluations and comparisons, name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
 
 ## Synthesis
 
@@ -179,10 +178,9 @@ Rather than an evidence synthesis characteristic of most systematic reviews, we 
 
 Figure \ref{fig:prisma} depicts our identification of studies via databases and registers. Following the completion and input of each search string, there were a total of 1,422 sources within all of the platforms used. De-duplication resulted in 1,309 entries, which were added to the title/abstract screening for review. Of these, 328 entries met the screening criteria and were assessed through full text review. Of these, 44 fit the original criteria, and 19 were included as distinct from NN prediction.
 
-```{r fig:prisma, fig.align='center', out.width="80%", echo=FALSE}
+```{r prisma, fig.align='center', out.width="80%", echo=FALSE}
 #| fig.cap =
-#| "\\label{fig:prisma}
-#| PRISMA-S flow chart.
+#| "PRISMA-S flow chart.
 #|  Lowercase letters refer to items obtained from
 #|  the seed set (m),
 #|  the structured search (n), and
@@ -197,7 +195,7 @@ We then reviewed 43 studies comprising a seed set that inspired this review. Aft
 
 ## Bibliographic and methodological properties
 
-The `r nrow(tab_synthesis)` included studies were analyzed based on several characteristics (see Section \ref{sec:data}), and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, _Hindawi - Journal of Healthcare Engineering_ published 3, and _PLOS One_ published 2.
+The `r nrow(tab_synthesis)` included studies were analyzed based on several characteristics (see Section \ref{data-and-code}), and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, _Hindawi - Journal of Healthcare Engineering_ published 3, and _PLOS One_ published 2.
 
 Another interesting pattern lay in the years of publication (Figure \ref{fig:year}). While they trace back to the late 1990s, they have become more common, which suggests that this is an active, though not rapidly expanding, methodological approach. We note that, while CBR in health and medicine originated as early as 1990, these studies did emerge early on once CBR had established itself. So the idea has been "in the air" for as long as CBR has been in use.
 
@@ -231,10 +229,9 @@ tab_synthesis |>
   )
 ```
 
-```{r fig:year, fig.align='center', out.width="75%", echo=FALSE}
+```{r year, fig.align='center', out.width="75%", echo=FALSE}
 #| fig.cap =
-#| "\\label{fig:year}
-#| Number of publications in our sample each year."
+#| "Number of publications in our sample each year."
 knitr::include_graphics("../../fig/fig-years.png")
 ```
 
@@ -285,10 +282,9 @@ A partial exception to this focus was a 2014 study that also reported a decision
 
 The mosaic plot in Figure \ref{fig:properties} summarizes the relation between data source, clinical task, and aim.
 
-```{r fig:properties, fig.align='center', out.width="100%", echo=FALSE}
+```{r properties, fig.align='center', out.width="100%", echo=FALSE}
 #| fig.cap =
-#| "\\label{fig:properties}
-#| Share of studies characterized by several design elements:
+#| "Share of studies characterized by several design elements:
 #|  data source (row),
 #|  clinical task (fill color), and
 #|  remit (opacity)."
@@ -296,9 +292,9 @@ knitr::include_graphics("../../fig/fig-properties.png")
 ```
 
 ## Rationales
-\label{sec:rationales}
+\label{rationales}
 
-The included studies hypothesized, asserted, or assumed several benefits of localized modeling specific to clinical and medical settings and advantages over other modeling approaches (see Section \ref{sec:data}).
+The included studies hypothesized, asserted, or assumed several benefits of localized modeling specific to clinical and medical settings and advantages over other modeling approaches (see Section \ref{data-and-code}).
 The most common was that the restriction to similar or relevant past cases would improve predictive performance for the index case [@Mariuzzi1997; @Liang2015a; @Ng2015; @Lee2017]. In particular, @Lee2015 hypothesized and confirmed that the value of each past case would be positively related to its similarity to the index case, an assumption built in to the weighting schemes of other approaches. @Lowsky2013 made a different case, that the fewer parametric assumptions and complications of a CBR-style model would allow for greater accuracy.
 Additionally, several investigators asserted that the use of localized cohorts befit the clinical focus on the individual patient rather than the population, without reference to performance [@Song2006c; @Xu2008a].
 
@@ -319,15 +315,14 @@ CBR can be understood as the opposite side of a trade-off with rule-based reason
 Other studies addressed limitations of available tools. @Lopez2011a implemented a comprehensive CBR tool in response to the lack of general-purpose software, to enable coupling with other tools as well as to expedite development, experimentation, and uptake. Several other teams also set out to develop  more interoperable clinical support tools [@Elter2007a; @Liang2015a; @Ng2015; @Zhang2018a].
 The frequency plot in Figure \ref{fig:methods} compares the rates at which several methodological elements are invoked in the sample.
 
-```{r fig:methods, fig.align='center', out.width="100%", echo=FALSE}
+```{r methods, fig.align='center', out.width="100%", echo=FALSE}
 #| fig.cap =
-#| "\\label{fig:methods}
-#| Frequency of recurring methodological elements across included studies."
+#| "Frequency of recurring methodological elements across included studies."
 knitr::include_graphics("../../fig/fig-methods.png")
 ```
 
 ## Performance assessments
-\label{sec:performance}
+\label{performance-assessments}
 
 Most included studies quantitatively compared the predictive performance of their proposed method(s) to one or more comparators. What we took to be the signature results are collated in Table \ref{tab:performance} in the Appendix. Note that we exercised some judgment in classifying methods as proposals and comparators, as in some cases all methods were original but only some showcased main ideas.
 It would be impractical to meta-analyze these numbers due to the great variety of settings, problems, data types, and choices involved.
@@ -336,7 +331,6 @@ We do observe one clear pattern: All of the proposed methods that most evidently
 Meanwhile, when proposed approaches targeted cohort demarcation or choice of predictive model (statistical CBR [@Park2006]; individualized logistic regression, decision tree, and random forest [@Lee2015; @Lee2017]), they did not consistently outperform comparators.
 
 ## Identified needs
-\label{sec:needs}
 
 The study authors focused their recommendations and their own plans for future work mostly on technical improvements and evaluations [@Mariuzzi1997; @Yearwood1997a].
 Urged improvements included full or partial automation of predictor selection [@Mariuzzi1997; @Yearwood1997a], similarity learning [@Mariuzzi1997; @Wang2019], and parameter optimization [@Song2006c; @Lee2017]; extensions to new data structures [@Lopez2011a], data types [@Liang2015a; @Verma2015a; @Malykh2018a], and reasoning systems [@Nicolas2014a]; and the use of more advanced model components to improve accuracy or efficiency [@Lowsky2013; @Lee2015; @Liang2015a; @Zhang2018a].
@@ -366,7 +360,6 @@ Because we excluded studies that used conventional NN prediction, many included 
 We also note that the majority of studies evaluated and compared methods using leave-one-out cross-validation (LOOCV). This is an appropriate technique when available data are scarce, and indeed most data sets used by included studies numbered in the hundreds of cases or fewer. This likely follows from the older age of many included studies and from their consistent primary focus on clinical data, which is more costly to collect and comes with more restrictions on its use.
 
 ## Coherence
-\label{sec:coherence}
 
 The motivational and methodological unity of these studies does not reflect a unified research program. Besides the lack of any primary journal of record, we observed collaborations only among the authors of smaller contiguous programs, including applications of the TWNFI methodology [@Song2006c; @Verma2015a], individualized mortality prediction for ICU patients [@Lee2015; @Lee2017] and the use of more explanatory models to prioritize predictors or treatments for chronic disease [@Ng2015; @Tang2021c; @Ng2021b].
 
@@ -406,10 +399,9 @@ With the exception of the descriptive survival models of @Mariuzzi1997, only one
 
 This relatively small sample exhibited a wide range of approaches, both technically and conceptually. Discussion of the technical diversity of these approaches has been summarized above and published in greater detail in previous reviews [@Choudhury2016; @Sharafoddini2017; @Parimbelli2018], and we focus here on the conceptual. The design of a localized modeling approach can be decomposed into three largely independent choices: (1) how to measure the similarity between cases, (2) how to retrieve a cohort of cases similar to an index case, and (3) how to generate a prediction or other statistical insight for the index case from the similarity cohort. The choices are the _similarity measure_, the _cohort retrieval_, and the _statistical model_, respectively. These are diagrammed in Figure \ref{fig:framework}.
 
-```{r fig:framework, fig.align='center', out.width="80%", echo=FALSE}
+```{r framework, fig.align='center', out.width="80%", echo=FALSE}
 #| fig.cap =
-#| "\\label{fig:framework}
-#| General framework for localized models."
+#| "General framework for localized models."
 knitr::include_graphics("../../fig/fig-typology.pdf")
 ```
 
@@ -417,12 +409,12 @@ Each step can be unsupervised supervised: Unsupervised similarity measures inclu
 
 ## Directions and expectations
 
-As discussed in Section \ref{sec:rationales}, most studies were premised on the potential predictive value of localized models.
-As cautioned in Section \ref{sec:performance}, not all experiments affirmed this premise. Most of those that did involved using metric learning to improve retrieval and sometimes iterative optimization of the metric and of the localized model.
+As discussed in Section \ref{rationales}, most studies were premised on the potential predictive value of localized models.
+As cautioned in Section \ref{performance-assessments}, not all experiments affirmed this premise. Most of those that did involved using metric learning to improve retrieval and sometimes iterative optimization of the metric and of the localized model.
 Some studies showcased results using a variety of such specializations [@CampilloGimenez2012a; @Ng2015; @Zhang2018a]. However, because these advanced implementations were mostly compared against their precursors or commonplace alternatives, we cannot speak to their performance or any trade-offs with respect to each other.
 This would be a worthy goal of future work.
 
-While most studies identified outstanding technical needs (Section \ref{sec:needs}), few emphasized the need to assess human-focused qualities like user interface and user experience, interpretability, meaningfulness, or trust.
+While most studies identified outstanding technical needs (Section \ref{identified-needs}), few emphasized the need to assess human-focused qualities like user interface and user experience, interpretability, meaningfulness, or trust.
 Most studies identified interpretability as an advantage of localized models, though none evaluated model interpretability and few proposed new interpretative uses.
 Lack of trust in ML tools is a long-recognized problem that direct intepretability of model components could help alleviate, but this is more often assumed than demonstrated.
 One valuable direction for future work would be to measure the utility of interpretable components in research and in clinical practice and the correctness and confidence of users in their interpretations.
@@ -452,7 +444,6 @@ The authors received no specific funding or other support for this work.
 The authors declare that they have no competing interests.
 
 # Data and code
-\label{sec:data}
 
 Search results are publicly available in a Zotero group library.
 Data collected or encoded for included studies are publicly available in two Google Sheets.
@@ -470,14 +461,12 @@ Code used to analyze these data and generate this manuscript is publicly availab
 How is patient similarity–based individualized modeling conducted using retrospective data?
 
 ## Purpose of review
-\label{sec:appendix-purpose}
 
 1. Provide a summary of individualized models to date.
 2. Lay the groundwork for conducting a comparison study of individualized models.
 3. Provide a framework for future individualized modeling studies.
 
-## Search
-\label{sec:appendix-search}
+## Search design
 
 The procedure for formulating the search began with an evaluation of the research question. We highlighted specific elements within our topic of interest that we found critical to our search and listed them using an OR of ANDs, pairing terms we believed would provide our desired result. Following the solidification of the search, a thesaurus was created in which each term was expanded by synonyms that are similar enough to our core term to be applicable to our search. The expanded search string was then evaluated using the PubMed Advanced Search platform. We initially included each term and their synonyms separately to evaluate what resulted. Several terms were eliminated due to PubMed classifying them as “phrases not found” and other terms were removed to reduce the number of results, providing a more concise list of results. At the conclusions of this process for each individual term, we combined each search term using an OR of ANDs to ultimately form our search.
 
@@ -607,7 +596,6 @@ Our searches of _Mathematical Reviews_ therefore yielded 113 results.
 These totaled 1,422 sources from all platforms. We organized the full results in a public Zotero collection alongside the seed set and created a single folder for the 25 results reviewed in detail.
 
 ## Screening process
-\label{sec:appendix-screening}
 
 Most deduplication was done automatically in Covidence. As full-text review was done in Zotero, some additional duplicates were noticed and merged.
 
@@ -619,9 +607,8 @@ When abstracts were not obtained by search or by Covidence, we attempted to find
 (Two examples of (d) are the use of the term "personalized model" to refer in some cases to parameterized models tuned to individual patient measurements and in others to patient-centered models of care.) Studies that passed title/abstract screen were exported to Zotero.
 
 ## Selection process
-\label{sec:appendix-selection}
 
-Some PDFs were obtained using Zotero from a university workstation, and the remaining were obtained through university library services. The review process is detailed in Section \ref{sec:full-text}.
+Some PDFs were obtained using Zotero from a university workstation, and the remaining were obtained through university library services. The review process is detailed in Section \ref{full-text-review}.
 
 Our selection of relevant papers from the search corpus was based on the following inclusion/exclusion criteria:
 

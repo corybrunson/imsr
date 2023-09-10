@@ -257,6 +257,10 @@ ggsave(
   here::here("fig/fig-properties.png"), properties_mosaic,
   width = 8, height = 4
 )
+ggsave(
+  here::here("fig/fig-properties.jpg"), properties_mosaic,
+  width = 8, height = 4
+)
 
 # years of publication
 composite_studies %>%
@@ -286,6 +290,7 @@ composite_studies %>%
   year_plot
 print(year_plot)
 ggsave(here::here("fig/fig-years.png"), year_plot, width = 6, height = 2)
+ggsave(here::here("fig/fig-years.jpg"), year_plot, width = 6, height = 2)
 
 # approach types
 composite_studies %>%
@@ -350,3 +355,4 @@ composite_approaches %>%
   method_freq
 print(method_freq)
 ggsave(here::here("fig/fig-methods.png"), method_freq, width = 8, height = 3)
+ggsave(here::here("fig/fig-methods.jpg"), method_freq, width = 8, height = 3)
