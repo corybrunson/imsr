@@ -1,6 +1,8 @@
 library(tidyverse)
 library(ggmosaic)
 
+googlesheets4::gs4_auth()
+
 #' Read data.
 
 # journals of references in previous reviews
@@ -21,6 +23,11 @@ properties_inclusion <- googlesheets4::read_sheet(
 #   readxl::read_xlsx() %>%
 composite_techniques <- googlesheets4::read_sheet(
   ss = "1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs", sheet = 1L
+)
+
+# methodological specifications within general framework
+framework_specializations <- googlesheets4::read_sheet(
+  ss = "1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs", sheet = 2L
 )
 
 # add citation numbers from most recent LaTeX compilation
@@ -154,6 +161,21 @@ properties_inclusion %>%
   print() -> tab_eval_comp
 # write to file, to be read into document
 write_rds(tab_eval_comp, file = here::here("data/eval-comp.rds"))
+
+# table of specifications from general framework to retrieved studies
+framework_specializations |> 
+  rename(Citation = `Zotero key`) |> 
+  mutate(across(
+    c(Relevance, Retrieval, Adaptation),
+    \(x) str_replace_all(x, "\\) \\(", ",")
+  )) |> 
+  mutate(across(
+    c(Relevance, Retrieval, Adaptation),
+    \(x) str_replace_all(x, "\\n", "; ")
+  )) |> 
+  print() -> framework_specs
+# write to file, to be read into document
+write_rds(framework_specs, file = here::here("data/framework.rds"))
 
 #' Print summaries.
 

@@ -6,15 +6,16 @@ authoryear]{elsarticle} %review=doublespace preprint=single 5p=2 column
 
   \journal{Artificial Intelligence In Medicine} % Sets Journal name
 
-\usepackage{lineno} % add
-  \linenumbers % turns line numbering on
-
 \usepackage{graphicx}
 %%%%%%%%%%%%%%%% end my additions to header
 
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
+% TODO: Currently lineno needs to be loaded after amsmath because of conflict
+% https://github.com/latex-lineno/lineno/issues/5
+\usepackage{lineno} % add
+  \linenumbers % turns line numbering on
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
 % use upquote if available, for straight quotes in verbatim environments
@@ -97,6 +98,7 @@ authoryear]{elsarticle} %review=doublespace preprint=single 5p=2 column
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
 
 \usepackage{lscape} \newcommand{\landscapebegin}{\begin{landscape}} \newcommand{\landscapeend}{\end{landscape}}
 
@@ -1265,6 +1267,89 @@ similarity, though most uniform cohort sizes were tuned. Some earlier
 studies tuned generalized regression models, but more recent studies did
 not.
 
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2087}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2795}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1535}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3583}}@{}}
+\caption{\label{tab:framework}Specializations of general framework to
+included studies. Flags: R = recurse, S = supervised, T = tuned
+(optimized).}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Citation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Relevance
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Retrieval
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Adaptation
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Citation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Relevance
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Retrieval
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Adaptation
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+{[}11{]} & Levenshtein distance\hspace{18em} & Statistical\hspace{18em}
+& Survival (S)\hspace{18em} \\
+{[}19{]} & Weighted sum (S)\hspace{18em} & Combinatorial\hspace{18em} &
+Proportion (S)\hspace{18em} \\
+{[}20{]} & Kohonen mapping\hspace{18em} & Adaptive\hspace{18em} &
+Representation (S)\hspace{18em} \\
+{[}13{]} & Euclidean distance\hspace{18em} & Statistical
+(T)\hspace{18em} & Weighted sum (S)\hspace{18em} \\
+{[}22{]} & Entropic distance\hspace{18em} & Combinatorial\hspace{18em} &
+Proportion (S)\hspace{18em} \\
+{[}23{]} & Euclidean distance\hspace{18em} & Combinatorial\hspace{18em}
+& Proportion (S)\hspace{18em} \\
+{[}18,21,25,26{]} & Feature selection (R,S)\hspace{18em} & Combinatorial
+(R)\hspace{18em} & Fuzzy rules (S,T)\hspace{18em} \\
+{[}24{]} & User-defined\hspace{18em} & User-defined\hspace{18em} &
+User-defined\hspace{18em} \\
+{[}12{]} & Mahalanobis distance (S)\hspace{18em} & Combinatorial
+(T)\hspace{18em} & Proportional hazards (S)\hspace{18em} \\
+{[}27{]} & Weighted overlap\hspace{18em} & Combinatorial
+(T)\hspace{18em} & Weighted sum (S)\hspace{18em} \\
+{[}28{]} & Distance metric learning (S)\hspace{18em} &
+Combinatorial\hspace{18em} & Association rules (S,T)\hspace{18em} \\
+{[}15{]} & Locally supervised metric learning (S); Feature
+selection\hspace{18em} & Combinatorial\hspace{18em} & Logistic model
+(S)\hspace{18em} \\
+{[}14{]} & Cosine similarity\hspace{18em} & Combinatorial
+(T)\hspace{18em} & Logistic model (S); Decision tree (S)\hspace{18em} \\
+{[}29{]} & Range overlap\hspace{18em} & Clustering (S)\hspace{18em} &
+Artificial neural network (S)\hspace{18em} \\
+{[}16{]} & Cosine similarity; Random forest proximity (S)\hspace{18em} &
+Combinatorial (T)\hspace{18em} & Logistic model (S); Decision tree (S);
+Random forest (S)\hspace{18em} \\
+{[}31{]} & Unclear\hspace{18em} & Unclear\hspace{18em} &
+Unclear\hspace{18em} \\
+{[}30{]} & Gaussian process model\hspace{18em} & Complete\hspace{18em} &
+Weighted support vector machine (S); Weighted Gaussian process
+regression (S)\hspace{18em} \\
+{[}17{]} & Weighted sum\hspace{18em} & Combinatorial (T)\hspace{18em} &
+Logistic model (S); Random forest (S); Nearest neighbors
+(S)\hspace{18em} \\
+{[}32{]} & Weighted sum\hspace{18em} & Combinatorial\hspace{18em} &
+Extreme learning machine (S)\hspace{18em} \\
+{[}33{]} & Weighted sum\hspace{18em} & Statistical\hspace{18em} & Linear
+model\hspace{18em} \\
+{[}34,35{]} & Locally supervised metric learning (S)\hspace{18em} &
+Causal inference matching\hspace{18em} & Statistical test
+(S)\hspace{18em} \\
+\end{longtable}
+
 \hypertarget{directions-and-expectations}{%
 \subsection{Directions and
 expectations}\label{directions-and-expectations}}
@@ -1904,7 +1989,7 @@ Cybernetics, Part C (Applications and Reviews) 2011;41:421--34.
 Artificial Intelligence Review 1992;6:3--34.
 \url{https://doi.org/10.1007/BF00155578}.}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Gierl1998}{}}%
+\leavevmode\vadjust pre{\hypertarget{ref-Gierl1998a}{}}%
 \CSLLeftMargin{{[}5{]} }%
 \CSLRightInline{Gierl L, Bull M, Schmidt R. {CBR} in {Medicine}. In:
 Lenz M, Burkhard H-D, Bartsch-Spörl B, Wess S, editors. Case-{Based
@@ -1922,7 +2007,7 @@ Science and Applications 2016;7.
 \leavevmode\vadjust pre{\hypertarget{ref-Dai2020}{}}%
 \CSLLeftMargin{{[}7{]} }%
 \CSLRightInline{Dai L, Zhu H, Liu D.
-\href{https://arxiv.org/abs/2012.01976}{Patient similarity: Methods and
+\href{http://arxiv.org/abs/2012.01976}{Patient similarity: Methods and
 applications}. arXiv:201201976 {[}Cs{]} 2020.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Welch2013}{}}%
@@ -2148,14 +2233,17 @@ ONE 2013;8:e71991. \url{https://doi.org/10.1371/journal.pone.0071991}.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Biecek2021}{}}%
 \CSLLeftMargin{{[}39{]} }%
-\CSLRightInline{Biecek P, Burzykowski T. Explanatory {Model Analysis}:
-{Explore}, {Explain}, and {Examine Predictive Models}. {New York}:
-{Chapman and Hall/CRC}; 2021.}
+\CSLRightInline{Biecek P, Burzykowski T.
+\href{https://ema.drwhy.ai/}{Explanatory {Model Analysis}: {Explore},
+{Explain}, and {Examine Predictive Models}}. {New York}: {Chapman and
+Hall/CRC}; 2021.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Molnar2023}{}}%
 \CSLLeftMargin{{[}40{]} }%
-\CSLRightInline{Molnar C. Interpretable {Machine Learning}: {A Guide}
-for {Making Black Box Models Explainable}. 2023.}
+\CSLRightInline{Molnar C.
+\href{https://christophm.github.io/interpretable-ml-book}{Interpretable
+{Machine Learning}: {A Guide} for {Making Black Box Models
+Explainable}}. 2023.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Moshawrab2023}{}}%
 \CSLLeftMargin{{[}41{]} }%
@@ -2174,8 +2262,10 @@ Research}: {Scoping Review}. Journal of Medical Internet Research
 
 \leavevmode\vadjust pre{\hypertarget{ref-Yang2006}{}}%
 \CSLLeftMargin{{[}43{]} }%
-\CSLRightInline{Yang L. Distance {Metric Learning}: {A Comprehensive
-Survey}. PhD thesis. Michigan State University, 2006.}
+\CSLRightInline{Yang L.
+\href{http://www.cs.cmu.edu/~./liuy/frame_survey_v2.pdf}{Distance
+{Metric Learning}: {A Comprehensive Survey}}. PhD thesis. Michigan State
+University, 2006.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Bellet2014}{}}%
 \CSLLeftMargin{{[}44{]} }%
@@ -2185,10 +2275,11 @@ Learning} for {Feature Vectors} and {Structured Data} 2014.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Xing2002}{}}%
 \CSLLeftMargin{{[}45{]} }%
-\CSLRightInline{Xing E, Jordan M, Russell SJ, Ng A. Distance {Metric
-Learning} with {Application} to {Clustering} with {Side-Information}.
-Advances in {Neural Information Processing Systems}, vol. 15, {MIT
-Press}; 2002.}
+\CSLRightInline{Xing E, Jordan M, Russell SJ, Ng A.
+\href{https://proceedings.neurips.cc/paper/2002/hash/c3e4035af2a1cde9f21e1ae1951ac80b-Abstract.html}{Distance
+{Metric Learning} with {Application} to {Clustering} with
+{Side-Information}}. Advances in {Neural Information Processing
+Systems}, vol. 15, {MIT Press}; 2002.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Goyal2008}{}}%
 \CSLLeftMargin{{[}46{]} }%

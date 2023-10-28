@@ -68,6 +68,7 @@ library(tidyverse)
 Sys.sleep(10)
 tab_synthesis <- readr::read_rds(here::here("data/synthesis.rds"))
 composite_studies <- readr::read_rds(here::here("data/composite.rds"))
+framework_specs <- readr::read_rds(here::here("data/framework.rds"))
 tab_eval_comp <- readr::read_rds(here::here("data/eval-comp.rds"))
 citation_id <- readr::read_rds(here::here("data/citations.rds"))
 ```
@@ -101,7 +102,7 @@ Nevertheless, as some recent applications have begun to show, they can be used t
 While most ML models come equipped with measures of feature importance and model-agnostic tools can generate explanations for model predictions, these quantifications are not directly interpretable model components analogous to the split nodes of a decision tree (DT) or the effect estimates of a GLM.
 While the patient similarity measure used to retrieve each cohort may be complicated, the cohort itself can be directly inspected by the user. Provided the model family fitted to the cohorts is interpretable, the localized model as a whole inherits this property. Thus, localized models may embody both styles of CBR.
 
-We refer the interested reader to several previous reviews of CBR in medicine [@Gierl1998; @Begum2011; @Choudhury2016], of measures of patient similarity [@Dai2020], and of uses of patient similarity in predictive models [@Welch2013; @Sharafoddini2017; @Parimbelli2018]. While the reviews of CBR focus on applications using health data, the patient similarity reviews encompass many additional types of data (various molecular -omics, genetic tests, medical images, laboratory tests, patient preferences, patient-reported outcomes, tracking devices, social media) and survey a much broader scope of models (exploratory analysis via dimension reduction and cluster analysis; risk evaluation and outcome prediction; clinical decision support and software tools). For the present review, we are interested in how similarity matching on patient-level health data is used to construct local cohorts for predictive or inferential modeling.
+We refer the interested reader to several previous reviews of CBR in medicine [@Gierl1998a; @Begum2011; @Choudhury2016], of measures of patient similarity [@Dai2020], and of uses of patient similarity in predictive models [@Welch2013; @Sharafoddini2017; @Parimbelli2018]. While the reviews of CBR focus on applications using health data, the patient similarity reviews encompass many additional types of data (various molecular -omics, genetic tests, medical images, laboratory tests, patient preferences, patient-reported outcomes, tracking devices, social media) and survey a much broader scope of models (exploratory analysis via dimension reduction and cluster analysis; risk evaluation and outcome prediction; clinical decision support and software tools). For the present review, we are interested in how similarity matching on patient-level health data is used to construct local cohorts for predictive or inferential modeling.
 
 ## Objectives
 
@@ -263,7 +264,7 @@ composite_studies |>
     align = "lllllrr",
     caption = paste0(
       "\\label{tab:composite}",
-      "Methodological elements of studies included in the synthesis. "
+      "Methodological elements of studies included in the synthesis."
     )
   )
 ```
@@ -406,6 +407,27 @@ knitr::include_graphics("../../fig/fig-typology.pdf")
 ```
 
 Each step can be unsupervised supervised: Unsupervised similarity measures include discrete measures like the Levenshtein distance and continuous measures like cosine similarity, while supervised measures include the Mahalanobis distance and random forest proximity as well as several composite measures with weights calculated from the data. Most retrieval steps obtained cohorts with a uniform size (cardinality) or similarity threshold, and the remaining were likewise only informed by predictors; thus, while a retrieval step could in principle be supervised, in this sample none were. Almost all models were supervised, being that most performed predictive tasks, though @Mariuzzi1997 modeled only survival rates within localized cohorts. Meanwhile, each step can be optimized in a ML fashion by having its parameters tuned to improve performance. We found no studies that tuned the calculation of similarity, though most uniform cohort sizes were tuned. Some earlier studies tuned generalized regression models, but more recent studies did not.
+
+```{r tab:framework, echo=FALSE, message=FALSE, warning=FALSE}
+framework_specs |> 
+  mutate(
+    Citation = sapply(
+      str_split(Citation, "; "),
+      function(s) str_c("@", s, collapse = "; ")
+    )
+  ) |> 
+  mutate(Citation = str_c("[", Citation, "]")) |> 
+  # prevent numeric list columns from dominating the horizontal space
+  mutate(across(c(-Citation), ~ str_c(., "\\hspace{18em}"))) |> 
+  knitr::kable(
+    align = "llll",
+    caption = paste0(
+      "\\label{tab:framework}",
+      "Specializations of general framework to included studies.",
+      " Flags: R = recurse, S = supervised, T = tuned (optimized)."
+    )
+  )
+```
 
 ## Directions and expectations
 
