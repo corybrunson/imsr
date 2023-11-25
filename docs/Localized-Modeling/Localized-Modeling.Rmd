@@ -1,66 +1,136 @@
 ---
+# Supported options: 
+#   sn-nature:       Style for submissions to Nature Portfolio journals
+#   sn-basic:        Basic Springer Nature Reference Style/Chemistry Reference Style
+#   sn-mathphys:     Math and Physical Sciences Reference Style
+#   sn-aps:          American Physical Society (APS) Reference Style
+#   sn-vancouver:    Vancouver Reference Style
+#   sn-apa:          APA Reference Style 
+#   sn-chicago:      Chicago-based Humanities Reference Style
+#   default:         Default
+
+classoptions: 
+  - sn-nature      
+  # - Numbered      # Optional: Use numbered references instead of namedate references (only for sn-nature, sn-basic, sn-vancouver, sn-chicago, sn-mathphys or sn-nature)
+  # - referee       # Optional: Use double line spacing 
+  # - lineno        # Optional: Add line numbers
+  # - iicol         # Optional: Double column layour
+
 title: "Clinical prediction with localized modeling using similarity-based cohorts: A scoping review"
-author:
-  - name: Adi Cohen
+titlerunning: Clinical Prediction with Localized Modeling
+authors: 
+  - firstname: Adi
+    lastname: Cohen
+    degrees: BS?
     email: ac4569@my.nsu.edu
     affiliation: 1
-  - name: Patti McCall-Junkin
+  - firstname: Patti
+    lastname: McCall-Junkin
+    degrees: MA, MLS
     email: pattimccall.junkin@gmail.com
     affiliation: 2
-  - name: Jason Cory Brunson
+  - firstname: Jason Cory
+    lastname: Brunson
+    degrees: PhD
     email: jason.brunson@medicine.ufl.edu
+    orcid: 0000-0003-3126-9494
     affiliation: 3
-    correspondingauthor: true
-address:
-  - code: 1
-    address: College of Osteopathic Medicine, Nova Southeastern University, 3200 S University Drive, Davie, FL 33328
-  - code: 2
-    address: Smathers Libraries Academic Research & Consulting Services, University of Florida, P.O. Box 117000, Gainesville, FL 32611-7000
-  - code: 3
-    address: Laboratory for Systems Medicine, University of Florida, P.O. Box 100225 JHMHC, Gainesville, FL 32610-0225
-abstract: |
-  Background:
-  Applications of classical case-based reasoning (CBR) to clinical and health tasks have given rise to a family of techniques in which a statistical model is fitted to a subset of labeled cases, selected for relevance or similarity to an unlabeled case to which the model is applied. These localized models, as we propose to call them, may perform as well as "black-box" models while retaining direct interpretations. Their adoption has been hindered by fragmented development and implementation challenges. Our goal in this scoping review was to describe the clinical and health applications of localized models to date and to derive a general framework for their design and evaluation.
-  
-  Methods:
-  We searched four electronic bibliographic platforms (PubMed, Web of Science, Academic Search Premier, and MathSciNet) during 2021 July 19–22. We screened and reviewed entries based on four criteria intended to specify applications of localized models to tasks involving analysis of clinical or health data. Two authors divided title/abstract screening and collaboratively reviewed screened entries for inclusion. We also screened and reviewed a seed set that inspired the review and traced methodological citations from included entries. We discussed and summarized settings, tasks, and tools; identified and tabulated themes; and synthesized the methods into a general framework. We received no specific funding for this work.
-  
-  Results:
-  Of 1,309 search results, 328 were reviewed. Of these, combined with 43 publications that seeded the review and 1 obtained by citation tracking, 25 were included in the review and methodological synthesis. The specificity of several search terms was poor, and inter-rater reliability was low. Entries were published from 1997 to 2021, with half of these since 2015. The most common tasks were prognosis and diagnosis. The studies overwhelmingly focused on clinical data, occasionally including laboratory and image-derived data. Only three studies applied localized models to tasks other than prediction. Several studies commented on memory and runtime costs, and four proposed partial solutions. While few methods were reused and no results were reproduced, a general technique that specializes to most of those encountered was straightforward to describe.
-  
-  Conclusions:
-  Localized models have potential to improve the performance of models used in clinical decision support tools while maintaining interpretability, provided computational hurdles can be overcome. Our search undoubtedly failed to capture all studies that used methods of this kind, but those we found follow a consistent enough design to be reproduced by a general-purpose tool. We hope that our review and synthesis will spur future work on efficiency, reproducibility, and user interactions and needs.
-keywords: 
+    corresponding: TRUE
+affiliations:
+  - number: 1
+    info:
+      orgdiv: College of Osteopathic Medicine
+      orgname: Nova Southeastern University
+    address:
+        street: 3200 S University Drive
+        city: Davie
+        postcode: 33328
+        state: FL
+        country: USA
+  - number: 2
+    info:
+      orgdiv: Smathers Libraries Academic Research & Consulting Services
+      orgname: University of Florida
+    address:
+        street: P.O. Box 117000
+        city: Gainesville
+        postcode: 32611-7000
+        state: FL
+        country: USA
+  - number: 3
+    corresponding: TRUE
+    info:
+      orgdiv: Laboratory for Systems Medicine
+      orgname: University of Florida
+    address:
+        street: P.O. Box 100225 JHMHC
+        city: Gainesville
+        postcode: 32610-0225
+        state: FL
+        country: USA
+keywords:
   - case-based reasoning
   - localized modeling
   - nearest neighbors
   - clinical decision support
   - scoping review
-journal: "Artificial Intelligence In Medicine"
-date: "`r format(Sys.Date(), format = '%Y %b %d')`"
-classoption: preprint, 3p, authoryear
+# pacs: 
+#   jel:
+#     - "D8"
+#     - "H51"
+#   msc:
+#     - "35A01"
+#     - "65L10"
+
+# Sample for structured abstract
+abstract: |
+  Background:
+  Applications of classical case-based reasoning (CBR) have given rise to a family of techniques we call “localized models”, in which a statistical model is fitted to a neighborhood of similar labeled cases. We aim to describe clinical and health applications of localized models to date and propose a general framework for their design and evaluation.
+  
+  Methods:
+  We searched four bibliographic platforms during 2021 July 19–22. We set four eligibility criteria to identify applications of localized models to clinical and health tasks. Two authors divided title/abstract screening and reviewed screened entries for inclusion. We discussed settings, tasks, and tools; identified and tabulated themes; and synthesized the methods into a general framework.
+  
+  Results:
+  Of 1,309 search results, 328 were reviewed, then combined with 43 publications that seeded the review and 1 obtained by citation tracking. 25 were included, published 1997–2021. The specificity of search terms was poor, and inter-rater reliability was low. Almost all models were predictive, the most common tasks being prognosis and diagnosis. Most studies used clinical, occasionally laboratory and image, data. Several addressed memory and runtime costs. A general technique that specializes to most of those reviewed was straightforward to describe.
+  
+  Conclusions:
+  Localized models have potential to improve the performance of clinical decision support tools while maintaining interpretability, provided computational hurdles are overcome, and they follow a consistent pattern that could be implemented in a general-purpose way. We hope that our review will spur future work on efficiency, reproducibility, and user needs.
+
 bibliography:
   - ../bibliography/SR-bibliography.bib
   - ../bibliography/SR-0-Found.bib
   - ../bibliography/SR-2-Included.bib
   - ../bibliography/SR-3-Tracked.bib
-linenumbers: true
-numbersections: true
-# Use a CSL with `citation_package = "default"`
-# csl: https://www.zotero.org/styles/elsevier-harvard
-# csl: https://www.zotero.org/styles/artificial-intelligence-in-medicine
-csl: artificial-intelligence-in-medicine.csl
-output: 
-  rticles::elsevier_article:
+
+header-includes: |
+  \usepackage{lscape}
+  \newcommand{\landscapebegin}{\begin{landscape}}
+  \newcommand{\landscapeend}{\end{landscape}}
+  
+  %% Per the spinger doc, new theorem styles can be included using built in style, 
+  %% but it seems the don't work so commented below
+  %\theoremstyle{thmstyleone}%
+  \newtheorem{theorem}{Theorem}%  meant for continuous numbers
+  %%\newtheorem{theorem}{Theorem}[section]% meant for sectionwise numbers
+  %% optional argument [theorem] produces theorem numbering sequence instead of independent numbers for Proposition
+  \newtheorem{proposition}[theorem]{Proposition}%
+  %%\newtheorem{proposition}{Proposition}% to get separate numbers for theorem and proposition etc.
+
+  %% \theoremstyle{thmstyletwo}%
+  \theoremstyle{remark}
+  \newtheorem{example}{Example}%
+  \newtheorem{remark}{Remark}%
+
+  %% \theoremstyle{thmstylethree}%
+  \theoremstyle{definition}
+  \newtheorem{definition}{Definition}%
+
+output:
+  rticles::springer_article:
     keep_tex: true
     latex_engine: xelatex
     # citation_package: natbib
     citation_package: "default"
-header-includes:
-  \usepackage{lscape}
-  \newcommand{\landscapebegin}{\begin{landscape}}
-  \newcommand{\landscapeend}{\end{landscape}}
-
 ---
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -72,6 +142,10 @@ framework_specs <- readr::read_rds(here::here("data/framework.rds"))
 tab_eval_comp <- readr::read_rds(here::here("data/eval-comp.rds"))
 citation_id <- readr::read_rds(here::here("data/citations.rds"))
 ```
+
+### Acknowledgments {-}
+
+We are grateful for the astute and supportive comments of three anonymous reviewers.
 
 # Introduction
 
@@ -402,7 +476,8 @@ This relatively small sample exhibited a wide range of approaches, both technica
 
 ```{r framework, fig.align='center', out.width="80%", echo=FALSE}
 #| fig.cap =
-#| "General framework for localized models."
+#| "General framework for localized models.
+#|  Dashed arrows indicate optional steps."
 knitr::include_graphics("../../fig/fig-typology.pdf")
 ```
 
@@ -452,10 +527,6 @@ Future purely quantitative work could assess whether similarity-tuning can achie
 ## Conclusions
 
 We propose the term _localized modeling_ to encompass an approach derived from CBR in which parameterized models are fitted in a standardized way to nearest neighborhoods of past or training cases according to a measure of patient similarity. We conducted a systematic search for studies that apply localized models to tasks involving health data and synthesized these largely independently developed approaches into a general framework. While the search was limited by low inter-rater reliability and failure to recover several motivating examples, the included studies used many of the same underlying tools to build, optimize, and evaluate their methods. We therefore believe that our framework can serve to taxonomize ongoing work of this type and inform the development of customizable implementations. Indeed, the availability of increasing computational power, the diversity of tasks to which these models were applied and of technical specifications they employed, and the apparent lack of any multi-group research program to date suggest great potential for growth. Whereas precious few of the reviewed studies used these models, for any task other than prediction, despite widespread suspicion among clinicians of "black-box" models and growing interest in interpretable alternatives, we recommend that future work put greater emphasis on the development and validation of interpretable localized models and on their reception by communities of medical research and clinical practice.
-
-# Acknowledgments
-
-We are grateful for the astute and supportive comments of three anonymous reviewers.
 
 # Support
 

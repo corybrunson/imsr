@@ -126,7 +126,7 @@ similarity-based cohorts: A scoping review}
       \affiliation[1]{College of Osteopathic Medicine, Nova Southeastern
 University, 3200 S University Drive, Davie, FL 33328}
     \affiliation[2]{Smathers Libraries Academic Research \& Consulting
-Services, University at Florida, P. O. Box 117000, Gainesville, FL
+Services, University of Florida, P.O. Box 117000, Gainesville, FL
 32611-7000}
     \affiliation[3]{Laboratory for Systems Medicine, University of
 Florida, P.O. Box 100225 JHMHC, Gainesville, FL 32610-0225}
@@ -191,64 +191,59 @@ neighbors \sep clinical decision support \sep
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-Clinical decision support (CDS) systems have been a fixture of
-artificial intelligence (AI) research since inception. As machine
-learning (ML) emerged, clinical modeling tasks became some of the most
-common and celebrated applications. A technique core to clinical
-applications of both AI and ML is \emph{similarity-matching}, which
-relies on a \emph{patient similarity measure}\footnote{Similarity
-  measures between more granular units of analysis, such as encounters
-  and decision points, are often still referred to as patient similarity
-  measures.} to extract a cohort of past or training cases used to
-inform the diagnosis, prognosis, or care of a new or test case.
-Similarity-matching powers the retrieval step of most case-based
-reasoning (CBR) systems and provides the neighborhoods from which
-nearest neighbor (NN) models derive predictions. Whereas NN predictions
-are generated automatically via averaging (regression) or voting
-(classification), traditional CBR tools return the retrieved cases to
-inform human decision-making.
+A main driver of the development of clinical information systems (CIS)
+and clinical decision support (CDS) tools has been to leverage the
+advantages of routinely collected health data toward improving care.
+These advantages include their immediate accessibility through the
+institutional EHR, billing database, or other source; their specificity
+to the institution and the population it serves; and the closeness in
+time of the available data. Though by definition not collected for
+research use, the secondary research use of routinely collected health
+data has been put forth, with the monicker ``practice-based evidence'',
+as an important complement to the paradigm of evidence-based practice.
 
-We discuss in this review a hybrid computational approach we call
-\emph{localized modeling} (see Section \ref{coherence}) that appears to
-have been introduced independently several times. The approach fits ML
-models, including regularized families of generalized regression models
-(GLMs), to cohorts retrieved via similarity matching. Whereas CBR and NN
-prediction use patient similarity to obtain an ideally homogeneous
-subpopulation matched to the index case, in localized modeling one seeks
-a relevant yet heterogeneous subpopulation, each member of which may
-deviate from the index case. A prediction or inference is then obtained
-from a model fitted to this \emph{similarity cohort}. The use of
-similarity cohorts distinguishes localized modeling from classical GLMs
-that still dominate analysis in clinical trials and comparative
-effectiveness research, as well as from many cutting-edge ML models that
-are fitted to whole populations, while the cohorts' heterogeneity and
-its utility to the model distinguish the approach from CBR. In
-principle, this allows interpretable models like GLMs to identify and
-measure the effects of determining factors that are specific to the
-index case. In the reviewed studies, localized modeling shows some
-promise toward simultaneously achieving the performance improvements of
-ML and the interpretability of classical models.
+Over the same period of time, interest in individualizing care from
+population-derived evidence-based recommendations to specific patient
+needs has driven the application of advanced computational tools,
+including artificial intelligence (AI). Whereas classical models
+produced formulae involving a limited set of data elements that would be
+uniformly applied to all patients, AI models often process hundreds or
+more variables in opaque ways to yield predictions that depend on not
+only their values but their associations and their interplay with
+respect to outcomes. The loss of straightforward interpretations of
+these models has limited their practical uptake and motivated the
+construction of explanatory statistics for opaque models as well as the
+development of more interpretable complex models.
 
-One memorable aspiration of clinical informatics was the ``green
-button'' that would, in response to a query, automatically retrieve
-patient data from an institution's records with which to conduct
-on-demand retrospective studies for an individual patient {[}1{]}.
-Localized modeling has recently been put forth as one answer to this
-appeal. Studies using localized models have been limited by
-computational cost---a naïve implementation involves fitting,
-optimizing, and evaluating a model on a separate population for each
-training case---and recent studies have described algorithms and
-implementations designed to reduce this cost. As greater access to
-health data, informatical knowledge, algorithmic efficiency, and
-computational power continue to spur innovation in CDS, we may expect
-localized modeling to become more accessible and efficient, its
-advantages better understood, and its disadvantages ameliorated.
+One of few methodologies to address all three of these established needs
+is one we call \emph{localized modeling}, which appears to have been
+introduced several times independently under different names, and in
+slightly different forms. The approach is a specialized form of
+case-based reasoning (CBR) that relies on a patient similarity
+measure\footnote{Similarity measures between more granular units of
+  analysis, such as encounters and decision points, are often still
+  referred to as patient similarity measures.} to extract a cohort of
+past or training cases that then inform the diagnosis, prognosis, or
+care of a new or test case. While traditional CBR returns these
+retrieved cases to inform human decision-making, the related nearest
+neighbors (NN) technique generates predictions from cohorts
+automatically via averaging (regression) or voting (classification) of
+their outcomes. In contrast, localized modeling fits families of
+predictive models, most commonly generalized linear models (GLMs), to
+these retrieved similarity cohorts in order to generate predictions.
+Localized models thus provide a way to fit fully interpretable models to
+large population data in a way that is personalized to each case.
 
-The motivation for this scoping review is to describe the settings in
-and problems with which localized models have been tasked to date, and
-to synthesize existing methods into a general framework. Along the way,
-we attempt to reconcile terminology, summarize motivations and
-evaluations, and propose valuable follow-up work.
+This approach harkens to the aspirational ``green button'' that would,
+in response to a query, automatically retrieve patient data from an
+institution's records with which to conduct on-demand retrospective
+studies for an individual patient {[}1{]}. Our motivations in this
+scoping review are to describe the settings in and problems with which
+this approach has been tasked, to attempt to organize them within a
+common framework, and to evaluate the promise they show toward achieving
+this or other needs in clinical informatics. Along the way, we attempt
+to reconcile terminology, summarize motivations and evaluations, and
+propose valuable follow-up work.
 
 \hypertarget{related-work}{%
 \subsection{Related work}\label{related-work}}
