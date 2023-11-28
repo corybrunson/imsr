@@ -263,12 +263,13 @@ mosaic_data %>%
     aes(x = product(Task, Source), fill = Task, alpha = Aim, weight = n),
     divider = mosaic("v")
   ) +
-  stat_mosaic_text(
-    # geom = "label",
-    aes(x = product(Aim, Task, Source), weight = n,
-        label = mosaic_refs[match(after_stat(label), mosaic_labs)]),
-    divider = mosaic("v"), size = 3
-  ) +
+  # FIXME: remove reference annotations if journal does not enumerate them
+  # stat_mosaic_text(
+  #   # geom = "label",
+  #   aes(x = product(Aim, Task, Source), weight = n,
+  #       label = mosaic_refs[match(after_stat(label), mosaic_labs)]),
+  #   divider = mosaic("v"), size = 3
+  # ) +
   scale_y_productlist("Source") +
   # scale_y_productlist("Source", labels = ggmosaic:::product_labels()) +
   scale_fill_brewer(type = "qual", na.value = "#000000") +
@@ -311,8 +312,8 @@ composite_studies %>%
   labs(x = NULL, y = NULL) ->
   year_plot
 print(year_plot)
-ggsave(here::here("fig/fig-years.png"), year_plot, width = 6, height = 2)
-ggsave(here::here("fig/fig-years.jpg"), year_plot, width = 6, height = 2)
+ggsave(here::here("fig/fig-years.png"), year_plot, width = 8, height = 2)
+ggsave(here::here("fig/fig-years.jpg"), year_plot, width = 8, height = 2)
 
 # approach types
 composite_studies %>%
@@ -364,8 +365,8 @@ composite_approaches %>%
   ggplot(aes(x = Elements, y = count, label = refs)) +
   theme_bw() + theme(panel.grid.major.y = element_blank()) +
   geom_col() +
-  geom_text(hjust = 0, size = 3) +
-  expand_limits(y = c(NA_real_, 17)) +
+  # geom_text(hjust = 0, size = 3) +
+  # expand_limits(y = c(NA_real_, 17)) +
   # geom_text(hjust = 1, size = 3, color = "white") +
   scale_x_discrete(limits = rev) +
   scale_y_continuous(

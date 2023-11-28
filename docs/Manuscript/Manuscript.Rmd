@@ -40,10 +40,10 @@ journal: "Artificial Intelligence In Medicine"
 date: "`r format(Sys.Date(), format = '%Y %b %d')`"
 classoption: preprint, 3p, authoryear
 bibliography:
-  - ../bibliography/SR-bibliography.bib
-  - ../bibliography/SR-0-Found.bib
-  - ../bibliography/SR-2-Included.bib
-  - ../bibliography/SR-3-Tracked.bib
+  - SR-bibliography.bib
+  - SR-0-Found.bib
+  - SR-2-Included.bib
+  - SR-3-Tracked.bib
 linenumbers: true
 numbersections: true
 # Use a CSL with `citation_package = "default"`

@@ -21,7 +21,7 @@ titlerunning: Clinical Prediction with Localized Modeling
 authors: 
   - firstname: Adi
     lastname: Cohen
-    degrees: BS?
+    degrees: BS
     email: ac4569@my.nsu.edu
     affiliation: 1
   - firstname: Patti
@@ -97,10 +97,10 @@ abstract: |
   Localized models have potential to improve the performance of clinical decision support tools while maintaining interpretability, provided computational hurdles are overcome, and they follow a consistent pattern that could be implemented in a general-purpose way. We hope that our review will spur future work on efficiency, reproducibility, and user needs.
 
 bibliography:
-  - ../bibliography/SR-bibliography.bib
-  - ../bibliography/SR-0-Found.bib
-  - ../bibliography/SR-2-Included.bib
-  - ../bibliography/SR-3-Tracked.bib
+  - SR-bibliography.bib
+  - SR-0-Found.bib
+  - SR-2-Included.bib
+  - SR-3-Tracked.bib
 
 header-includes: |
   \usepackage{lscape}
@@ -143,9 +143,7 @@ tab_eval_comp <- readr::read_rds(here::here("data/eval-comp.rds"))
 citation_id <- readr::read_rds(here::here("data/citations.rds"))
 ```
 
-### Acknowledgments {-}
-
-We are grateful for the astute and supportive comments of three anonymous reviewers.
+\pagebreak
 
 # Introduction
 
@@ -241,7 +239,7 @@ Finally, one author (JCB) applied the same review process to the seed set of 43 
 
 ## Coding
 
-Following the selection sources aligning with our review, we collected characteristics of included studies (Section \ref{data-and-code}). The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, performance measures, results of evaluations and comparisons, name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
+Following the selection sources aligning with our review, we collected characteristics of included studies. The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, performance measures, results of evaluations and comparisons, name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
 
 ## Synthesis
 
@@ -260,7 +258,7 @@ Figure \ref{fig:prisma} depicts our identification of studies via databases and 
 #|  the seed set (m),
 #|  the structured search (n), and
 #|  citation/reference tracking (s)."
-knitr::include_graphics("../../fig/fig-prisma.pdf")
+knitr::include_graphics("Fig1.pdf")
 ```
 
 There were 60 disagreements over inclusion versus exclusion.
@@ -270,9 +268,11 @@ We then reviewed 43 studies comprising a seed set that inspired this review. Aft
 
 ## Bibliographic and methodological properties
 
-The `r nrow(tab_synthesis)` included studies were analyzed based on several characteristics (see Section \ref{data-and-code}), and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, _Hindawi - Journal of Healthcare Engineering_ published 3, and _PLOS One_ published 2.
+The `r nrow(tab_synthesis)` included studies were analyzed based on several characteristics, and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, _Hindawi - Journal of Healthcare Engineering_ published 3, and _PLOS One_ published 2.
 
 Another interesting pattern lay in the years of publication (Figure \ref{fig:year}). While they trace back to the late 1990s, they have become more common, which suggests that this is an active, though not rapidly expanding, methodological approach. We note that, while CBR in health and medicine originated as early as 1990, these studies did emerge early on once CBR had established itself. So the idea has been "in the air" for as long as CBR has been in use.
+
+\small
 
 ```{r tab:synthesis, echo=FALSE, message=FALSE, warning=FALSE}
 tab_synthesis |> 
@@ -304,10 +304,12 @@ tab_synthesis |>
   )
 ```
 
-```{r year, fig.align='center', out.width="75%", echo=FALSE}
+\normalsize
+
+```{r year, fig.align='center', out.width="100%", echo=FALSE}
 #| fig.cap =
 #| "Number of publications in our sample each year."
-knitr::include_graphics("../../fig/fig-years.png")
+knitr::include_graphics("Fig2.png")
 ```
 
 Another dominant characteristic of included studies is their broader remit. We categorized studies as "knowledge" or "practice" based on whether their aim was to produce generalizable knowledge or to improve practice. We classified 7 of the 25 studies as "knowledge", making the majority of studies from a "practice" standpoint. These studies aimed to provide tools for use in clinic or to improve outcomes.
@@ -316,6 +318,8 @@ Lastly, we observed a commonality among 6 of the 25 included studies in having e
 
 In addition to the aim of its analysis, we coded several aspects of the design of each study, including the source and type of data and the clinical task the model performed (Table \ref{tab:synthesis}), as well as the specific methodology and terminology adopted (Table \ref{tab:composite}).
 In the following subsections, we take a closer look at these design elements.
+
+\small
 
 ```{r tab:composite, echo=FALSE, message=FALSE, warning=FALSE}
 composite_studies |> 
@@ -343,6 +347,8 @@ composite_studies |>
   )
 ```
 
+\normalsize
+
 ## Application domains
 
 While all included studies were reported in scientific and medical journals, the vast majority were oriented toward clinical practice rather than medical research. For example, a 2006 study specifically evaluated the usefulness of CBR-based explanations for the purpose of decision support [@Doyle2006a]. This study was part of a much larger literature on CBR systems and was included here despite relying on NN prediction because it used an unconventional voting scheme to generate recommendations. A more recent study took essentially the same focus with respect to a proposed clinical risk prediction model, which amounted to CBR with a novel weighting scheme on predictors informed by expert consensus [@Fang2021a]. In both cases a prototype implementation was deployed in an experimental setting for evaluation.
@@ -361,15 +367,14 @@ The mosaic plot in Figure \ref{fig:properties} summarizes the relation between d
 #| fig.cap =
 #| "Share of studies characterized by several design elements:
 #|  data source (row),
-#|  clinical task (fill color), and
+#|  clinical task (fill), and
 #|  remit (opacity)."
-knitr::include_graphics("../../fig/fig-properties.png")
+knitr::include_graphics("Fig3.png")
 ```
 
 ## Rationales
-\label{rationales}
 
-The included studies hypothesized, asserted, or assumed several benefits of localized modeling specific to clinical and medical settings and advantages over other modeling approaches (see Section \ref{data-and-code}).
+The included studies hypothesized, asserted, or assumed several benefits of localized modeling specific to clinical and medical settings and advantages over other modeling approaches.
 The most common was that the restriction to similar or relevant past cases would improve predictive performance for the index case [@Mariuzzi1997; @Liang2015a; @Ng2015; @Lee2017]. In particular, @Lee2015 hypothesized and confirmed that the value of each past case would be positively related to its similarity to the index case, an assumption built in to the weighting schemes of other approaches. @Lowsky2013 made a different case, that the fewer parametric assumptions and complications of a CBR-style model would allow for greater accuracy.
 Additionally, several investigators asserted that the use of localized cohorts befit the clinical focus on the individual patient rather than the population, without reference to performance [@Song2006c; @Xu2008a].
 
@@ -393,11 +398,10 @@ The frequency plot in Figure \ref{fig:methods} compares the rates at which sever
 ```{r methods, fig.align='center', out.width="100%", echo=FALSE}
 #| fig.cap =
 #| "Frequency of recurring methodological elements across included studies."
-knitr::include_graphics("../../fig/fig-methods.png")
+knitr::include_graphics("Fig4.png")
 ```
 
 ## Performance assessments
-\label{performance-assessments}
 
 Most included studies quantitatively compared the predictive performance of their proposed method(s) to one or more comparators. What we took to be the signature results are collated in Table \ref{tab:performance} in the Appendix. Note that we exercised some judgment in classifying methods as proposals and comparators, as in some cases all methods were original but only some showcased main ideas.
 It would be impractical to meta-analyze these numbers due to the great variety of settings, problems, data types, and choices involved.
@@ -474,14 +478,16 @@ With the exception of the descriptive survival models of @Mariuzzi1997, only one
 
 This relatively small sample exhibited a wide range of approaches, both technically and conceptually. Discussion of the technical diversity of these approaches has been summarized above and published in greater detail in previous reviews [@Choudhury2016; @Sharafoddini2017; @Parimbelli2018], and we focus here on the conceptual. The design of a localized modeling approach can be decomposed into three largely independent choices: (1) how to measure the similarity between cases, (2) how to retrieve a cohort of cases similar to an index case, and (3) how to generate a prediction or other statistical insight for the index case from the similarity cohort. The choices are the _similarity measure_, the _cohort retrieval_, and the _statistical model_, respectively. These are diagrammed in Figure \ref{fig:framework}.
 
-```{r framework, fig.align='center', out.width="80%", echo=FALSE}
+```{r framework, fig.align='center', out.width="100%", echo=FALSE}
 #| fig.cap =
 #| "General framework for localized models.
 #|  Dashed arrows indicate optional steps."
-knitr::include_graphics("../../fig/fig-typology.pdf")
+knitr::include_graphics("Fig5.pdf")
 ```
 
 Each step can be unsupervised supervised: Unsupervised similarity measures include discrete measures like the Levenshtein distance and continuous measures like cosine similarity, while supervised measures include the Mahalanobis distance and random forest proximity as well as several composite measures with weights calculated from the data. Most retrieval steps obtained cohorts with a uniform size (cardinality) or similarity threshold, and the remaining were likewise only informed by predictors; thus, while a retrieval step could in principle be supervised, in this sample none were. Almost all models were supervised, being that most performed predictive tasks, though @Mariuzzi1997 modeled only survival rates within localized cohorts. Meanwhile, each step can be optimized in a ML fashion by having its parameters tuned to improve performance. We found no studies that tuned the calculation of similarity, though most uniform cohort sizes were tuned. Some earlier studies tuned generalized regression models, but more recent studies did not.
+
+\small
 
 ```{r tab:framework, echo=FALSE, message=FALSE, warning=FALSE}
 framework_specs |> 
@@ -503,6 +509,8 @@ framework_specs |>
     )
   )
 ```
+
+\normalsize
 
 ## Directions and expectations
 
@@ -528,38 +536,21 @@ Future purely quantitative work could assess whether similarity-tuning can achie
 
 We propose the term _localized modeling_ to encompass an approach derived from CBR in which parameterized models are fitted in a standardized way to nearest neighborhoods of past or training cases according to a measure of patient similarity. We conducted a systematic search for studies that apply localized models to tasks involving health data and synthesized these largely independently developed approaches into a general framework. While the search was limited by low inter-rater reliability and failure to recover several motivating examples, the included studies used many of the same underlying tools to build, optimize, and evaluate their methods. We therefore believe that our framework can serve to taxonomize ongoing work of this type and inform the development of customizable implementations. Indeed, the availability of increasing computational power, the diversity of tasks to which these models were applied and of technical specifications they employed, and the apparent lack of any multi-group research program to date suggest great potential for growth. Whereas precious few of the reviewed studies used these models, for any task other than prediction, despite widespread suspicion among clinicians of "black-box" models and growing interest in interpretable alternatives, we recommend that future work put greater emphasis on the development and validation of interpretable localized models and on their reception by communities of medical research and clinical practice.
 
-# Support
+\pagebreak
 
-The authors received no specific funding or other support for this work.
+# Appendix {-}
 
-# Competing interests
-
-The authors declare that they have no competing interests.
-
-# Data and code
-
-Search results are publicly available in a Zotero group library.
-Data collected or encoded for included studies are publicly available in two Google Sheets.
-Code used to analyze these data and generate this manuscript is publicly available in a GitHub repository.
-
-* Search results, included studies, and other bibliography: <https://www.zotero.org/groups/5017571/imsr/>
-* Bibliographic and methodological properties of included studies: <https://docs.google.com/spreadsheets/d/1tpWMhYH2pyRT55K7n2J2XFs-kEV_JTuCDmXzJ4BBgNo/>
-* Terminology and composite techniques of included studies: <https://docs.google.com/spreadsheets/d/1xvDJwiLBoI2oz8fxHJ5MjNmiju_RAlK7RJv-wXe1DAs/>
-* Code used to conduct analyses and prepare the manuscript: <https://github.com/corybrunson/imsr>
-
-# Appendix
-
-## Research question
+## Research question {-}
 
 How is patient similarity–based individualized modeling conducted using retrospective data?
 
-## Purpose of review
+## Purpose of review {-}
 
 1. Provide a summary of individualized models to date.
 2. Lay the groundwork for conducting a comparison study of individualized models.
 3. Provide a framework for future individualized modeling studies.
 
-## Search design
+## Search design {-}
 
 The procedure for formulating the search began with an evaluation of the research question. We highlighted specific elements within our topic of interest that we found critical to our search and listed them using an OR of ANDs, pairing terms we believed would provide our desired result. Following the solidification of the search, a thesaurus was created in which each term was expanded by synonyms that are similar enough to our core term to be applicable to our search. The expanded search string was then evaluated using the PubMed Advanced Search platform. We initially included each term and their synonyms separately to evaluate what resulted. Several terms were eliminated due to PubMed classifying them as “phrases not found” and other terms were removed to reduce the number of results, providing a more concise list of results. At the conclusions of this process for each individual term, we combined each search term using an OR of ANDs to ultimately form our search.
 
@@ -573,7 +564,7 @@ Once we have finalized the search as a logical pattern, we will take the followi
 
 Following discussion among AC, PMJ, and JCB, we discarded results from Google Scholar due to missing abstracts, missing URLs, high overlap with other search results, and irreproducibility of the search process.
 
-### Search strings
+### Search strings {-}
 
 Here we reproduce the search strings and platform specifications used in our literature search.
 We first finalized the **PubMed** search string below:[^pubmed-url]
@@ -688,7 +679,7 @@ Our searches of _Mathematical Reviews_ therefore yielded 113 results.
 
 These totaled 1,422 sources from all platforms. We organized the full results in a public Zotero collection alongside the seed set and created a single folder for the 25 results reviewed in detail.
 
-## Screening process
+## Screening process {-}
 
 Most deduplication was done automatically in Covidence. As full-text review was done in Zotero, some additional duplicates were noticed and merged.
 
@@ -699,7 +690,7 @@ When abstracts were not obtained by search or by Covidence, we attempted to find
     d. Exclude if search term clearly has different meaning than intended
 (Two examples of (d) are the use of the term "personalized model" to refer in some cases to parameterized models tuned to individual patient measurements and in others to patient-centered models of care.) Studies that passed title/abstract screen were exported to Zotero.
 
-## Selection process
+## Selection process {-}
 
 Some PDFs were obtained using Zotero from a university workstation, and the remaining were obtained through university library services. The review process is detailed in Section \ref{full-text-review}.
 
@@ -712,15 +703,17 @@ Our selection of relevant papers from the search corpus was based on the followi
 
 We decided after concluding full-text review to perform one round of citation-tracking, of citations within the Methods (or analogous) sections of the included entries.
 
-## Analysis and synthesis
+## Analysis and synthesis {-}
 
 Because we could not predict the scope of methodological approaches we would encounter, we did not prepare specific analyses or syntheses _a priori_.
 
-## Performance evaluations and comparisons
+## Performance evaluations and comparisons {-}
 
 \landscapebegin
 
 **TODO: Place vertical separators between major columns.**
+
+\small
 
 ```{r tab:performance, echo=FALSE, message=FALSE, warning=FALSE}
 tab_eval_comp |> 
@@ -791,6 +784,8 @@ tab_eval_comp |>
     )
   )
 ```
+
+\normalsize
 
 \landscapeend
 
