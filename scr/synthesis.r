@@ -31,7 +31,8 @@ framework_specializations <- googlesheets4::read_sheet(
 )
 
 # add citation numbers from most recent LaTeX compilation
-here::here("docs/Manuscript/Manuscript.tex") %>%
+# here::here("docs/Manuscript/Manuscript.tex") %>%
+here::here("docs/Localized-Modeling/Localized-Modeling.tex") %>%
   read_lines() %>%
   enframe(name = NULL, value = "line") %>%
   filter(str_detect(line, "\\{ref-")) %>%
@@ -113,10 +114,11 @@ write_rds(citation_id, here::here("data/citations.rds"))
 
 # table of evaluations and comparisons
 eval_comp_incl <- c(
-  "Wyns2004a", "Song2006c", "Elter2007a", "Xu2008a", "Kasabov2010",
-  "Liang2015a", "CampilloGimenez2012a", "Malykh2018a", "Zhang2018a",
-  "Nicolas2014a", "Ma2020a",# "Tang2021c",
-  "Park2006", "Lowsky2013", "Ng2015", "Lee2015", "Lee2017", "Wang2019"
+  "Wyns2004", "Song2006", "Elter2007", "Xu2008", "Kasabov2010",
+  "Liang2015", "CampilloGimenez2013", "Malykh2018", "Zhang2018",
+  "Nicolas2014", "Ma2020",# "Tang2021",
+  "Park2006", "Lowsky2013", "Ng2015", "Lee2015", "Lee2017", "Wang2019",
+  "Doborjeh2022", "Liu2022"
 )
 properties_inclusion %>%
   rename_with(snakecase::to_snake_case) %>%
