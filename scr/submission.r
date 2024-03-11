@@ -1,7 +1,7 @@
 
 # copy figures to _AI Review_ folder
 file.copy(
-  here::here("fig/fig-prisma.pdf"),
+  here::here("fig/fig-prisma-update.pdf"),
   here::here("docs/Localized-Modeling/Fig1.pdf"),
   overwrite = TRUE
 )

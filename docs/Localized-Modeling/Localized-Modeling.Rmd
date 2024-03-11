@@ -85,16 +85,16 @@ keywords:
 # Sample for structured abstract
 abstract: |
   Background:
-  Applications of classical case-based reasoning (CBR) have given rise to a family of techniques we call “localized models”, in which a statistical model is fitted to a neighborhood of similar labeled cases. We aim to describe clinical and health applications of localized models to date and propose a general framework for their design and evaluation.
+  Applications of classical case-based reasoning (CBR) have given rise to a family of techniques we call “localized models”, in which a statistical model is fitted to a neighborhood of \hl{labeled cases matched by similarity to a target case}. We aim to describe clinical and health applications of localized models to date and propose a general framework for their design and evaluation.
   
   Methods:
-  We searched four bibliographic platforms during 2021 July 19–22. We set four eligibility criteria to identify applications of localized models to clinical and health tasks. Two authors divided title/abstract screening and reviewed screened entries for inclusion. We discussed settings, tasks, and tools; identified and tabulated themes; and synthesized the methods into a general framework.
+  We searched four bibliographic platforms during 2021 July 19–22\hl{, updated 2024 January 24}. We set four eligibility criteria to identify applications of localized models to clinical and health tasks. Two authors divided title/abstract screening and reviewed screened entries for inclusion. We discussed settings, tasks, and tools; identified and tabulated themes; and synthesized the methods into a general framework.
   
   Results:
-  Of 1,309 search results, 328 were reviewed, then combined with 43 publications that seeded the review and 1 obtained by citation tracking. 25 were included, published 1997–2021. The specificity of search terms was poor, and inter-rater reliability was low. Almost all models were predictive, the most common tasks being prognosis and diagnosis. Most studies used clinical, occasionally laboratory and image, data. Several addressed memory and runtime costs. A general technique that specializes to most of those reviewed was straightforward to describe.
+  Of \hl{1,657} search results, \hl{360} were reviewed, then combined with 43 publications that seeded the review and 1 obtained by citation tracking. \hl{27} were included, published 1997–\hl{2022}. The specificity of search terms was poor, and inter-rater reliability was low. Almost all models were predictive, the most common tasks being prognosis and diagnosis. Most studies used clinical, occasionally laboratory and image, data. Several addressed memory and runtime costs. A general technique that specializes to most of those reviewed \hl{involved matching, retrieval, fitting, and evaluation steps that could optionally be supervised, optimized, or recursively performed}.
   
   Conclusions:
-  Localized models have potential to improve the performance of clinical decision support tools while maintaining interpretability, provided computational hurdles are overcome, and they follow a consistent pattern that could be implemented in a general-purpose way. We hope that our review will spur future work on efficiency, reproducibility, and user needs.
+  Localized models have potential to improve the performance of clinical decision support tools while maintaining interpretability, \hl{but rigorous comparisons to competing methods must be conducted and} computational hurdles \hl{must be} \hl{overcome.} We hope that our review will spur future work on efficiency, reproducibility, and user needs.
 
 bibliography:
   - SR-bibliography.bib
@@ -108,6 +108,10 @@ header-includes: |
   \usepackage{lscape}
   \newcommand{\landscapebegin}{\begin{landscape}}
   \newcommand{\landscapeend}{\end{landscape}}
+  
+  \usepackage{soul}
+  \definecolor{lightblue}{rgb}{.80,.90,1}
+  \sethlcolor{lightblue}
   
   %% Per the spinger doc, new theorem styles can be included using built in style, 
   %% but it seems the don't work so commented below
@@ -151,19 +155,20 @@ citation_id <- readr::read_rds(here::here("data/citations.rds"))
 
 A main driver of the development of clinical information systems (CIS) and clinical decision support (CDS) tools has been to leverage the advantages of routinely collected health data toward improving care.
 These advantages include their immediate accessibility through the institutional EHR, billing database, or other source; their specificity to the institution and the population it serves; and the closeness in time of the available data.
-Though by definition not collected for research use, the secondary research use of routinely collected health data has been put forth, with the monicker "practice-based evidence", as an important complement to the paradigm of evidence-based practice.
+Though by definition not collected for research use, the secondary research use of routinely collected health data has been put forth, \hl{as} "practice-based evidence", \hl{a} complement to the paradigm of evidence-based practice.
 
-Over the same period of time, interest in individualizing care from population-derived evidence-based recommendations to specific patient needs has driven the application of advanced computational tools, including artificial intelligence (AI). Whereas classical models produced formulae involving a limited set of data elements that would be uniformly applied to all patients, AI models often process hundreds or more variables in opaque ways to yield predictions that depend on not only their values but their associations and their interplay with respect to outcomes. The loss of straightforward interpretations of these models has limited their practical uptake and motivated the construction of explanatory statistics for opaque models as well as the development of more interpretable complex models.
+Over the same period of time, interest in individualizing care from population-derived evidence-based recommendations to specific patient needs has driven the application of advanced computational tools, including artificial intelligence (AI). Whereas classical models produced formulae involving a limited set of data elements that would be uniformly applied to all patients, AI models often process hundreds or more variables in opaque ways to yield predictions that depend on not only their values but their associations and \hl{interplay with each other}. The loss of straightforward interpretations of these models has limited their practical uptake and motivated the construction of explanatory statistics for opaque models as well as the development of more interpretable complex models.
 
 One of few methodologies to address all three of these established needs is one we call _localized modeling_, which appears to have been introduced several times independently under different names, and in slightly different forms.
 The approach is a specialized form of case-based reasoning (CBR) that relies on a patient similarity measure[^psm] to extract a cohort of past or training cases that then inform the diagnosis, prognosis, or care of a new or test case.
-While traditional CBR returns these retrieved cases to inform human decision-making, the related nearest neighbors (NN) technique generates predictions from cohorts automatically via averaging (regression) or voting (classification) of their outcomes.
-In contrast, localized modeling fits families of predictive models, most commonly generalized linear models (GLMs), to these retrieved similarity cohorts in order to generate predictions.
-Localized models thus provide a way to fit fully interpretable models to large population data in a way that is personalized to each case.
+\hl{Traditional} CBR returns these retrieved cases to inform human decision-making\hl{;} the related nearest neighbors (NN) technique generates predictions from cohorts automatically via averaging (regression) or voting (classification) of their outcomes.
+In contrast, localized modeling fits families of predictive models, \hl{for example} generalized linear models (GLMs), \hl{to retrieved} similarity cohorts in order to generate predictions.
+Localized models thus provide \hl{an individualized way to fit fully interpretable models to large population data}.
 
 [^psm]: Similarity measures between more granular units of analysis, such as encounters and decision points, are often still referred to as patient similarity measures.
 
 This approach harkens to the aspirational "green button" that would, in response to a query, automatically retrieve patient data from an institution’s records with which to conduct on-demand retrospective studies for an individual patient [@Longhurst2014].
+\hl{Several hurdles face the adoption of such an approach in practice, but its benefits must first be demonstrated.}
 Our motivations in this scoping review are to describe the settings in and problems with which this approach has been tasked, to attempt to organize them within a common framework, and to evaluate the promise they show toward achieving this or other needs in clinical informatics.
 Along the way, we attempt to reconcile terminology, summarize motivations and evaluations, and propose valuable follow-up work.
 
@@ -171,10 +176,12 @@ Along the way, we attempt to reconcile terminology, summarize motivations and ev
 
 Clinical CBR emerged among rule-based approaches and other AI tools in the development of expert systems [@Aamodt1994]. Early implementations realized a general workflow described as "the four REs", later the "R4 cycle" [@Aamodt1994; @Begum2011]: Given a new case (or problem), the system _retrieves_ one or more past cases (solved problems) from a corpus, _reuses_ these to generate an understanding of (solution to) the new case, _revises_ this understanding (solution) to better fit the new case (sometimes called "adaptation"), and _retains_ the new case and its eventual understanding (solution) in the corpus to be retrieved and reused in future. In contrast to rule-based systems, which are variable-based and generally interpretable as a single rule applied to all new cases, case-based systems provide case-specific interpretations in the form of a number of more fully understood reference cases. While the similarity measure used in the retrieval step need not be changed as the corpus grows, proposed measures have been diverse, contested, and rarely systematically compared.
 
-@Kolodner1992 distinguished two styles of CBR: problem-solving, which is more procedural and used when objectives are more clearly defined, and interpretative, which provides categorizations and justifications for possible solutions. A similar dichotomy is commonly used to distinguish the performance criterion for the usefulness of predictive models from the interpretability criterion for their usability. In these terms, localized models are highly procedural: The step of fitting a predictive model to a retrieved cohort can be understood as an automated adaptive strategy [@Begum2011], and the parameters that govern cohort retrieval can be tuned alongside model hyperparameters in a ML workflow. Accordingly, localized models have been primarily used for and evaluated on their ability to predict classes or outcomes.
-Nevertheless, as some recent applications have begun to show, they can be used to draw inferences about the importance of different risk factors to specific individuals.
-While most ML models come equipped with measures of feature importance and model-agnostic tools can generate explanations for model predictions, these quantifications are not directly interpretable model components analogous to the split nodes of a decision tree (DT) or the effect estimates of a GLM.
-While the patient similarity measure used to retrieve each cohort may be complicated, the cohort itself can be directly inspected by the user. Provided the model family fitted to the cohorts is interpretable, the localized model as a whole inherits this property. Thus, localized models may embody both styles of CBR.
+@Kolodner1992 distinguished two styles of CBR: problem-solving, which is more procedural and used when objectives are more clearly defined, and interpretative, which provides categorizations and justifications for possible solutions. A similar dichotomy is commonly used to distinguish the performance criterion for the usefulness of predictive models from the interpretability criterion for their usability. In these terms, localized models are highly procedural: The step of fitting a predictive model to a retrieved cohort \hl{is} an automated adaptive strategy [@Begum2011], and the parameters that govern cohort retrieval can be tuned alongside model hyperparameters in a \hl{machine learning (ML)} workflow. Accordingly, localized models have been primarily used for and evaluated on their ability to predict classes or outcomes.
+Nevertheless, as some recent applications have \hl{shown}, they can be used to draw inferences about the importance of different risk factors to specific individuals.
+While most ML models come equipped with measures of feature importance and model-agnostic tools can generate explanations for model predictions, these quantifications are not directly interpretable model components analogous to the split nodes of a decision tree (DT) or the \hl{coefficients} of a GLM.
+While the patient similarity measure used to retrieve each cohort may be complicated, the cohort itself can be directly inspected by the user. Provided the model family fitted to the cohorts is interpretable, the localized model \hl{inherits} this property. Thus, localized models may embody both styles of CBR.
+
+\hl{TODO: Discuss implementation; add review citations to next paragraph.}
 
 We refer the interested reader to several previous reviews of CBR in medicine [@Gierl1998; @Begum2011; @Choudhury2016], of measures of patient similarity [@Dai2020], and of uses of patient similarity in predictive models [@Welch2013; @Sharafoddini2017; @Parimbelli2018]. While the reviews of CBR focus on applications using health data, the patient similarity reviews encompass many additional types of data (various molecular -omics, genetic tests, medical images, laboratory tests, patient preferences, patient-reported outcomes, tracking devices, social media) and survey a much broader scope of models (exploratory analysis via dimension reduction and cluster analysis; risk evaluation and outcome prediction; clinical decision support and software tools). For the present review, we are interested in how similarity matching on patient-level health data is used to construct local cohorts for predictive or inferential modeling.
 
@@ -259,7 +266,9 @@ Figure \ref{fig:prisma} depicts our identification of studies via databases and 
 #|  Lowercase letters refer to items obtained from
 #|  the seed set (m),
 #|  the structured search (n), and
-#|  citation/reference tracking (s)."
+#|  citation/reference tracking (s).
+#|  \\hl{Within the structured search results,
+#|  summands correspond to original and update.}"
 knitr::include_graphics("Fig1.pdf")
 ```
 
