@@ -187,7 +187,7 @@ We refer the interested reader to several previous reviews of CBR in medicine [@
 
 ## Objectives
 
-Our goals in this review are (1) to describe applications to date of similarity-based localized models using patient-level health data and (2) to provide a general framework for the design and evaluation of such localized models. Our selection of relevant papers from the search corpus will be based on the following inclusion/exclusion criteria:
+Our goals in this review are (1) to describe \hl{applications} of similarity-based localized models using patient-level health data and (2) to provide a general framework for the design and evaluation of such localized models. Our selection of relevant papers from the search corpus will be based on the following inclusion/exclusion criteria:
 
 * Uses case-level data from a corpus of past cases with known responses\newline
 (response may be outcome, diagnosis, subtype, etc.)
@@ -198,7 +198,7 @@ Our goals in this review are (1) to describe applications to date of similarity-
 * Fits statistical models to cohorts from which to make predictions or draw inferences about index cases\newline
 (outcome predictions, survival estimates, risk factor contributions, model evaluation statistics, etc.)
 
-We expected the general framework to come down to three choices: A patient similarity measure, a cohort selection process, and a statistical model family. Such a general method would be straightforward, if laborious, to implement, and specializations of it would account for the majority of real-world applications. A general implementation based on this method would allow researchers to expedite every step of the analysis process, including selection, optimization, and evaluation, and enable sensitivity, robustness, and multiverse analyses that help identify the most consequential choices along the way.
+We expected the general framework to come down to three choices: A patient similarity measure, a cohort selection process, and a statistical model family\hl{. }A general implementation based on this method would allow researchers to expedite every step of the analysis process, including \hl{retrieval}, optimization, and evaluation, and enable sensitivity, robustness, and multiverse analyses that help identify the most consequential choices along the way.
 
 # Methods
 
@@ -222,11 +222,14 @@ The structure and terms of our search strings were inspired in part by previous 
 
 We conducted all searches over 2021 July 19–22. We tentatively excluded results from Google Scholar because they were missing abstracts, and later agreed to discard these results due to the lack of reproducibility of the search. We organized the remaining results into a public Zotero collection with one subcollection for each database. We then imported the pooled results to Covidence, which merged some duplicate entries.
 
+\hl{We repeated the search on 2024 January 24 on the PubMed and Web of Science databases to bring the results up to date.}
+
 ## Title/abstract screen
 
 Within Covidence, we screened titles and abstracts for relevance. We decided on four eligibility criteria to expedite the screening process.
 Articles must be written in English, for readability; they must be original studies, to exclude secondary sources with duplicate information; their use settings must be medical, clinical, or related, to keep our review topical; and it must not be clear that their use of our search terms was different from our intended meaning.
 Each of two authors (AC and JCB) screened roughly half of the entries. They regularly reviewed each other’s decisions to improve consistency. In cases of uncertainty, entries were included.
+\hl{For the update, on author (PM) screened all results for three criteria and another (JCB) screened the survivors for the fourth criterion.}
 
 ## Full text review
 
@@ -245,14 +248,15 @@ During full text review, we decided to expand the conception of statistical mode
 However, this then admitted studies that applied conventional nearest neighbors prediction: Each retrieved cohort consisted of the $k$ most similar cases to the index case, and the response for the index case was predicted to be either the mean (continuous response) or the plurality (discrete response) of the cohort's responses. A review of all studies that use nearest neighbors prediction would be impractical. Because our focus is on novel approaches that combine similarity-based retrieval and statistical modeling of retrieved cohorts, we chose to exclude those studies whose approach was equivalent to nearest neighbors prediction using a conventional similarity measure.
 
 Finally, one author (JCB) applied the same review process to the seed set of 43 studies that inspired the review.
+\hl{The same author later reviewed the updated results.}
 
 ## Coding
 
-Following the selection sources aligning with our review, we collected characteristics of included studies. The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, performance measures, results of evaluations and comparisons, name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
+\hl{We next} collected characteristics of included studies. The features included bibliographic fields (date of publication, journal, authors, title, keywords, DOI), study goals (objective, generalizable knowledge, evaluation, clinical/medical domain), data sets (data source, type of data, range of data, number of cases/incidences, number of predictors/features), and methodological choices (types of similarity measure, families of adaptation step/statistical model, method(s) compared against, performance measures, results of evaluations and comparisons, name given to modeling approach). We used these data to detect and visualize trends amongst the included studies.
 
 ## Synthesis
 
-Rather than an evidence synthesis characteristic of most systematic reviews, we here pursue a methodology synthesis to harmonize largely independent research efforts that have converged on a common modeling technique. The goal will be to describe a unified framework for localized models that can be used to guide future study designs and implementations as well as more systematically evaluate variations on the theme and measure the dependence of results on modeling choices.
+Rather than an evidence synthesis characteristic of most systematic reviews, we here pursue a methodology synthesis to harmonize largely independent research efforts that have converged on a common \hl{family of techniques}. The goal will be to describe a unified framework for localized models that can be used to guide future study designs and implementations as well as more systematically evaluate variations on the theme and measure the dependence of results on modeling choices.
 
 # Results
 
@@ -713,6 +717,22 @@ Our selection of relevant papers from the search corpus was based on the followi
 * Fits statistical models to cohorts to make inferences about index cases
 
 We decided after concluding full-text review to perform one round of citation-tracking, of citations within the Methods (or analogous) sections of the included entries.
+
+## \hl{Update} {-}
+
+\hl{
+Of the 25 studies included, 4 showed up in no database searches (but included from the seed set), 1 was obtained via reference tracking, and, of the remaining 20 found through the database searches, only 1 was not found in PubMed or Web of Science. That one was instead found in Mathematical Reviews. Since MR returns about the same volume of results as WoS and PM, we omitted it from the update.
+
+We applied the search terms exactly as before but restricted the dates to 2021 July 19 (the beginning of the date range for our original searches) or later. We omitted the WoS search that returned impractically many results the first time around and was omitted then.
+
+We ran the update search on 2024 January 24.
+
+The PubMed update returned 97 results. The Web of Science refresher returned 272 + 0 + 26 = 298 results. Covidence removed duplicates, so that 348 studies were slated for screening.
+
+Screening by title and abstract was done in two waves.
+First, PM excluded only on account of a study not being (a) clinical/medical, (b) English, and (c) original.
+Then, JCB then excluded on account of a study being (d) indicated by the intended meanings of our search terms.
+}
 
 ## Analysis and synthesis {-}
 
