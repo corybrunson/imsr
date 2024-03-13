@@ -168,7 +168,7 @@ Localized models thus provide \hl{an individualized way to fit fully interpretab
 [^psm]: Similarity measures between more granular units of analysis, such as encounters and decision points, are often still referred to as patient similarity measures.
 
 This approach harkens to the aspirational "green button" that would, in response to a query, automatically retrieve patient data from an institution’s records with which to conduct on-demand retrospective studies for an individual patient [@Longhurst2014].
-\hl{Several hurdles face the adoption of such an approach in practice, but its benefits must first be demonstrated.}
+\hl{Several hurdles face the deployment of such an approach in practice, but its benefits must first be demonstrated.}
 Our motivations in this scoping review are to describe the settings in and problems with which this approach has been tasked, to attempt to organize them within a common framework, and to evaluate the promise they show toward achieving this or other needs in clinical informatics.
 Along the way, we attempt to reconcile terminology, summarize motivations and evaluations, and propose valuable follow-up work.
 
@@ -181,13 +181,15 @@ Nevertheless, as some recent applications have \hl{shown}, they can be used to d
 While most ML models come equipped with measures of feature importance and model-agnostic tools can generate explanations for model predictions, these quantifications are not directly interpretable model components analogous to the split nodes of a decision tree (DT) or the \hl{coefficients} of a GLM.
 While the patient similarity measure used to retrieve each cohort may be complicated, the cohort itself can be directly inspected by the user. Provided the model family fitted to the cohorts is interpretable, the localized model \hl{inherits} this property. Thus, localized models may embody both styles of CBR.
 
-\hl{TODO: Discuss implementation; add review citations to next paragraph.}
-
 We refer the interested reader to several previous reviews of CBR in medicine [@Gierl1998; @Begum2011; @Choudhury2016], of measures of patient similarity [@Dai2020], and of uses of patient similarity in predictive models [@Welch2013; @Sharafoddini2017; @Parimbelli2018]. While the reviews of CBR focus on applications using health data, the patient similarity reviews encompass many additional types of data (various molecular -omics, genetic tests, medical images, laboratory tests, patient preferences, patient-reported outcomes, tracking devices, social media) and survey a much broader scope of models (exploratory analysis via dimension reduction and cluster analysis; risk evaluation and outcome prediction; clinical decision support and software tools). For the present review, we are interested in how similarity matching on patient-level health data is used to construct local cohorts for predictive or inferential modeling.
 
 ## Objectives
 
-Our goals in this review are (1) to describe \hl{applications} of similarity-based localized models using patient-level health data and (2) to provide a general framework for the design and evaluation of such localized models. Our selection of relevant papers from the search corpus will be based on the following inclusion/exclusion criteria:
+Our goals in this review are (1) to describe \hl{applications} of similarity-based localized models using patient-level health data and (2) to provide a general framework for the design and evaluation of such localized models.
+\hl{We focus narrowly on localized models, rather than broadly on patient similarity--based clinical decision support tools, so that we may thoroughly assess their value in terms of reported evaluations and comparisons to other methods.
+This also allows us to devise a high-level framework that specializes to the majority of these methods, which we then use to frame our discussion and recommendations.}
+
+Our selection of relevant papers from the search corpus will be based on the following inclusion/exclusion criteria:
 
 * Uses case-level data from a corpus of past cases with known responses\newline
 (response may be outcome, diagnosis, subtype, etc.)
@@ -385,7 +387,10 @@ The remaining coded rationales were for augmentations or hybridizations of then-
 CBR can be understood as the opposite side of a trade-off with rule-based reasoning between model size and model complexity\hl{:} @Doyle2006 describe their approach as "knowledge-light", in that "the cases do not contain explicit explanation structures; instead, explanation is achieved by comparison of the query case with retrieved cases". This means that the greatest performance and efficiency challenges in CBR have to do with the retrieval and revision phases in the R4 cycle. Several studies addressed these challenges: @Park2006, while excluded from the synthesis, were the earliest to propose that cohorts be bounded by a similarity threshold rather than by \hl{the} number of cases, \hl{which} improved performance in their experiments. @CampilloGimenez2013 leveraged predictor weights obtained from logistic regression to inform the similarity calculation used in retrieval. @Lowsky2013 used non-parametric models to reduce the computational burden of revision (prediction). @Ma2020 proposed to improve efficiency along the entire R4 cycle, but in particular by only executing task-dependent steps in real time ("just-in-time learning", JITL), and @Ng2021 and @Tang2021 partitioned multiple phases in the R4 cycle into offline and online components, only the latter of which would be performed in real time as new data are received.
 @Liu2022 \hl{used transfer learning from globally-fitted models to improve the efficiency of localized models.}
 
-Other studies addressed limitations of available tools. @Lopez2011 implemented a comprehensive CBR tool in response to the lack of general-purpose software, to enable coupling with other tools as well as to expedite development, experimentation, and uptake. Several other teams also set out to develop  more interoperable clinical support tools [@Elter2007; @Liang2015; @Ng2015; @Zhang2018].
+Other studies addressed limitations of available tools. @Lopez2011 implemented a comprehensive CBR tool in response to the lack of general-purpose software, to enable coupling with other tools as well as to expedite development, experimentation, and uptake. Several other teams also set out to develop more \hl{generalizable and data-agnostic} clinical support tools [@Elter2007; @Liang2015; @Ng2015; @Zhang2018].
+\hl{However, more informatical and legal challenges to implementation, including interoperability of systems and data and regulations concerning security and privacy, were rarely addressed.
+We discuss this further in Section} \ref{feasibility}\hl{.}
+
 Figure \ref{fig:methods} compares the rates at which several methodological elements are invoked in the sample.
 
 ## Evaluations
@@ -501,21 +506,49 @@ framework_specs |>
 
 ## Directions and expectations for future work
 
-### 
+### Performance
 
 As discussed in Section \ref{rationales}, most studies were premised on the potential predictive value of localized models.
-As cautioned in Section \ref{performance-assessments}, not all experiments affirmed this premise. Most of those that did involved using metric learning to improve retrieval and sometimes iterative optimization of the metric and of the localized model.
-Some studies showcased results using a variety of such specializations [@CampilloGimenez2013; @Ng2015; @Zhang2018]. However, because these advanced implementations were mostly compared against their precursors or commonplace alternatives, we cannot speak to their performance or any trade-offs with respect to each other.
+As cautioned in Section \ref{evaluations}, not all experiments affirmed this premise. Most of those that did involved using metric learning to improve retrieval and sometimes iterative optimization of the metric and of the localized model.
+Some studies showcased results using a variety of such specializations [@CampilloGimenez2013; @Ng2015; @Zhang2018; @Liu2022]. However, because these advanced implementations were mostly compared against their precursors or commonplace alternatives, we cannot speak to their performance or any trade-offs with respect to each other.
 This would be a worthy goal of future work.
 
-### 
+\hl{
+The value of this work would be enhanced by standardization and modularization.
+First, studies using localized models should locate the proposed approach and any variations in a shared specification space. For this purpose, we propose the framework outlined above, at least as a starting point.
+When a specification invokes complex techniques, for example supervised DML or neural network classifiers, it should be compared at least to alternative specifications using simpler alternatives.
+}
+@CampilloGimenez2013 and @Liu2022 \hl{provide excellent examples in which all possible choices are toggled and yield a neatly nested comparison.
+Additionally, some state-of-the-art models, including others that obtain individualized predictions, should be included in comparisons.
+Finally, implementations should be not only published on public repositories but designed in such a way that users familiar with the underlying language can substitute a technique of their choosing for any part of the specification (similarity, retrieval, fitting, evaluation).
+We believe these principles will make reported results clearer and reproduction and extension easier.
+}
+
+### Interpretability
 
 While most studies identified outstanding technical needs (Section \ref{identified-needs}), few emphasized the need to assess human-focused qualities like user interface and user experience, interpretability, meaningfulness, or trust.
 Most studies identified interpretability as an advantage of localized models, though none evaluated model interpretability and few proposed new interpretative uses.
 Lack of trust in ML tools is a long-recognized problem that direct intepretability of model components could help alleviate, but this is more often assumed than demonstrated.
-One valuable direction for future work would be to measure the utility of interpretable components in research and in clinical practice and the correctness and confidence of users in their interpretations.
 
-### 
+One valuable direction for future work would be to measure the utility of interpretable components in research and in clinical practice and the correctness and confidence of users in their interpretations.
+\hl{
+This is a necessary precondition for practical use but would also be a valuable contribution to the experimental literature.
+Another would be to compare the localized predictor importance measures obtained from localized models to the local importance measures used to explain predictions made by opaque models. This would test both measures for concurrent validity, while differences between them would inform what settings or cases are poorly served by one or the other.
+}
+
+### Feasibility
+
+\hl{Much of the reviewed work was motivated by the need for modeling paradigms that perform well on a variety of tasks and in a variety of settings.
+This need demands not only methodologies but also architectures that are robust, versatile, and compliant in the face of diverse data models and use restrictions, yet no studies in our sample addressed the challenges of system interoperability and regulatory requirements head-on.}
+
+\hl{CBR and, by extension, localized modeling are especially susceptible to these challenges, as corpora of past cases must be aggregated from multiple institutions and from multiple systems within institutions, and models built on them must then be applicable to out-of-box data structures as well.
+Individual systems exhibit many dimensions of incompleteness} [@Weiskopf2013] \hl{and vary along other dimensions of quality} [@Kohane2021]\hl{, and their aggregation for modeling purposes depends on several kinds of interoperability} [@Weber2015]\hl{.
+Successful deployment also depends on satisfying regulatory regimes designed to protect the privacy of patients, the security of communications, and trust between parties} [@Haendel2021]\hl{.
+While most studies in our sample focused on improving care, increasingly many over time focused on generalizable knowledge.
+Therefore, as studies using localized modeling shift from proof of concept to feasibility, they will also need to demonstrate practical and regulatory feasibility.
+}
+
+### Customizability
 
 The primary goal of these studies was to establish that localized models, and certain strategies within this paradigm, perform at or above the level of other predictive models or strategies.
 From a functionalist approach to reproducibility [@Matarese2022], then, later studies were broadly successful at reproducing earlier studies, and later studies provide sufficient detail to support ongoing reproduction efforts---though these might be limited by the lack of open-source code or public implementations.
@@ -523,11 +556,12 @@ However, the immediate goal of most studes was to improve care, and an implied n
 
 We posit that an essential component of practical usefulness is the ability of the user community to exert some control over the models.
 Given the impact on performance of the choice or optimization of the similarity measure, an important target for user input would be the importance of certain variables in the calculation of similarity, with an understanding of how it can impact not only the performance of the predictions but also the cohort retrieved for the model. For one example, a user may want to minimize the weight of rare diseases in medical history in order to retrieve a population with more such cases in order to better measure their associated risk to the outcome. In contrast, they may want to increase the weight of the indicating diagnosis in order to allow fewer patients from similar but distinct populations to influence the model. For another example, a user may want to down-weight socioeconomic variables like race--ethnicity in order to ensure a more diverse modeling cohort.
+@Lopez2011 \hl{took an important step in this direction with an adjustable and adaptable implementation.}
 Future purely quantitative work could assess whether similarity-tuning can achieve these ends more flexibly than strict inclusion/exclusion criteria.
 
 ## Conclusions
 
-We propose the term _localized modeling_ to encompass an approach derived from CBR in which parameterized models are fitted in a standardized way to nearest neighborhoods of past or training cases according to a measure of patient similarity. We conducted a systematic search for studies that apply localized models to tasks involving health data and synthesized these largely independently developed approaches into a general framework. While the search was limited by low inter-rater reliability and failure to recover several motivating examples, the included studies used many of the same underlying tools to build, optimize, and evaluate their methods. We therefore believe that our framework can serve to taxonomize ongoing work of this type and inform the development of customizable implementations. Indeed, the availability of increasing computational power, the diversity of tasks to which these models were applied and of technical specifications they employed, and the apparent lack of any multi-group research program to date suggest great potential for growth. Whereas precious few of the reviewed studies used these models, for any task other than prediction, despite widespread suspicion among clinicians of "black-box" models and growing interest in interpretable alternatives, we recommend that future work put greater emphasis on the development and validation of interpretable localized models and on their reception by communities of medical research and clinical practice.
+We propose the term _localized modeling_ to encompass an approach derived from CBR in which parameterized models are fitted in a standardized way to nearest neighborhoods of past or training cases according to a measure of patient similarity. We conducted a systematic search for studies that apply localized models to tasks involving health data and synthesized these largely independently developed approaches into a general framework. While the search was limited by low inter-rater reliability and failure to recover several motivating examples, the included studies used many of the same underlying tools to build, optimize, and evaluate their methods. We therefore believe that our framework can serve to taxonomize ongoing work of this type and inform the development of customizable implementations. Indeed, the availability of increasing computational power, the diversity of tasks to which these models were applied and of technical specifications they employed, and the apparent lack of any multi-group research program to date suggest great potential for growth. Whereas precious few of the reviewed studies used these \hl{models for} any task other than prediction, despite widespread suspicion among clinicians of "black-box" models and growing interest in interpretable alternatives, we recommend that future work put greater emphasis on the development and validation of interpretable localized models and on their reception by communities of medical research and clinical practice.
 
 \pagebreak
 
@@ -716,7 +750,7 @@ Because we could not predict the scope of methodological approaches we would enc
 
 ## Methodological elements {-}
 
-Table \ref{tab:composite} and Figure \ref{fig:methods} summarize the techniques and terminology used by the included studies, as referred to in the main text.
+\hl{Table} \ref{tab:composite} \hl{and Figure} \ref{fig:methods} \hl{summarize the techniques and terminology used by the included studies, as referred to in the main text.}
 
 \small
 
@@ -755,6 +789,9 @@ knitr::include_graphics("Fig4.png")
 ```
 
 ## Performance evaluations and comparisons {-}
+
+\hl{Table} \ref{tab:performance} \hl{summarizes the evaluations and comparisons made of methods proposed in the included studies.
+In most cases, not all performance results are included; for the sake of concision, only what we judged to be the headline results, using the primary evaluation metrics, are reproduced here. The table contains no original results.}
 
 \landscapebegin
 
