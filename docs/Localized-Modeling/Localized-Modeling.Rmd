@@ -22,7 +22,7 @@ authors:
   - firstname: Adi
     lastname: Cohen
     degrees: BS
-    email: ac4569@my.nsu.edu
+    email: ac4569@mynsu.nova.edu
     affiliation: 1
   - firstname: Patti
     lastname: McCall-Junkin
@@ -231,7 +231,7 @@ We conducted all searches over 2021 July 19–22. We tentatively excluded result
 Within Covidence, we screened titles and abstracts for relevance. We decided on four eligibility criteria to expedite the screening process.
 Articles must be written in English, for readability; they must be original studies, to exclude secondary sources with duplicate information; their use settings must be medical, clinical, or related, to keep our review topical; and it must not be clear that their use of our search terms was different from our intended meaning.
 Each of two authors (AC and JCB) screened roughly half of the entries. They regularly reviewed each other’s decisions to improve consistency. In cases of uncertainty, entries were included.
-\hl{For the update, on author (PM) screened all results for three criteria and another (JCB) screened the survivors for the fourth criterion.}
+\hl{For the update, one author (PM) screened all results for three criteria and another (JCB) screened the survivors for the fourth criterion.}
 
 ## Full text review
 
