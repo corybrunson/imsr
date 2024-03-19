@@ -229,7 +229,8 @@ tab_synthesis %>%
   mutate(Source = factor(
     Source,
     c("Clinical", "Laboratory", "Imaging",
-      "Clinical, Laboratory", "Clinical, Imaging", "Patient-reported")
+      "Clinical, Laboratory", "Clinical, Imaging", "Clinical, Environmental",
+      "Patient-reported")
   )) %>%
   mutate(Task = factor(
     Task,

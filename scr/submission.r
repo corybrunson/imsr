@@ -16,13 +16,12 @@ file.copy(
   overwrite = TRUE
 )
 file.copy(
-  here::here("fig/fig-methods.png"),
-  here::here("docs/Localized-Modeling/Fig4.png"),
+  here::here("fig/fig-typology.pdf"),
+  here::here("docs/Localized-Modeling/Fig4.pdf"),
   overwrite = TRUE
 )
 file.copy(
-  here::here("fig/fig-typology.pdf"),
-  here::here("docs/Localized-Modeling/Fig5.pdf"),
+  here::here("fig/fig-methods.png"),
+  here::here("docs/Localized-Modeling/Fig5.png"),
   overwrite = TRUE
 )
-

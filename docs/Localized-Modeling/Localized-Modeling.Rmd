@@ -110,8 +110,9 @@ header-includes: |
   \newcommand{\landscapeend}{\end{landscape}}
   
   \usepackage{soul}
-  \definecolor{lightblue}{rgb}{.80,.90,1}
-  \sethlcolor{lightblue}
+  %%\definecolor{hlcolor}{rgb}{.80,.90,1}
+  \definecolor{hlcolor}{rgb}{1,1,1}
+  \sethlcolor{hlcolor}
   
   %% Per the spinger doc, new theorem styles can be included using built in style, 
   %% but it seems the don't work so commented below
@@ -290,7 +291,7 @@ stopifnot(nrow(tab_synthesis) == 27L)
 
 ## Bibliographic and methodological properties
 
-The `r nrow(tab_synthesis)` included studies were analyzed based on several characteristics, and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, _Hindawi - Journal of Healthcare Engineering_ published 3, and _PLOS One_ published 2.
+The `r nrow(tab_synthesis)` included studies were analyzed based on several characteristics, and we report and describe some observations here (Table \ref{tab:synthesis}). The studies were published in a variety of journals, with some of greater frequency, though no single journal published more than 3. The journal _Evolving Systems_ published 2 of the included studies, _Artificial Intelligence in Medicine_ published 3, _Hindawi - Journal of Healthcare Engineering_ published 3\hl{, \emph{Evolving Systems} published 2}, and _PLOS One_ published 2.
 
 Another interesting pattern lay in the years of publication (Figure \ref{fig:year}). While \hl{these studies} trace back to the late 1990s, they have become more common, which suggests that this is an active, though not rapidly expanding, \hl{approach}. We note \hl{that} CBR in health and medicine originated as early as 1990, \hl{and localized modeling emerged soon after} CBR had established itself\hl{;} the idea has been "in the air" for as long as CBR has been in use.
 
@@ -474,7 +475,7 @@ This relatively small sample exhibited a wide range of approaches, both technica
 #| fig.cap =
 #| "General framework for localized models.
 #|  Dashed arrows indicate optional steps."
-knitr::include_graphics("Fig5.pdf")
+knitr::include_graphics("Fig4.pdf")
 ```
 
 Each step can be unsupervised supervised: Unsupervised similarity measures include discrete measures like the Levenshtein distance and continuous measures like cosine similarity, while supervised measures include the Mahalanobis distance and random forest proximity as well as several composite measures with weights calculated from the data. Most retrieval steps obtained cohorts with a uniform size (cardinality) or similarity threshold, and the remaining were likewise only informed by predictors; thus, while a retrieval step could in principle be supervised, in this sample none were. Almost all models were supervised, being that most performed predictive tasks, though @Mariuzzi1997 modeled only survival rates within localized cohorts. Meanwhile, each step can be optimized in a ML fashion by having its parameters tuned to improve performance. We found \hl{one study} that tuned the calculation of similarity [@Liu2022], though most uniform cohort sizes were also tuned. Some earlier studies tuned generalized regression models, but more recent studies did not.
@@ -785,7 +786,7 @@ composite_studies |>
 ```{r methods, fig.align='center', out.width="100%", echo=FALSE}
 #| fig.cap =
 #| "Frequency of recurring methodological elements across included studies."
-knitr::include_graphics("Fig4.png")
+knitr::include_graphics("Fig5.png")
 ```
 
 ## Performance evaluations and comparisons {-}
