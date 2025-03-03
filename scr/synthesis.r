@@ -61,7 +61,6 @@ properties_inclusion %>%
     `Cases` = number_of_cases_incidents,
     `Features` = number_of_predictors_features
   ) %>%
-  mutate(Task = ifelse(Task == "Recommendation", "Decision Support", Task)) %>% 
   mutate(across(
     c(Cases, Features),
     \(x) sapply(x, FUN = format, big.mark = ",")
@@ -234,7 +233,7 @@ tab_synthesis %>%
   )) %>%
   mutate(Task = factor(
     Task,
-    c("Prediction", "Clustering", "Diagnosis", "Prognosis", "Decision Support")
+    c("Diagnosis", "Prognosis", "Forecast", "Recommendation")
   )) %>%
   mutate(Aim = factor(Aim, c("Knowledge", "Practice"))) %>%
   # mutate(across(c(Source, Task, Aim), fct_infreq)) %>%
