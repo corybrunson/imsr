@@ -226,7 +226,7 @@ prognosis, or care of a new or test case.\footnote{Similarity measures
   still referred to as patient similarity measures\hl{ in our sample}.}
 \hl{Some of the earliest and simplest CBR tools returned} these
 retrieved cases \hl{ to inform human decision-making}\citep{Aamodt1994};
-the related nearest neighbors (NN) technique generates predictions from
+the related nearest neighbors (\hl{kNN}) technique generates predictions from
 cohorts automatically via averaging (regression) or voting
 (classification) of their outcomes. In contrast, \hl{SCBM} fits families
 of predictive models, for example generalized linear models (GLMs), to
@@ -235,8 +235,6 @@ retrieved similarity cohorts in order to generate predictions.
 While the patient similarity measure used to retrieve each cohort may be complicated, the cohort itself can be directly inspected.}
 
 \hl{This approach offers an alternative paradigm for interpretable machine learning that combines the simplicity and transparency of classical models like decision trees (DTs) and GLMs with the sensitivity to nonlinearity and interactions of advanced opaque models like random forests (RFs) and artificial neural networks (ANNs). The sensitivity is enabled by the fitting of the model to the local cohort, whose size and scope are governed by hyperparameters that may be tuned like any others via grid or Bayesian optimization. Some similarity measures or other retrieval methods may be more interpretable than others, so that the interpretability of the SCBM approach would then depend on that of its retrieval (similarity matching) and revision (predictive modeling) steps. Moreover, this approach would benefit computationally as well as practically from the availability of a large corpus of cases, as efficient data structures and algorithms exist for similarity matching }\citep{Halder2024}\hl{ and the local models would benefit from increased numbers of relevant cases.}
-\hl{SCBM}s thus provide an individualized way to fit fully interpretable
-models to large population data.
 
 This approach harkens to the aspirational ``green button'' that would,
 in response to a query, automatically retrieve patient data from an
@@ -285,7 +283,7 @@ outcomes. Nevertheless, as \hl{we find in this review}, they can be used
 to draw inferences about the importance of different risk factors to
 specific individuals.
 
-\hl{We also note that a large variety of AI tools, besides NN, use similarity measures or other relevance-based retrieval methods: Back-propagation in ANNs relies on differentiation, which requires that all network nodes' activation functions and, therefore, the final model are continuous and differentiable, i.e. that small distances between cases yield small changes in prediction; and kernel-based methods that rely directly on pairwise distances computed via inner product, rather than high-dimensional coordinates, extend far beyond their use in CBR. The key difference in SCBM is that the retrieved cohort is treated as a component of the model and made available to the user. Indeed, retrieval procedures were the most significant algorithmic requirements and accomplishments of CBR }\citep{Kolodner1992, Gierl1998}\hl{ and the retrieved cohorts may be reused for numerous modeling tasks.}
+\hl{We also note that a large variety of AI tools, besides kNN, use similarity measures or other relevance-based retrieval methods: Back-propagation in ANNs relies on differentiation, which requires that all network nodes' activation functions and, therefore, the final model are continuous and differentiable, i.e. that small distances between cases yield small changes in prediction; and kernel-based methods that rely directly on pairwise distances computed via inner product, rather than high-dimensional coordinates, extend far beyond their use in CBR. The key difference in SCBM is that the retrieved cohort is treated as a component of the model and made available to the user. Indeed, retrieval procedures were the most significant algorithmic requirements and accomplishments of CBR }\citep{Kolodner1992, Gierl1998}\hl{ and the retrieved cohorts may be reused for numerous modeling tasks.}
 Thus, \hl{SCBM}s may embody both styles of CBR.
 
 We refer the interested reader to several previous reviews of CBR in
@@ -449,7 +447,7 @@ platforms used. De-duplication resulted in 1,657 entries, which were
 added to the title/abstract screening for review. Of these, 360 entries
 met the screening criteria and were assessed through full text review.
 Of these, 51 fit the original criteria, and 21 were included as distinct
-from NN prediction.
+from \hl{kNN} prediction.
 
 \begin{figure}
 
@@ -475,7 +473,7 @@ We then reviewed \hl{a seed set comprising 43 studies} that inspired
 this review. After removing duplicates and screening for eligibility, we
 were left with 6 additional studies
 \citep{Park2006, Lowsky2013, Lee2015, Ng2015, Lee2017, Wang2019}, 1 of
-which was excluded from the synthesis for using NN prediction. Reference
+which was excluded from the synthesis for using \hl{kNN} prediction. Reference
 tracking from the 43 + 360 = 403 studies assessed for eligibility led us
 to identify 1 additional study that met our criteria
 \citep{Kasabov2010}. This left us with 21 + 1 + 5 = 27 studies included
@@ -500,7 +498,7 @@ have become \hl{slightly }more common, which suggests that this is an
 active, though not rapidly expanding, approach. We note that CBR in
 health and medicine originated as early as 1990, and \hl{SCBM} emerged
 soon after CBR had established itself; the idea has been ``in the air''
-for as long as CBR has been in use.
+for as long as CBR has been in use.\hl{ Based on the motivations and methodologies observed in our sample (discussed in later sections), we speculate that the higher frequency of studies since 2013 is attributable in large part to the availability of vaster clinical databases with improved pre-processing tools, following the rapid uptake of EHRs; and of more efficient and powerful tools for retrieval (similarity-matching), the traditional bottleneck of CBR. Another possibility is an increased interest in interpretable machine learning }\citep{Rudin2022}\hl{. Each of these factors should apply with no less force to other CDSS and clinical applications of ML, and the rise we see may simply be commensurate with an overall increase in the volume of articles in these fields.}
 
 \small
 
@@ -669,7 +667,7 @@ journals, the vast majority were oriented toward clinical practice
 rather than medical research. For example, a 2006 study specifically
 evaluated the usefulness of CBR-based explanations for the purpose of
 decision support \citep{Doyle2006}. This study was part of a much larger
-literature on CBR systems and was included here despite relying on NN
+literature on CBR systems and was included here despite relying on \hl{kNN}
 prediction because it used an unconventional voting scheme to generate
 recommendations. A more recent study took essentially the same focus
 with respect to a proposed clinical risk prediction model, which
@@ -984,7 +982,7 @@ non-linear while some were locally learned, and some were optimized
 globally while others locally. Not all qualified as DML, since the
 resulting measures would not necessarily satisfy the triangle
 inequality. Each used its similarity measure to retrieve training cases
-relevant to each testing case. \hl{Most} took a standard NN approach to
+relevant to each testing case. \hl{Most} took a standard \hl{kNN} approach to
 generating predictions; \hl{two} \citep{Vilhena2016, Tang2021} fit
 predictive models to the retrieved cohorts.
 
@@ -1015,7 +1013,7 @@ CBR''.\footnote{Drawing from \citet{Goyal2008}, we suggest the term
   similarity cohorts of fixed cardinality.} The step used a heuristic
 procedure to locate a similarity threshold that (locally) maximizes
 predictive accuracy on the training set. This is analogous to optimizing
-the neighborhood size parameter in NN predictive modeling, so we will
+the neighborhood size parameter in \hl{kNN} predictive modeling, so we will
 not discuss it further except to mention that the authors found
 statistical CBR to outperform conventional CBR on several data sets.
 \citet{CampilloGimenez2013} combined these learning techniques: They
@@ -1024,7 +1022,7 @@ predictors (by predicting the binary outcome of kidney transplant
 waitlist registration) and for the cases (by predicting agreement of
 outcome between an index case and other training cases), and they used
 exhaustion to optimize the size of the retrieved cohort for the accuracy
-of the NN model using the previously optimized weights.
+of the \hl{kNN} model using the previously optimized weights.
 
 \subsubsection{Localized models}\label{localized-models}
 
@@ -1053,7 +1051,7 @@ cardinality, only the one previously published study
 in this corpus took this approach, though \citet{Liu2022} took a third
 option by retrieving fixed proportions of training data. Viewed as a
 hyperparameter of the individualized modeling approach, cohort size can
-be treated in the same way as neighborhood size in NN \hl{prediction},
+be treated in the same way as neighborhood size in \hl{kNN} \hl{prediction},
 so we will not discuss it further.
 
 \citet{Kasabov2010} proposed an iterative algorithm to settle on an
@@ -1225,7 +1223,7 @@ However, even those that showcased several such specializations }\citep{Campillo
 This work would be facilitated by standardization and modularization using a framework like that outlined above.
 For example, }\citet{CampilloGimenez2013}\hl{ and }\citet{Liu2022}\hl{ use a modular design to toggle multiple choices and obtain neatly nested comparisons.}
 
-\hl{While most studies identified outstanding technical needs (Section }\ref{identified-needs}\hl{), few (though some) emphasized the need to assess human-focused qualities like user interface and user experience, interpretability, meaningfulness, or trust.
+\hl{While most studies identified outstanding technical needs (Section }\ref{identified-needs}\hl{), few (though some) emphasized the need to assess interpretability, meaningfulness, or trust.
 Most studies identified interpretability as an advantage of localized models, though none evaluated model interpretability and few proposed new interpretative uses.
 Lack of trust in ML tools is a long-recognized problem that direct intepretability of model components could help alleviate.
 One valuable direction for future work would be to measure the utility of interpretable components in research and in clinical practice and the correctness and confidence of users in their interpretations.
@@ -1279,7 +1277,7 @@ and clinical practice.
 \item
   AI: artificial intelligence
 \item
-  NN: nearest neighbors
+  \hl{kNN}: nearest neighbors
 \item
   GLM: generalized linear model
 \item
@@ -1857,14 +1855,14 @@ Comparators
 & & & & \hspace{6em} & C5.0 & 93.71\%\hspace{6em} \\
 & & & & \hspace{6em} & CART & 92.00\%\hspace{6em} \\
 & & & & \hspace{6em} & LR & 91.14\%\hspace{6em} \\
-& & & & \hspace{6em} & NN & 88.29\%\hspace{6em} \\
+& & & & \hspace{6em} & \hl{kNN} & 88.29\%\hspace{6em} \\
 & & Heart & Statistical CBR & 83.70\%\hspace{6em} & LR &
 84.44\%\hspace{6em} \\
-& & & & \hspace{6em} & NN & 82.22\%\hspace{6em} \\
+& & & & \hspace{6em} & \hl{kNN} & 82.22\%\hspace{6em} \\
 & & & & \hspace{6em} & CBR & 81.85\%\hspace{6em} \\
 & & & & \hspace{6em} & CART & 76.67\%\hspace{6em} \\
 & & & & \hspace{6em} & C5.0 & 76.30\%\hspace{6em} \\
-& & Breast & Statistical CBR & 96.96\%\hspace{6em} & NN &
+& & Breast & Statistical CBR & 96.96\%\hspace{6em} & \hl{kNN} &
 97.50\%\hspace{6em} \\
 & & & & \hspace{6em} & CBR & 96.61\%\hspace{6em} \\
 & & & & \hspace{6em} & LR & 96.61\%\hspace{6em} \\
@@ -1875,13 +1873,13 @@ Comparators
 & & & & \hspace{6em} & CBR & 73.16\%\hspace{6em} \\
 & & & & \hspace{6em} & C5.0 & 73.15\%\hspace{6em} \\
 & & & & \hspace{6em} & CART & 72.89\%\hspace{6em} \\
-& & & & \hspace{6em} & NN & 65.39\%\hspace{6em} \\
+& & & & \hspace{6em} & \hl{kNN} & 65.39\%\hspace{6em} \\
 & & Liver & Statistical CBR & 66.76\%\hspace{6em} & CART &
 67.94\%\hspace{6em} \\
 & & & & \hspace{6em} & LR & 67.35\%\hspace{6em} \\
 & & & & \hspace{6em} & C5.0 & 66.47\%\hspace{6em} \\
 & & & & \hspace{6em} & CBR & 60.88\%\hspace{6em} \\
-& & & & \hspace{6em} & NN & 55.59\%\hspace{6em} \\
+& & & & \hspace{6em} & \hl{kNN} & 55.59\%\hspace{6em} \\
 \citet{Song2006} & RMSE & GFR & TWNFI & 7.08\hspace{6em} & MDRD &
 7.74\hspace{6em} \\
 & & & & \hspace{6em} & MLP & 8.38\hspace{6em} \\
@@ -1951,18 +1949,18 @@ Individualized DC & 0.801\hspace{6em} \\
 & & & Individualized DT & 0.779\hspace{6em} & & \hspace{6em} \\
 & & & Individualized RF & 0.839\hspace{6em} & & \hspace{6em} \\
 & & & Individualized CSRF & 0.832\hspace{6em} & & \hspace{6em} \\
-\citet{Malykh2018} & Accuracy & J13/pneumonia & Case-based NN &
+\citet{Malykh2018} & Accuracy & J13/pneumonia & Case-based \hl{ANN} &
 81.6\%\hspace{6em} & & \hspace{6em} \\
-& & K80.1/gallbladder & Case-based NN & 76.7\%\hspace{6em} & &
+& & K80.1/gallbladder & Case-based \hl{ANN} & 76.7\%\hspace{6em} & &
 \hspace{6em} \\
-& & H25.1/age-related cataract & Case-based NN & 94.9\%\hspace{6em} & &
+& & H25.1/age-related cataract & Case-based \hl{ANN} & 94.9\%\hspace{6em} & &
 \hspace{6em} \\
-& & H26.2/complicated cataract & Case-based NN & 91.4\%\hspace{6em} & &
+& & H26.2/complicated cataract & Case-based \hl{ANN} & 91.4\%\hspace{6em} & &
 \hspace{6em} \\
-& & 167.4/encephalopathy & Case-based NN & 72.4\%\hspace{6em} & &
+& & 167.4/encephalopathy & Case-based \hl{ANN} & 72.4\%\hspace{6em} & &
 \hspace{6em} \\
-& & 167.9/CBD & Case-based NN & 75.4\%\hspace{6em} & & \hspace{6em} \\
-& & N20.1/ureter & Case-based NN & 58.7\%\hspace{6em} & &
+& & 167.9/CBD & Case-based \hl{ANN} & 75.4\%\hspace{6em} & & \hspace{6em} \\
+& & N20.1/ureter & Case-based \hl{ANN} & 58.7\%\hspace{6em} & &
 \hspace{6em} \\
 \citet{Zhang2018} & AUROC & Cognitive impairment & Gaussian process
 regression with custom kernel & 0.92\hspace{6em} & linear regression
