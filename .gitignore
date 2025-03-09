@@ -11,5 +11,8 @@ fig
 tab
 **/*.log
 **/*.spl
-**/*.tex
+**/*.aux
+**/*.out
 **/*.pdf
+**/*.synctex.gz
+
