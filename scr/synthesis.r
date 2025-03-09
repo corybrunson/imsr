@@ -58,8 +58,8 @@ properties_inclusion %>%
     Aim = ifelse(generalizable_knowledge == "Science", "Knowledge", "Practice"),
     Source = type_of_data,
     Type = range_of_data,
-    `Cases` = number_of_cases_incidents,
-    `Features` = number_of_predictors_features
+    Cases = number_of_cases_incidents,
+    Features = number_of_predictors_features
   ) %>%
   mutate(across(
     c(Cases, Features),
@@ -125,12 +125,17 @@ properties_inclusion %>%
   transmute(
     zotero_key, date_of_publication,
     proposal = proposed_methods,
+    cases = number_of_cases_incidents,
+    features = number_of_predictors_features,
     evaluation = evaluation_comparison_approach,
     measure = performance_measure,
     performance = performance_values
   ) %>%
+  # break `cases`, `features`, and `performance` together
+  mutate(across(c(cases, features), \(l) str_split(l, "; "))) %>%
   # break `performance` into nested data with task, method, value
-  mutate(performance = str_split(performance, "\n")) %>% unnest(performance) %>%
+  mutate(performance = str_split(performance, "\n")) %>% 
+  unnest(c(cases, features, performance)) %>%
   separate(col = performance, into = c("task", "results"), sep = ": ") %>%
   mutate(results = str_split(results, "; ")) %>% unnest(results) %>%
   mutate(results = str_remove(results, " \\(.*\\)$")) %>%
@@ -381,3 +386,66 @@ composite_approaches %>%
 print(method_freq)
 ggsave(here::here("fig/fig-methods.png"), method_freq, width = 8, height = 3)
 ggsave(here::here("fig/fig-methods.jpg"), method_freq, width = 8, height = 3)
+
+# extract evaluations of proposed methods
+tab_eval_comp |> 
+  pivot_wider(
+    id_cols = c(zotero_key, date_of_publication, measure, task, cases, features),
+    names_from = role, values_from = results
+  ) |> 
+  transmute(
+    zotero_key, Date = as_date(date_of_publication),
+    Measure = measure, Problem = task, Cases = cases, Features = features,
+    proposal
+  ) |> 
+  arrange(Date) |> 
+  unnest(proposal) |> 
+  separate_wider_delim(
+    proposal, delim = ": ",
+    names = c("Proposal", "Performance")
+  ) |> 
+  mutate(across(
+    c(Cases, Features),
+    \(s) as.double(str_remove(s, ","))
+  )) |> 
+  mutate(Performance = ifelse(
+    str_detect(Performance, "%$"),
+    as.double(str_remove(Performance, "%$")) / 100,
+    as.double(Performance)
+  )) |> 
+  left_join(
+    select(tab_synthesis, zotero_key = Citation, Source, Type, Task),
+    by = "zotero_key"
+  ) ->
+  tab_eval_prop
+# visualize relationships between data size and performance measures
+tab_eval_prop |> 
+  add_count(Measure, name = "Count") |> 
+  filter(Count > 2) |> 
+  ggplot(aes(x = Cases, y = Performance)) +
+  theme_bw() +
+  facet_wrap(vars(Measure), scales = "free") +
+  geom_point(aes(color = Task, shape = Source, size = Features^(2/3))) +
+  ggrepel::geom_text_repel(
+    aes(label = Proposal),
+    size = 3, max.overlaps = Inf
+  ) +
+  scale_size_area(max_size = 10) +
+  scale_shape_manual(values = c(16, 15, 17, 5, 6, 3, 4)) +
+  guides(
+    size = guide_legend(ncol = 3, order = 1),
+    shape = guide_legend(order = 2),
+    color = guide_legend(ncol = 2, order = 3)
+  ) +
+  labs(size = "Features") +
+  theme(legend.position = "bottom") ->
+  performance_determinants
+print(performance_determinants)
+ggsave(
+  here::here("fig/fig-performance.png"), performance_determinants,
+  width = 13, height = 8
+)
+ggsave(
+  here::here("fig/fig-performance.jpg"), performance_determinants,
+  width = 13, height = 8
+)
