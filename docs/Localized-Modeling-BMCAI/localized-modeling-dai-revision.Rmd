@@ -179,8 +179,9 @@ Clinical CBR emerged among rule-based approaches and other AI tools in the devel
 In these terms, \hl{SCBM}s are \hl{nearest neighbor--based and }highly procedural: The step of fitting a predictive model to a retrieved cohort is an automated adaptive strategy [@Begum2011], and the parameters that govern cohort retrieval can be tuned alongside model hyperparameters in a machine learning (ML) workflow. Accordingly, \hl{SCBM}s have been primarily used for and evaluated on their ability to predict classes or outcomes.
 Nevertheless, as \hl{we find in this review}, they can be used to draw inferences about the importance of different risk factors to specific individuals.
 
-\hl{We also note that a large variety of AI tools, besides kNN, use similarity measures or other relevance-based retrieval methods: Back-propagation in ANNs relies on differentiation, which requires that all network nodes' activation functions and, therefore, the final model are continuous and differentiable, i.e. that small distances between cases yield small changes in prediction; and kernel-based methods that rely directly on pairwise distances computed via inner product, rather than high-dimensional coordinates, extend far beyond their use in CBR. The key difference in SCBM is that the retrieved cohort is treated as a component of the model and made available to the user. Indeed, retrieval procedures were the most significant algorithmic requirements and accomplishments of CBR }[@Kolodner1992; @Gierl1998]\hl{ and the retrieved cohorts may be reused for numerous modeling tasks.}
-Thus, \hl{SCBM}s may embody both styles of CBR.
+\hl{We also note that a large variety of AI tools, besides kNN, use similarity measures or other relevance-based retrieval methods: Back-propagation in ANNs relies on differentiation, which requires that all network nodes' activation functions and, therefore, the final model are continuous and differentiable, i.e. that small distances between cases yield small changes in prediction; and kernel-based methods that rely directly on pairwise distances computed via inner product, rather than high-dimensional coordinates, extend far beyond their use in CBR.
+Additionally, }@Schoenborn2021\hl{ survey CBR-powered explanations of opaque models and taxonomize them as \emph{model-agnostic} versus \emph{model-based}, though this coupling of CBR with predictive models is inverted from that of SCBM.
+What distinguishes SCBM is that the retrieved cohort is treated as a component of the model and made available to the user. Indeed, retrieval procedures were the most significant algorithmic requirements and accomplishments of CBR }[@Kolodner1992; @Gierl1998]\hl{ and the retrieved cohorts may be reused for numerous modeling tasks.}
 
 We refer the interested reader to several previous reviews of CBR in medicine [@Gierl1998; @Begum2011; @Choudhury2016]\hl{, of CDSS more broadly }[@Wasylewicz2019]\hl{ and of AI-driven systems }[@Elhaddad2024], \hl{of patient similarity measures} [@Dai2020]\hl{, of kNN algorithms }[@Halder2024], \hl{of theory and uses of CBR for} predictive models [@Welch2013; @Sharafoddini2017; @Parimbelli2018; @Badra2023]\hl{, and of recent advances in CBR with emphasis on interpretability and explainability }[@Schoenborn2021; @Rudin2022]. While the reviews of CBR \hl{and CDSS }focus on applications using health data, the \hl{others consider }additional types of data (various molecular -omics, genetic tests, medical images, laboratory tests, patient preferences, patient-reported outcomes, tracking devices, social media) and survey a much broader scope of models (exploratory analysis via dimension reduction and cluster analysis; risk evaluation and outcome prediction\hl{; }software tools).
 
@@ -222,7 +223,7 @@ Because we are not aware of any standard procedures for conducting reviews and s
 
 ## Search
 
-We derived the eligibility \hl{criteria }from a seed set of previously read studies. Based on these criteria, we formulated search strings for five platforms: PubMed, Web of Science, Academic Search Premier, Google Scholar, and MathSciNet. We finalized the PubMed search first, then adapted it to the other platforms\hl{.}
+We derived the eligibility \hl{criteria }from a seed set of previously read studies. Based on these criteria, we formulated search strings for five platforms: PubMed, Web of Science, Academic Search Premier, Google Scholar, and MathSciNet. \hl{These platforms were chosen to cover a range of relevant disciplines (biomedicine, mathematics, broader sciences) and types of reports (journal articles, conference proceedings, grey literature.} We finalized the PubMed search first, then adapted it to the other platforms\hl{.}
 
 We conducted all searches over 2021 July 19–22. We tentatively excluded results from Google Scholar because they were missing abstracts, and later agreed to discard these results due to the lack of reproducibility of the search. We organized the remaining results into a public Zotero collection with one subcollection for each database. We then imported the pooled results to Covidence, which merged some duplicate entries.
 
@@ -404,18 +405,18 @@ It would be impractical to meta-analyze these numbers due to the great variety o
 We do observe one clear pattern: All of the proposed methods that most evidently outperformed their comparators---Kohonen + CBR [@Wyns2004], TWNFI [@Song2006; @Kasabov2010], gravitational search algorithms (GSA) [@Liang2015], CBR + rules (+ DML) [@Nicolas2014], Gaussian process regression [@Zhang2018], JITL-ELM [@Ma2020]---are hybrids of \hl{SCBM} (in some cases CBR) with other techniques, often DML. Though @CampilloGimenez2013 and @Ng2015 report non-superior performance by such hybrids, the pattern suggests the importance of the similarity measure to the retrieval step.
 Meanwhile, when proposed approaches targeted cohort demarcation or choice of predictive model---statistical CBR [@Park2006]; individualized \hl{GLM, DT, and RF} [@Lee2015; @Lee2017]---they did not consistently outperform comparators.
 
-Figure S1 **TODO**.
+\hl{Figure }\ref{fig:performance}\hl{ visualizes the relationship between performance and case count, feature count, data source, and predictive task for those experiments that evaluated models using accuracy or AUROC (other performance measures were too rare to allow for useful comparisons).
+While not represented in the plot, results from different models applied to the same data can be inferred from their common case counts, data sources, and tasks.
+The data are too heterogeneous to meaningfully test for trends. Performance varies much more between experiments than between models within experiments, and there is no clear dependency on the source(s) of data or on the type of prediction.
+We also note that the plot is no less consistent with the alarming negative association between sample size and reported accuracy observed by }@Berisha2021\hl{ than with the inverse association expected in the absence of selective reporting.}
 
 ## Identified needs
 
-The study authors focused their recommendations and their own plans for future work mostly on technical improvements and evaluations [@Mariuzzi1997; @Yearwood1997].
+\hl{S}tudy authors focused their recommendations and \hl{future plans} mostly on technical improvements and evaluations\hl{.}
 Urged improvements included full or partial automation of predictor selection [@Mariuzzi1997; @Yearwood1997], similarity learning [@Mariuzzi1997; @Wang2019], and parameter optimization [@Song2006; @Lee2017]; extensions to new data structures [@Lopez2011], data types [@Liang2015; @Verma2015; @Malykh2018], and reasoning systems [@Nicolas2014]; and the use of more advanced model components to improve accuracy or efficiency [@Lowsky2013; @Lee2015; @Liang2015; @Zhang2018].
 Authors also urged validations and independent evaluations using larger or more comprehensive data sets [@Elter2007; @Xu2008; @Verma2015; @Ng2015], using data aggregated from multiple health systems [@Lee2015; @Lee2017; @Tang2021; @Ng2021], and in other care settings or disease contexts [@Song2006; @Zhang2018; @Tang2021; @Ng2021].
-
-Less common were calls to strengthen the connection between the methods and the users.
-Some authors urged the incorporation of (human-derived) domain knowledge into the data or models [@Yearwood1997; @Wang2019]. Others suggested new uses of their modeling approaches: to measure feature importance [@Wyns2004], to make models more expressive [@Lee2015], and to combine information obtained both from global and from \hl{SCBM}s [@Ng2015].
-Most of this incremental work was indeed carried out in later investigations in our sample.
-That said, we did not find reports of successful implementations of these tools in clinical practice. (Several excluded studies did showcase uses of CBR in practice.)
+\hl{That said, s}ome authors urged the incorporation of (human-derived) domain knowledge into the data or models [@Yearwood1997; @Wang2019]\hl{, and o}thers suggested new uses of their \hl{methods} to measure feature importance [@Wyns2004], to make models more expressive [@Lee2015], and to combine information obtained both from global and from \hl{SCBM}s [@Ng2015].
+\hl{(}Most of this incremental work was indeed carried out \hl{later} in our sample.\hl{)}
 
 # \hl{Discussion}
 
@@ -476,6 +477,9 @@ knitr::include_graphics("Fig5.pdf")
 ```
 
 Each step can be unsupervised supervised: Unsupervised similarity measures include \hl{the} Levenshtein distance and \hl{cosine} similarity, while supervised measures include the Mahalanobis distance and \hl{RF} proximity as well as several composite measures with weights calculated from the data. Most retrieval steps obtained cohorts with a uniform size (cardinality) or similarity threshold, and the remaining were likewise only informed by predictors; thus, while a retrieval step could in principle be supervised, in this sample none were. Almost all models were supervised, being that most performed predictive tasks, though @Mariuzzi1997 modeled only survival rates within localized cohorts. Meanwhile, each step can be optimized in a ML fashion by having its parameters tuned to improve performance. We found one study that tuned the calculation of similarity [@Liu2022], though most uniform cohort sizes were also tuned. Some earlier studies tuned generalized regression models, but more recent studies did not.
+
+\hl{A SCBM implementation based on this framework would help investigators systematically compare predictions and other output obtained using different tools for cohort retrieval and predictive modeling, as well as tune the parameters governing these tools. It would also make like-kind comparisons of performance easier on different tasks using different data sets and expedite validation studies. This would address the core technical needs expressed in our sample (Section }\ref{identified-needs}\hl{)} as well as the limitations of our own comparison of reported performances (Section }\ref{evaluations}\hl{).
+We also believe that this framework could be used to make the diversity of possible approaches more comprehensible to users, enabling them to most appropriately tailor these decisions to their tasks.}
 
 \small
 
@@ -837,10 +841,11 @@ knitr::include_graphics("Fig4.png")
 
 Table \ref{tab:performance} summarizes the evaluations and comparisons made of methods proposed in the included studies.
 In most cases, not all performance results are included; for the sake of concision, only what we judged to be the headline results, using the primary evaluation metrics, are reproduced here. The table contains no original results.
+\hl{Figure }\ref{fig:performance}\hl{ visualizes the relationship between the performances of the proposed methods (not of their comparators) and several aspects of the experiments used to evaluate them.}
 
 \landscapebegin
 
-**TODO: Place vertical separators (` |`) between major columns.**
+**TODO: Place vertical separators between major columns.**
 
 \small
 
@@ -917,5 +922,15 @@ tab_eval_comp |>
 \normalsize
 
 \landscapeend
+
+```{r performance, fig.align='center', out.width="100%", echo=FALSE, fig.pos='H'}
+#| fig.cap =
+#| "\\hl{Scatterplot of predictive performance versus case count;
+#|  marker size, shape, and color
+#|  encode feature count, data source, and predictive task, respectively.
+#|  (Image included as a separate file.)}"
+# knitr::include_graphics("FigS1.png", error = FALSE)
+knitr::include_graphics("Fig6.png")
+```
 
 # References {-}

@@ -1,0 +1,1230 @@
+\providecommand{\noopsort}[1]{} \providecommand{\noopsort}[1]{}
+%% BioMed_Central_Bib_Style_v1.01
+
+\begin{thebibliography}{65}
+% BibTex style file: bmc-mathphys.bst (version 2.1), 2014-07-24
+\ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
+\ifx \binits  \undefined \def \binits#1{#1}\fi
+\ifx \bauthor  \undefined \def \bauthor#1{#1}\fi
+\ifx \batitle  \undefined \def \batitle#1{#1}\fi
+\ifx \bjtitle  \undefined \def \bjtitle#1{#1}\fi
+\ifx \bvolume  \undefined \def \bvolume#1{\textbf{#1}}\fi
+\ifx \byear  \undefined \def \byear#1{#1}\fi
+\ifx \bissue  \undefined \def \bissue#1{#1}\fi
+\ifx \bfpage  \undefined \def \bfpage#1{#1}\fi
+\ifx \blpage  \undefined \def \blpage #1{#1}\fi
+\ifx \burl  \undefined \def \burl#1{\textsf{#1}}\fi
+\ifx \doiurl  \undefined \def \doiurl#1{\url{https://doi.org/#1}}\fi
+\ifx \betal  \undefined \def \betal{\textit{et al.}}\fi
+\ifx \binstitute  \undefined \def \binstitute#1{#1}\fi
+\ifx \binstitutionaled  \undefined \def \binstitutionaled#1{#1}\fi
+\ifx \bctitle  \undefined \def \bctitle#1{#1}\fi
+\ifx \beditor  \undefined \def \beditor#1{#1}\fi
+\ifx \bpublisher  \undefined \def \bpublisher#1{#1}\fi
+\ifx \bbtitle  \undefined \def \bbtitle#1{#1}\fi
+\ifx \bedition  \undefined \def \bedition#1{#1}\fi
+\ifx \bseriesno  \undefined \def \bseriesno#1{#1}\fi
+\ifx \blocation  \undefined \def \blocation#1{#1}\fi
+\ifx \bsertitle  \undefined \def \bsertitle#1{#1}\fi
+\ifx \bsnm \undefined \def \bsnm#1{#1}\fi
+\ifx \bsuffix \undefined \def \bsuffix#1{#1}\fi
+\ifx \bparticle \undefined \def \bparticle#1{#1}\fi
+\ifx \barticle \undefined \def \barticle#1{#1}\fi
+\bibcommenthead
+\ifx \bconfdate \undefined \def \bconfdate #1{#1}\fi
+\ifx \botherref \undefined \def \botherref #1{#1}\fi
+\ifx \url \undefined \def \url#1{\textsf{#1}}\fi
+\ifx \bchapter \undefined \def \bchapter#1{#1}\fi
+\ifx \bbook \undefined \def \bbook#1{#1}\fi
+\ifx \bcomment \undefined \def \bcomment#1{#1}\fi
+\ifx \oauthor \undefined \def \oauthor#1{#1}\fi
+\ifx \citeauthoryear \undefined \def \citeauthoryear#1{#1}\fi
+\ifx \endbibitem  \undefined \def \endbibitem {}\fi
+\ifx \bconflocation  \undefined \def \bconflocation#1{#1}\fi
+\ifx \arxivurl  \undefined \def \arxivurl#1{\textsf{#1}}\fi
+\csname PreBibitemsHook\endcsname
+
+%%% 1
+\bibitem[\protect\citeauthoryear{Benchimol et~al.}{2015}]{Benchimol2015}
+\begin{barticle}
+\bauthor{\bsnm{Benchimol}, \binits{E.I.}},
+\bauthor{\bsnm{Smeeth}, \binits{L.}},
+\bauthor{\bsnm{Guttmann}, \binits{A.}},
+\bauthor{\bsnm{Harron}, \binits{K.}},
+\bauthor{\bsnm{Moher}, \binits{D.}},
+\bauthor{\bsnm{Petersen}, \binits{I.}},
+\bauthor{\bsnm{S{\o}rensen}, \binits{H.T.}},
+\bauthor{\bsnm{Elm}, \binits{E.}},
+\bauthor{\bsnm{Langan}, \binits{S.M.}},
+\bauthor{\bsnm{Committee}, \binits{R.W.}}:
+\batitle{The reporting of studies conducted using observational
+  routinely-collected health data (record) statement}.
+\bjtitle{PLOS Medicine}
+\bvolume{12}(\bissue{10}),
+\bfpage{1001885}
+(\byear{2015})
+\doiurl{10.1371/journal.pmed.1001885}
+\end{barticle}
+\endbibitem
+
+%%% 2
+\bibitem[\protect\citeauthoryear{Wasylewicz and
+  {Scheepers-Hoeks}}{2019}]{Wasylewicz2019}
+\begin{bchapter}
+\bauthor{\bsnm{Wasylewicz}, \binits{A.T.M.}},
+\bauthor{\bsnm{{Scheepers-Hoeks}}, \binits{A.M.J.W.}}:
+\bctitle{Clinical decision support systems}.
+In: \beditor{\bsnm{Kubben}, \binits{P.}},
+\beditor{\bsnm{Dumontier}, \binits{M.}},
+\beditor{\bsnm{Dekker}, \binits{A.}} (eds.)
+\bbtitle{Fundamentals of Clinical Data Science},
+pp. \bfpage{153}--\blpage{169}.
+\bpublisher{Springer},
+\blocation{Cham}
+(\byear{2019}).
+\doiurl{10.1007/978-3-319-99713-1_11}
+\end{bchapter}
+\endbibitem
+
+%%% 3
+\bibitem[\protect\citeauthoryear{Sim et~al.}{2001}]{Sim2001}
+\begin{barticle}
+\bauthor{\bsnm{Sim}, \binits{I.}},
+\bauthor{\bsnm{Gorman}, \binits{P.}},
+\bauthor{\bsnm{Greenes}, \binits{R.A.}},
+\bauthor{\bsnm{Haynes}, \binits{R.B.}},
+\bauthor{\bsnm{Kaplan}, \binits{B.}},
+\bauthor{\bsnm{Lehmann}, \binits{H.}},
+\bauthor{\bsnm{Tang}, \binits{P.C.}}:
+\batitle{Clinical decision support systems for the practice of evidence-based
+  medicine}.
+\bjtitle{Journal of the American Medical Informatics Association}
+\bvolume{8}(\bissue{6}),
+\bfpage{527}--\blpage{534}
+(\byear{2001})
+\doiurl{10.1136/jamia.2001.0080527}
+\end{barticle}
+\endbibitem
+
+%%% 4
+\bibitem[\protect\citeauthoryear{Holmqvist et~al.}{2015}]{Holmqvist2015}
+\begin{barticle}
+\bauthor{\bsnm{Holmqvist}, \binits{R.}},
+\bauthor{\bsnm{Philips}, \binits{B.}},
+\bauthor{\bsnm{Barkham}, \binits{M.}}:
+\batitle{Developing practice-based evidence: Benefits, challenges, and
+  tensions}.
+\bjtitle{Psychotherapy Research}
+\bvolume{25}(\bissue{1}),
+\bfpage{20}--\blpage{31}
+(\byear{2015})
+\doiurl{10.1080/10503307.2013.861093}
+\end{barticle}
+\endbibitem
+
+%%% 5
+\bibitem[\protect\citeauthoryear{Rosella}{2022}]{Rosella2022}
+\begin{barticle}
+\bauthor{\bsnm{Rosella}, \binits{L.C.}}:
+\batitle{Commentary: Deep learning approaches applied to routinely collected
+  health data: Future directions}.
+\bjtitle{International Journal of Epidemiology}
+\bvolume{51}(\bissue{3}),
+\bfpage{931}--\blpage{933}
+(\byear{2022})
+\doiurl{10.1093/ije/dyac064}
+\end{barticle}
+\endbibitem
+
+%%% 6
+\bibitem[\protect\citeauthoryear{Elhaddad et~al.}{2024}]{Elhaddad2024}
+\begin{botherref}
+\oauthor{\bsnm{Elhaddad}, \binits{M.}},
+\oauthor{\bsnm{Hamam}, \binits{S.}},
+\oauthor{\bsnm{Elhaddad}, \binits{M.}},
+\oauthor{\bsnm{Hamam}, \binits{S.}}:
+Ai-driven clinical decision support systems: An ongoing pursuit of potential.
+Cureus
+\textbf{16}(4)
+(2024)
+\doiurl{10.7759/cureus.57728}
+\end{botherref}
+\endbibitem
+
+%%% 7
+\bibitem[\protect\citeauthoryear{Molnar}{2023}]{Molnar2023}
+\begin{bbook}
+\bauthor{\bsnm{Molnar}, \binits{C.}}:
+\bbtitle{Interpretable Machine Learning: A Guide for Making Black Box Models
+  Explainable},
+(\byear{2023})
+\end{bbook}
+\endbibitem
+
+%%% 8
+\bibitem[\protect\citeauthoryear{Rudin et~al.}{2022}]{Rudin2022}
+\begin{barticle}
+\bauthor{\bsnm{Rudin}, \binits{C.}},
+\bauthor{\bsnm{Chen}, \binits{C.}},
+\bauthor{\bsnm{Chen}, \binits{Z.}},
+\bauthor{\bsnm{Huang}, \binits{H.}},
+\bauthor{\bsnm{Semenova}, \binits{L.}},
+\bauthor{\bsnm{Zhong}, \binits{C.}}:
+\batitle{Interpretable machine learning: Fundamental principles and 10 grand
+  challenges}.
+\bjtitle{Statistics Surveys}
+\bvolume{16}(\bissue{none}),
+\bfpage{1}--\blpage{85}
+(\byear{2022})
+\doiurl{10.1214/21-SS133}
+\end{barticle}
+\endbibitem
+
+%%% 9
+\bibitem[\protect\citeauthoryear{Brown}{2016}]{Brown2016}
+\begin{barticle}
+\bauthor{\bsnm{Brown}, \binits{S.-A.}}:
+\batitle{Patient similarity: Emerging concepts in systems and precision
+  medicine}.
+\bjtitle{Frontiers in Physiology}
+\bvolume{7},
+\bfpage{561}
+(\byear{2016})
+\doiurl{10.3389/fphys.2016.00561}
+\end{barticle}
+\endbibitem
+
+%%% 10
+\bibitem[\protect\citeauthoryear{Aamodt and Plaza}{1994}]{Aamodt1994}
+\begin{barticle}
+\bauthor{\bsnm{Aamodt}, \binits{A.}},
+\bauthor{\bsnm{Plaza}, \binits{E.}}:
+\batitle{Case-based reasoning: Foundational issues, methodological variations,
+  and system approaches}.
+\bjtitle{AI Communications}
+\bvolume{7}(\bissue{1}),
+\bfpage{39}--\blpage{59}
+(\byear{1994})
+\doiurl{10.3233/AIC-1994-7104}
+\end{barticle}
+\endbibitem
+
+%%% 11
+\bibitem[\protect\citeauthoryear{Halder et~al.}{2024}]{Halder2024}
+\begin{barticle}
+\bauthor{\bsnm{Halder}, \binits{R.K.}},
+\bauthor{\bsnm{Uddin}, \binits{M.N.}},
+\bauthor{\bsnm{Uddin}, \binits{M.A.}},
+\bauthor{\bsnm{Aryal}, \binits{S.}},
+\bauthor{\bsnm{Khraisat}, \binits{A.}}:
+\batitle{Enhancing k-nearest neighbor algorithm: A comprehensive review and
+  performance analysis of modifications}.
+\bjtitle{Journal of Big Data}
+\bvolume{11}(\bissue{1}),
+\bfpage{113}
+(\byear{2024})
+\doiurl{10.1186/s40537-024-00973-y}
+\end{barticle}
+\endbibitem
+
+%%% 12
+\bibitem[\protect\citeauthoryear{Lisboa et~al.}{2023}]{Lisboa2023}
+\begin{barticle}
+\bauthor{\bsnm{Lisboa}, \binits{P.J.G.}},
+\bauthor{\bsnm{Saralajew}, \binits{S.}},
+\bauthor{\bsnm{Vellido}, \binits{A.}},
+\bauthor{\bsnm{{Fern{\'a}ndez-Domenech}}, \binits{R.}},
+\bauthor{\bsnm{Villmann}, \binits{T.}}:
+\batitle{The coming of age of interpretable and explainable machine learning
+  models}.
+\bjtitle{Neurocomputing}
+\bvolume{535},
+\bfpage{25}--\blpage{39}
+(\byear{2023})
+\doiurl{10.1016/j.neucom.2023.02.040}
+\end{barticle}
+\endbibitem
+
+%%% 13
+\bibitem[\protect\citeauthoryear{Longhurst et~al.}{2014}]{Longhurst2014}
+\begin{barticle}
+\bauthor{\bsnm{Longhurst}, \binits{C.A.}},
+\bauthor{\bsnm{Harrington}, \binits{R.A.}},
+\bauthor{\bsnm{Shah}, \binits{N.H.}}:
+\batitle{A `green button' for using aggregate patient data at the point of
+  care}.
+\bjtitle{Health Affairs}
+\bvolume{33}(\bissue{7}),
+\bfpage{1229}--\blpage{1235}
+(\byear{2014})
+\doiurl{10.1377/hlthaff.2014.0099}
+\end{barticle}
+\endbibitem
+
+%%% 14
+\bibitem[\protect\citeauthoryear{Begum et~al.}{2011}]{Begum2011}
+\begin{barticle}
+\bauthor{\bsnm{Begum}, \binits{S.}},
+\bauthor{\bsnm{Ahmed}, \binits{M.U.}},
+\bauthor{\bsnm{Funk}, \binits{P.}},
+\bauthor{\bsnm{Xiong}, \binits{N.}},
+\bauthor{\bsnm{Folke}, \binits{M.}}:
+\batitle{Case-based reasoning systems in the health sciences: A survey of
+  recent trends and developments}.
+\bjtitle{IEEE Transactions on Systems, Man, and Cybernetics, Part C
+  (Applications and Reviews)}
+\bvolume{41}(\bissue{4}),
+\bfpage{421}--\blpage{434}
+(\byear{2011})
+\doiurl{10.1109/TSMCC.2010.2071862}
+\end{barticle}
+\endbibitem
+
+%%% 15
+\bibitem[\protect\citeauthoryear{Kolodner}{1992}]{Kolodner1992}
+\begin{barticle}
+\bauthor{\bsnm{Kolodner}, \binits{J.L.}}:
+\batitle{An introduction to case-based reasoning}.
+\bjtitle{Artif Intell Rev}
+\bvolume{6}(\bissue{1}),
+\bfpage{3}--\blpage{34}
+(\byear{1992})
+\doiurl{10.1007/BF00155578}
+\end{barticle}
+\endbibitem
+
+%%% 16
+\bibitem[\protect\citeauthoryear{Schoenborn et~al.}{2021}]{Schoenborn2021}
+\begin{bchapter}
+\bauthor{\bsnm{Schoenborn}, \binits{J.M.}},
+\bauthor{\bsnm{Weber}, \binits{R.O.}},
+\bauthor{\bsnm{Aha}},
+\bauthor{\bsnm{Cassens}, \binits{J.}},
+\bauthor{\bsnm{Althoff}, \binits{K.-D.}}:
+\bctitle{Explainable case-based reasoning: A survey}.
+In: \bbtitle{Proceedings for the Explainable Agency in AI Workshop at the 35th
+  AAAI Conference on Artificial Intelligence}.
+\bpublisher{AAAI},
+\blocation{The Internet}
+(\byear{2021})
+\end{bchapter}
+\endbibitem
+
+%%% 17
+\bibitem[\protect\citeauthoryear{Gierl et~al.}{1998}]{Gierl1998}
+\begin{bchapter}
+\bauthor{\bsnm{Gierl}, \binits{L.}},
+\bauthor{\bsnm{Bull}, \binits{M.}},
+\bauthor{\bsnm{Schmidt}, \binits{R.}}:
+\bctitle{Cbr in medicine}.
+In: \beditor{\bsnm{Lenz}, \binits{M.}},
+\beditor{\bsnm{Burkhard}, \binits{H.-D.}},
+\beditor{\bsnm{{Bartsch-Sp{\"o}rl}}, \binits{B.}},
+\beditor{\bsnm{Wess}, \binits{S.}} (eds.)
+\bbtitle{Case-Based Reasoning Technology}
+vol. \bseriesno{1400},
+pp. \bfpage{273}--\blpage{297}.
+\bpublisher{Springer},
+\blocation{Berlin, Heidelberg}
+(\byear{1998}).
+\doiurl{10.1007/3-540-69351-3_11}
+\end{bchapter}
+\endbibitem
+
+%%% 18
+\bibitem[\protect\citeauthoryear{Choudhury and Begum}{2016}]{Choudhury2016}
+\begin{botherref}
+\oauthor{\bsnm{Choudhury}, \binits{N.}},
+\oauthor{\bsnm{Begum}, \binits{S.A.}}:
+A survey on case-based reasoning in medicine.
+International Journal of Advanced Computer Science and Applications
+\textbf{7}(8)
+(2016)
+\doiurl{10.14569/IJACSA.2016.070820}
+\end{botherref}
+\endbibitem
+
+%%% 19
+\bibitem[\protect\citeauthoryear{Dai et~al.}{2020}]{Dai2020}
+\begin{botherref}
+\oauthor{\bsnm{Dai}, \binits{L.}},
+\oauthor{\bsnm{Zhu}, \binits{H.}},
+\oauthor{\bsnm{Liu}, \binits{D.}}:
+Patient similarity: Methods and applications.
+arXiv:2012.01976 [cs]
+(2020)
+{\href{https://arxiv.org/abs/2012.01976}{{arXiv:2012.01976}}}
+{[cs]}
+\end{botherref}
+\endbibitem
+
+%%% 20
+\bibitem[\protect\citeauthoryear{Welch and Kawamoto}{2013}]{Welch2013}
+\begin{barticle}
+\bauthor{\bsnm{Welch}, \binits{B.M.}},
+\bauthor{\bsnm{Kawamoto}, \binits{K.}}:
+\batitle{Clinical decision support for genetically guided personalized
+  medicine: A systematic review}.
+\bjtitle{Journal of the American Medical Informatics Association}
+\bvolume{20}(\bissue{2}),
+\bfpage{388}--\blpage{400}
+(\byear{2013})
+\doiurl{10.1136/amiajnl-2012-000892}
+\end{barticle}
+\endbibitem
+
+%%% 21
+\bibitem[\protect\citeauthoryear{Sharafoddini et~al.}{2017}]{Sharafoddini2017}
+\begin{barticle}
+\bauthor{\bsnm{Sharafoddini}, \binits{A.}},
+\bauthor{\bsnm{Dubin}, \binits{J.A.}},
+\bauthor{\bsnm{Lee}, \binits{J.}}:
+\batitle{Patient similarity in prediction models based on health data: A
+  scoping review}.
+\bjtitle{JMIR Medical Informatics}
+\bvolume{5}(\bissue{1}),
+\bfpage{7}
+(\byear{2017})
+\doiurl{10.2196/medinform.6730}
+\end{barticle}
+\endbibitem
+
+%%% 22
+\bibitem[\protect\citeauthoryear{Parimbelli et~al.}{2018}]{Parimbelli2018}
+\begin{barticle}
+\bauthor{\bsnm{Parimbelli}, \binits{E.}},
+\bauthor{\bsnm{Marini}, \binits{S.}},
+\bauthor{\bsnm{Sacchi}, \binits{L.}},
+\bauthor{\bsnm{Bellazzi}, \binits{R.}}:
+\batitle{Patient similarity for precision medicine: A systematic review}.
+\bjtitle{Journal of Biomedical Informatics}
+\bvolume{83},
+\bfpage{87}--\blpage{96}
+(\byear{2018})
+\doiurl{10.1016/j.jbi.2018.06.001}
+\end{barticle}
+\endbibitem
+
+%%% 23
+\bibitem[\protect\citeauthoryear{Badra and Lesot}{2023}]{Badra2023}
+\begin{barticle}
+\bauthor{\bsnm{Badra}, \binits{F.}},
+\bauthor{\bsnm{Lesot}, \binits{M.-J.}}:
+\batitle{Case-based prediction -- a survey}.
+\bjtitle{International Journal of Approximate Reasoning}
+\bvolume{158},
+\bfpage{108920}
+(\byear{2023})
+\doiurl{10.1016/j.ijar.2023.108920}
+\end{barticle}
+\endbibitem
+
+%%% 24
+\bibitem[\protect\citeauthoryear{Park et~al.}{2006}]{Park2006}
+\begin{barticle}
+\bauthor{\bsnm{Park}, \binits{Y.-J.}},
+\bauthor{\bsnm{Kim}, \binits{B.-C.}},
+\bauthor{\bsnm{Chun}, \binits{S.-H.}}:
+\batitle{New knowledge extraction technique using probability for case-based
+  reasoning: Application to medical diagnosis}.
+\bjtitle{Expert Systems}
+\bvolume{23}(\bissue{1}),
+\bfpage{2}--\blpage{20}
+(\byear{2006})
+\doiurl{10.1111/j.1468-0394.2006.00321.x}
+\end{barticle}
+\endbibitem
+
+%%% 25
+\bibitem[\protect\citeauthoryear{Lowsky et~al.}{2013}]{Lowsky2013}
+\begin{barticle}
+\bauthor{\bsnm{Lowsky}, \binits{D.J.}},
+\bauthor{\bsnm{Ding}, \binits{Y.}},
+\bauthor{\bsnm{Lee}, \binits{D.K.K.}},
+\bauthor{\bsnm{McCulloch}, \binits{C.E.}},
+\bauthor{\bsnm{Ross}, \binits{L.F.}},
+\bauthor{\bsnm{Thistlethwaite}, \binits{J.R.}},
+\bauthor{\bsnm{Zenios}, \binits{S.A.}}:
+\batitle{A {{K-nearest}} neighbors survival probability prediction method}.
+\bjtitle{Statistics in Medicine}
+\bvolume{32}(\bissue{12}),
+\bfpage{2062}--\blpage{2069}
+(\byear{2013})
+\doiurl{10.1002/sim.5673}
+\end{barticle}
+\endbibitem
+
+%%% 26
+\bibitem[\protect\citeauthoryear{Lee et~al.}{2015}]{Lee2015}
+\begin{barticle}
+\bauthor{\bsnm{Lee}, \binits{J.}},
+\bauthor{\bsnm{Maslove}, \binits{D.M.}},
+\bauthor{\bsnm{Dubin}, \binits{J.A.}}:
+\batitle{Personalized {{Mortality Prediction Driven}} by {{Electronic Medical
+  Data}} and a {{Patient Similarity Metric}}}.
+\bjtitle{PLOS ONE}
+\bvolume{10}(\bissue{5}),
+\bfpage{0127428}
+(\byear{2015})
+\doiurl{10.1371/journal.pone.0127428}
+\end{barticle}
+\endbibitem
+
+%%% 27
+\bibitem[\protect\citeauthoryear{Ng et~al.}{2015}]{Ng2015}
+\begin{barticle}
+\bauthor{\bsnm{Ng}, \binits{K.}},
+\bauthor{\bsnm{Sun}, \binits{J.}},
+\bauthor{\bsnm{Hu}, \binits{J.}},
+\bauthor{\bsnm{Wang}, \binits{F.}}:
+\batitle{Personalized {{Predictive Modeling}} and {{Risk Factor
+  Identification}} using {{Patient Similarity}}}.
+\bjtitle{AMIA Joint Summits on Translational Science proceedings. AMIA Joint
+  Summits on Translational Science}
+\bvolume{2015},
+\bfpage{132}--\blpage{136}
+(\byear{2015})
+\end{barticle}
+\endbibitem
+
+%%% 28
+\bibitem[\protect\citeauthoryear{Lee}{2017}]{Lee2017}
+\begin{barticle}
+\bauthor{\bsnm{Lee}, \binits{J.}}:
+\batitle{Patient-{{Specific Predictive Modeling Using Random Forests}}: {{An
+  Observational Study}} for the {{Critically Ill}}}.
+\bjtitle{JMIR Medical Informatics}
+\bvolume{5}(\bissue{1}),
+\bfpage{3}
+(\byear{2017})
+\doiurl{10.2196/medinform.6690}
+\end{barticle}
+\endbibitem
+
+%%% 29
+\bibitem[\protect\citeauthoryear{Wang et~al.}{2019}]{Wang2019}
+\begin{botherref}
+\oauthor{\bsnm{Wang}, \binits{N.}},
+\oauthor{\bsnm{Huang}, \binits{Y.}},
+\oauthor{\bsnm{Liu}, \binits{H.}},
+\oauthor{\bsnm{Fei}, \binits{X.}},
+\oauthor{\bsnm{Wei}, \binits{L.}},
+\oauthor{\bsnm{Zhao}, \binits{X.}},
+\oauthor{\bsnm{Chen}, \binits{H.}}:
+Measurement and application of patient similarity in personalized predictive
+  modeling based on electronic medical records.
+BioMedical Engineering OnLine
+\textbf{18}(1)
+(2019)
+\doiurl{10.1186/s12938-019-0718-2}
+\end{botherref}
+\endbibitem
+
+%%% 30
+\bibitem[\protect\citeauthoryear{Kasabov and Hu}{2010}]{Kasabov2010}
+\begin{barticle}
+\bauthor{\bsnm{Kasabov}, \binits{N.}},
+\bauthor{\bsnm{Hu}, \binits{Y.}}:
+\batitle{Integrated optimisation method for personalised modelling and case
+  studies for medical decision support}.
+\bjtitle{International Journal of Functional Informatics and Personalised
+  Medicine}
+\bvolume{3}(\bissue{3}),
+\bfpage{236}--\blpage{256}
+(\byear{2010})
+\doiurl{10.1504/IJFIPM.2010.039123}
+\end{barticle}
+\endbibitem
+
+%%% 31
+\bibitem[\protect\citeauthoryear{Yearwood and Wilkinson}{1997}]{Yearwood1997}
+\begin{barticle}
+\bauthor{\bsnm{Yearwood}, \binits{J.}},
+\bauthor{\bsnm{Wilkinson}, \binits{R.}}:
+\batitle{Retrieving cases for treatment advice in nursing using text
+  representation and structured text retrieval.}
+\bjtitle{Artificial Intelligence in Medicine}
+\bvolume{9}(\bissue{1}),
+\bfpage{79}--\blpage{99}
+(\byear{1997})
+\doiurl{10.1016/s0933-3657(96)00362-4}
+\end{barticle}
+\endbibitem
+
+%%% 32
+\bibitem[\protect\citeauthoryear{Mariuzzi et~al.}{1997}]{Mariuzzi1997}
+\begin{barticle}
+\bauthor{\bsnm{Mariuzzi}, \binits{G.}},
+\bauthor{\bsnm{Mombello}, \binits{A.}},
+\bauthor{\bsnm{Mariuzzi}, \binits{L.}},
+\bauthor{\bsnm{Hamilton}, \binits{P.W.}},
+\bauthor{\bsnm{Weber}, \binits{J.E.}},
+\bauthor{\bsnm{Thompson}, \binits{D.}},
+\bauthor{\bsnm{Bartels}, \binits{P.H.}}:
+\batitle{Quantitative study of ductal breast cancer--patient targeted
+  prognosis: An exploration of case base reasoning.}
+\bjtitle{Pathology - Research and Practice}
+\bvolume{193}(\bissue{8}),
+\bfpage{535}--\blpage{542}
+(\byear{1997})
+\doiurl{10.1016/S0344-0338(97)80011-8}
+\end{barticle}
+\endbibitem
+
+%%% 33
+\bibitem[\protect\citeauthoryear{Wyns et~al.}{2004}]{Wyns2004}
+\begin{barticle}
+\bauthor{\bsnm{Wyns}, \binits{B.}},
+\bauthor{\bsnm{Sette}, \binits{S.}},
+\bauthor{\bsnm{Boullart}, \binits{L.}},
+\bauthor{\bsnm{Baeten}, \binits{D.}},
+\bauthor{\bsnm{Hoffman}, \binits{I.E.A.}},
+\bauthor{\bsnm{De~Keyser}, \binits{F.}}:
+\batitle{Prediction of diagnosis in patients with early arthritis using a
+  combined {{Kohonen}} mapping and instance-based evaluation criterion.}
+\bjtitle{Artificial Intelligence in Medicine}
+\bvolume{31}(\bissue{1}),
+\bfpage{45}--\blpage{55}
+(\byear{2004})
+\doiurl{10.1016/j.artmed.2004.01.002}
+\end{barticle}
+\endbibitem
+
+%%% 34
+\bibitem[\protect\citeauthoryear{Song and Kasabov}{2006}]{Song2006}
+\begin{barticle}
+\bauthor{\bsnm{Song}, \binits{Q.}},
+\bauthor{\bsnm{Kasabov}, \binits{N.}}:
+\batitle{{{TWNFI}} --- a transductive neuro-fuzzy inference system with
+  weighted data normalization for personalized modeling}.
+\bjtitle{Neural Networks}
+\bvolume{19}(\bissue{10}),
+\bfpage{1591}--\blpage{1596}
+(\byear{2006})
+\doiurl{10.1016/j.neunet.2006.05.028}
+\end{barticle}
+\endbibitem
+
+%%% 35
+\bibitem[\protect\citeauthoryear{Elter et~al.}{2007}]{Elter2007}
+\begin{barticle}
+\bauthor{\bsnm{Elter}, \binits{M.}},
+\bauthor{\bsnm{{Schulz-Wendtland}}, \binits{R.}},
+\bauthor{\bsnm{Wittenberg}, \binits{T.}}:
+\batitle{The prediction of breast cancer biopsy outcomes using two {{CAD}}
+  approaches that both emphasize an intelligible decision process.}
+\bjtitle{Medical Physics}
+\bvolume{34}(\bissue{11}),
+\bfpage{4164}--\blpage{4172}
+(\byear{2007})
+\doiurl{10.1118/1.2786864}
+\end{barticle}
+\endbibitem
+
+%%% 36
+\bibitem[\protect\citeauthoryear{Xu et~al.}{2008}]{Xu2008}
+\begin{barticle}
+\bauthor{\bsnm{Xu}, \binits{Y.}},
+\bauthor{\bsnm{Chan}, \binits{C.C.H.}},
+\bauthor{\bsnm{Lo}, \binits{K.H.Y.-L.}},
+\bauthor{\bsnm{Tang}, \binits{D.}}:
+\batitle{Prediction model for the return to work of workers with injuries in
+  {{Hong Kong}}.}
+\bjtitle{Work}
+\bvolume{30}(\bissue{1}),
+\bfpage{77}--\blpage{84}
+(\byear{2008})
+\end{barticle}
+\endbibitem
+
+%%% 37
+\bibitem[\protect\citeauthoryear{L{\'o}pez et~al.}{2011}]{Lopez2011}
+\begin{barticle}
+\bauthor{\bsnm{L{\'o}pez}, \binits{B.}},
+\bauthor{\bsnm{Pous}, \binits{C.}},
+\bauthor{\bsnm{Gay}, \binits{P.}},
+\bauthor{\bsnm{Pla}, \binits{A.}},
+\bauthor{\bsnm{Sanz}, \binits{J.}},
+\bauthor{\bsnm{Brunet}, \binits{J.}}:
+\batitle{{{eXiT}}*{{CBR}}: {{A}} framework for case-based medical diagnosis
+  development and experimentation.}
+\bjtitle{Artificial Intelligence in Medicine}
+\bvolume{51}(\bissue{2}),
+\bfpage{81}--\blpage{91}
+(\byear{2011})
+\doiurl{10.1016/j.artmed.2010.09.002}
+\end{barticle}
+\endbibitem
+
+%%% 38
+\bibitem[\protect\citeauthoryear{Verma et~al.}{2015}]{Verma2015}
+\begin{barticle}
+\bauthor{\bsnm{Verma}, \binits{A.}},
+\bauthor{\bsnm{Fiasche}, \binits{M.}},
+\bauthor{\bsnm{Cuzzola}, \binits{M.}},
+\bauthor{\bsnm{Irrera}, \binits{G.}}:
+\batitle{Comparative study of existing personalized approaches for identifying
+  important gene markers and for risk estimation in {{Type2 Diabetes}} in
+  {{Italian}} population}.
+\bjtitle{Evolving Systems}
+\bvolume{6}(\bissue{1}),
+\bfpage{15}--\blpage{22}
+(\byear{2015})
+\doiurl{10.1007/s12530-013-9083-8}
+\end{barticle}
+\endbibitem
+
+%%% 39
+\bibitem[\protect\citeauthoryear{Liang et~al.}{2015}]{Liang2015}
+\begin{barticle}
+\bauthor{\bsnm{Liang}, \binits{W.}},
+\bauthor{\bsnm{Hu}, \binits{{\relax YJ}.}},
+\bauthor{\bsnm{Kasabov}, \binits{N.}}:
+\batitle{Evolving personalized modeling system for integrated feature,
+  neighborhood and parameter optimization utilizing gravitational search
+  algorithm}.
+\bjtitle{Evolving Systems}
+\bvolume{6}(\bissue{1}),
+\bfpage{1}--\blpage{14}
+(\byear{2015})
+\doiurl{10.1007/s12530-013-9081-x}
+\end{barticle}
+\endbibitem
+
+%%% 40
+\bibitem[\protect\citeauthoryear{{Campillo-Gimenez}
+  et~al.}{2013}]{CampilloGimenez2013}
+\begin{barticle}
+\bauthor{\bsnm{{Campillo-Gimenez}}, \binits{B.}},
+\bauthor{\bsnm{Jouini}, \binits{W.}},
+\bauthor{\bsnm{Bayat}, \binits{S.}},
+\bauthor{\bsnm{Cuggia}, \binits{M.}}:
+\batitle{Improving {{Case-Based Reasoning Systems}} by {{Combining K-Nearest
+  Neighbour Algorithm}} with {{Logistic Regression}} in the {{Prediction}} of
+  {{Patients}}' {{Registration}} on the {{Renal Transplant Waiting List}}}.
+\bjtitle{PLOS ONE}
+\bvolume{8}(\bissue{9}),
+\bfpage{71991}
+(\byear{2013})
+\doiurl{10.1371/journal.pone.0071991}
+\end{barticle}
+\endbibitem
+
+%%% 41
+\bibitem[\protect\citeauthoryear{Nicolas et~al.}{2014}]{Nicolas2014}
+\begin{barticle}
+\bauthor{\bsnm{Nicolas}, \binits{R.}},
+\bauthor{\bsnm{Fornells}, \binits{A.}},
+\bauthor{\bsnm{Golobardes}, \binits{E.}},
+\bauthor{\bsnm{Corral}, \binits{G.}},
+\bauthor{\bsnm{Puig}, \binits{S.}},
+\bauthor{\bsnm{Malvehy}, \binits{J.}}:
+\batitle{{{DERMA}}: A melanoma diagnosis platform based on collaborative
+  multilabel analog reasoning.}
+\bjtitle{The Scientific World Journal}
+\bvolume{2014},
+\bfpage{351518}
+(\byear{2014})
+\doiurl{10.1155/2014/351518}
+\end{barticle}
+\endbibitem
+
+%%% 42
+\bibitem[\protect\citeauthoryear{Vilhena et~al.}{2016}]{Vilhena2016}
+\begin{barticle}
+\bauthor{\bsnm{Vilhena}, \binits{J.}},
+\bauthor{\bsnm{Vicente}, \binits{H.}},
+\bauthor{\bsnm{Martins}, \binits{M.R.}},
+\bauthor{\bsnm{Gra{\~n}eda}, \binits{J.M.}},
+\bauthor{\bsnm{Caldeira}, \binits{F.}},
+\bauthor{\bsnm{Gusm{\~a}o}, \binits{R.}},
+\bauthor{\bsnm{Neves}, \binits{J.}},
+\bauthor{\bsnm{Neves}, \binits{J.}}:
+\batitle{A case-based reasoning view of thrombophilia risk.}
+\bjtitle{Journal of Biomedical Informatics}
+\bvolume{62},
+\bfpage{265}--\blpage{275}
+(\byear{2016})
+\doiurl{10.1016/j.jbi.2016.07.013}
+\end{barticle}
+\endbibitem
+
+%%% 43
+\bibitem[\protect\citeauthoryear{Zhang et~al.}{2018}]{Zhang2018}
+\begin{botherref}
+\oauthor{\bsnm{Zhang}, \binits{{\relax HJ}.}},
+\oauthor{\bsnm{Zhu}, \binits{F.}},
+\oauthor{\bsnm{Dodge}, \binits{{\relax HH}.}},
+\oauthor{\bsnm{Higgins}, \binits{{\relax GA}.}},
+\oauthor{\bsnm{Omenn}, \binits{{\relax GS}.}},
+\oauthor{\bsnm{Guan}, \binits{{\relax YF}.}},
+\oauthor{\bsnm{{Alzheimer's Dis Neuroimaging Initi}}}:
+A similarity-based approach to leverage multi-cohort medical data on the
+  diagnosis and prognosis of {{Alzheimer}}'s disease.
+GigaScience
+\textbf{7}(7)
+(2018)
+\doiurl{10.1093/gigascience/giy085}
+\end{botherref}
+\endbibitem
+
+%%% 44
+\bibitem[\protect\citeauthoryear{Malykh and Rudetskiy}{2018}]{Malykh2018}
+\begin{barticle}
+\bauthor{\bsnm{Malykh}, \binits{V.L.}},
+\bauthor{\bsnm{Rudetskiy}, \binits{S.V.}}:
+\batitle{Approaches to {{Medical Decision-Making Based}} on {{Big Clinical
+  Data}}.}
+\bjtitle{Journal of Healthcare Engineering}
+\bvolume{2018},
+\bfpage{3917659}
+(\byear{2018})
+\doiurl{10.1155/2018/3917659}
+\end{barticle}
+\endbibitem
+
+%%% 45
+\bibitem[\protect\citeauthoryear{Ma et~al.}{2020}]{Ma2020}
+\begin{botherref}
+\oauthor{\bsnm{Ma}, \binits{X.}},
+\oauthor{\bsnm{Si}, \binits{{\relax YB}.}},
+\oauthor{\bsnm{Wang}, \binits{{\relax ZF}.}},
+\oauthor{\bsnm{Wang}, \binits{{\relax YQ}.}}:
+Length of stay prediction for {{ICU}} patients using individualized single
+  classification algorithm.
+Computer Methods and Programs in Biomedicine
+\textbf{186}
+(2020)
+\doiurl{10.1016/j.cmpb.2019.105224}
+\end{botherref}
+\endbibitem
+
+%%% 46
+\bibitem[\protect\citeauthoryear{Wang et~al.}{2020}]{Wang2020}
+\begin{botherref}
+\oauthor{\bsnm{Wang}, \binits{Y.}},
+\oauthor{\bsnm{Liang}, \binits{Y.}},
+\oauthor{\bsnm{Sun}, \binits{H.}},
+\oauthor{\bsnm{Yang}, \binits{Y.}}:
+Emergency {{Response}} for {{COVID-19 Prevention}} and {{Control}} in {{Urban
+  Rail Transit Based}} on {{Case-Based Reasoning Method}}.
+Discrete Dynamics in Nature \& Society,
+1--9
+(2020)
+\end{botherref}
+\endbibitem
+
+%%% 47
+\bibitem[\protect\citeauthoryear{Tang et~al.}{2021}]{Tang2021}
+\begin{barticle}
+\bauthor{\bsnm{Tang}, \binits{P.C.}},
+\bauthor{\bsnm{Miller}, \binits{S.}},
+\bauthor{\bsnm{Stavropoulos}, \binits{H.}},
+\bauthor{\bsnm{Kartoun}, \binits{U.}},
+\bauthor{\bsnm{Zambrano}, \binits{J.}},
+\bauthor{\bsnm{Ng}, \binits{K.}}:
+\batitle{Precision population analytics: Population management at the
+  point-of-care}.
+\bjtitle{Journal of the American Medical Informatics Association}
+\bvolume{28}(\bissue{3}),
+\bfpage{588}--\blpage{595}
+(\byear{2021})
+\doiurl{10.1093/jamia/ocaa247}
+\end{barticle}
+\endbibitem
+
+%%% 48
+\bibitem[\protect\citeauthoryear{Ng et~al.}{2021}]{Ng2021}
+\begin{barticle}
+\bauthor{\bsnm{Ng}, \binits{K.}},
+\bauthor{\bsnm{Kartoun}, \binits{U.}},
+\bauthor{\bsnm{Stavropoulos}, \binits{H.}},
+\bauthor{\bsnm{Zambrano}, \binits{J.A.}},
+\bauthor{\bsnm{Tang}, \binits{P.C.}}:
+\batitle{Personalized treatment options for chronic diseases using precision
+  cohort analytics}.
+\bjtitle{Scientific Reports}
+\bvolume{11}(\bissue{1}),
+\bfpage{1}--\blpage{13}
+(\byear{2021})
+\doiurl{10.1038/s41598-021-80967-5}
+\end{barticle}
+\endbibitem
+
+%%% 49
+\bibitem[\protect\citeauthoryear{Liu et~al.}{2022}]{Liu2022}
+\begin{barticle}
+\bauthor{\bsnm{Liu}, \binits{K.}},
+\bauthor{\bsnm{Zhang}, \binits{X.}},
+\bauthor{\bsnm{Chen}, \binits{W.}},
+\bauthor{\bsnm{Yu}, \binits{A.S.L.}},
+\bauthor{\bsnm{Kellum}, \binits{J.A.}},
+\bauthor{\bsnm{Matheny}, \binits{M.E.}},
+\bauthor{\bsnm{Simpson}, \binits{S.Q.}},
+\bauthor{\bsnm{Hu}, \binits{Y.}},
+\bauthor{\bsnm{Liu}, \binits{M.}}:
+\batitle{Development and {{Validation}} of a {{Personalized Model With Transfer
+  Learning}} for {{Acute Kidney Injury Risk Estimation Using Electronic Health
+  Records}}}.
+\bjtitle{JAMA Network Open}
+\bvolume{5}(\bissue{7}),
+\bfpage{2219776}
+(\byear{2022})
+\doiurl{10.1001/jamanetworkopen.2022.19776}
+\end{barticle}
+\endbibitem
+
+%%% 50
+\bibitem[\protect\citeauthoryear{Doborjeh et~al.}{2022}]{Doborjeh2022}
+\begin{barticle}
+\bauthor{\bsnm{Doborjeh}, \binits{M.}},
+\bauthor{\bsnm{Doborjeh}, \binits{Z.}},
+\bauthor{\bsnm{Merkin}, \binits{A.}},
+\bauthor{\bsnm{Krishnamurthi}, \binits{R.}},
+\bauthor{\bsnm{Enayatollahi}, \binits{R.}},
+\bauthor{\bsnm{Feigin}, \binits{V.}},
+\bauthor{\bsnm{Kasabov}, \binits{N.}}:
+\batitle{Personalized {{Spiking Neural Network Models}} of {{Clinical}} and
+  {{Environmental Factors}} to {{Predict Stroke}}}.
+\bjtitle{Cognitive Computation}
+\bvolume{14}(\bissue{6}),
+\bfpage{2187}--\blpage{2202}
+(\byear{2022})
+\doiurl{10.1007/s12559-021-09975-x}
+\end{barticle}
+\endbibitem
+
+%%% 51
+\bibitem[\protect\citeauthoryear{Doyle et~al.}{2006}]{Doyle2006}
+\begin{barticle}
+\bauthor{\bsnm{Doyle}, \binits{D.}},
+\bauthor{\bsnm{Cunningham}, \binits{P.}},
+\bauthor{\bsnm{Walsh}, \binits{P.}}:
+\batitle{An evaluation of the usefulness of explanation in a case-based
+  reasoning system for decision support in bronchiolitis treatment}.
+\bjtitle{Computational Intelligence}
+\bvolume{22}(\bissue{3-4}),
+\bfpage{269}--\blpage{281}
+(\byear{2006})
+\doiurl{10.1111/j.1467-8640.2006.00288.x}
+\end{barticle}
+\endbibitem
+
+%%% 52
+\bibitem[\protect\citeauthoryear{Fang et~al.}{2021}]{Fang2021}
+\begin{barticle}
+\bauthor{\bsnm{Fang}, \binits{H.S.A.}},
+\bauthor{\bsnm{Tan}, \binits{N.C.}},
+\bauthor{\bsnm{Tan}, \binits{W.Y.}},
+\bauthor{\bsnm{Oei}, \binits{R.W.}},
+\bauthor{\bsnm{Lee}, \binits{M.L.}},
+\bauthor{\bsnm{Hsu}, \binits{W.}}:
+\batitle{Patient similarity analytics for explainable clinical risk
+  prediction.}
+\bjtitle{BMC Medical Informatics \& Decision Making}
+\bvolume{21}(\bissue{1}),
+\bfpage{1}--\blpage{12}
+(\byear{2021})
+\end{barticle}
+\endbibitem
+
+%%% 53
+\bibitem[\protect\citeauthoryear{Berisha et~al.}{2021}]{Berisha2021}
+\begin{barticle}
+\bauthor{\bsnm{Berisha}, \binits{V.}},
+\bauthor{\bsnm{Krantsevich}, \binits{C.}},
+\bauthor{\bsnm{Hahn}, \binits{P.R.}},
+\bauthor{\bsnm{Hahn}, \binits{S.}},
+\bauthor{\bsnm{Dasarathy}, \binits{G.}},
+\bauthor{\bsnm{Turaga}, \binits{P.}},
+\bauthor{\bsnm{Liss}, \binits{J.}}:
+\batitle{Digital medicine and the curse of dimensionality}.
+\bjtitle{npj Digit. Med.}
+\bvolume{4}(\bissue{1}),
+\bfpage{1}--\blpage{8}
+(\byear{2021})
+\doiurl{10.1038/s41746-021-00521-5}
+\end{barticle}
+\endbibitem
+
+%%% 54
+\bibitem[\protect\citeauthoryear{Yang}{2006}]{Yang2006}
+\begin{botherref}
+\oauthor{\bsnm{Yang}, \binits{L.}}:
+Distance metric learning: A comprehensive survey.
+PhD thesis,
+Michigan State University,
+Department of Computer Science and Engineering
+(May 2006)
+\end{botherref}
+\endbibitem
+
+%%% 55
+\bibitem[\protect\citeauthoryear{Bellet et~al.}{2014}]{Bellet2014}
+\begin{botherref}
+\oauthor{\bsnm{Bellet}, \binits{A.}},
+\oauthor{\bsnm{Habrard}, \binits{A.}},
+\oauthor{\bsnm{Sebban}, \binits{M.}}:
+A Survey on Metric Learning for Feature Vectors and Structured Data.
+arXiv
+(2014).
+\doiurl{10.48550/arXiv.1306.6709}
+\end{botherref}
+\endbibitem
+
+%%% 56
+\bibitem[\protect\citeauthoryear{Xing et~al.}{2002}]{Xing2002}
+\begin{bchapter}
+\bauthor{\bsnm{Xing}, \binits{E.P.}},
+\bauthor{\bsnm{Jordan}, \binits{M.}},
+\bauthor{\bsnm{Russell}, \binits{S.}},
+\bauthor{\bsnm{Ng}, \binits{A.Y.}}:
+\bctitle{Distance metric learning with application to clustering with
+  side-information}.
+In: \bbtitle{Advances in Neural Information Processing Systems 15 (NIPS 2002)},
+vol. \bseriesno{15}.
+\bpublisher{MIT Press},
+\blocation{Vancouver, BC, Canada}
+(\byear{2002})
+\end{bchapter}
+\endbibitem
+
+%%% 57
+\bibitem[\protect\citeauthoryear{Goyal et~al.}{2008}]{Goyal2008}
+\begin{bchapter}
+\bauthor{\bsnm{Goyal}, \binits{N.}},
+\bauthor{\bsnm{Lifshits}, \binits{Y.}},
+\bauthor{\bsnm{Sch{\"u}tze}, \binits{H.}}:
+\bctitle{Disorder inequality: A combinatorial approach to nearest neighbor
+  search}.
+In: \bbtitle{Proceedings of the 2008 International Conference on Web Search and
+  Data Mining}.
+\bsertitle{WSDM '08},
+pp. \bfpage{25}--\blpage{32}.
+\bpublisher{Association for Computing Machinery},
+\blocation{New York, NY, USA}
+(\byear{2008}).
+\doiurl{10.1145/1341531.1341538}
+\end{bchapter}
+\endbibitem
+
+%%% 58
+\bibitem[\protect\citeauthoryear{Weiskopf et~al.}{2013}]{Weiskopf2013}
+\begin{barticle}
+\bauthor{\bsnm{Weiskopf}, \binits{N.G.}},
+\bauthor{\bsnm{Hripcsak}, \binits{G.}},
+\bauthor{\bsnm{Swaminathan}, \binits{S.}},
+\bauthor{\bsnm{Weng}, \binits{C.}}:
+\batitle{Defining and measuring completeness of electronic health records for
+  secondary use}.
+\bjtitle{Journal of Biomedical Informatics}
+\bvolume{46}(\bissue{5}),
+\bfpage{830}--\blpage{836}
+(\byear{2013})
+\doiurl{10.1016/j.jbi.2013.06.010}
+\end{barticle}
+\endbibitem
+
+%%% 59
+\bibitem[\protect\citeauthoryear{Kohane et~al.}{2021}]{Kohane2021}
+\begin{barticle}
+\bauthor{\bsnm{Kohane}, \binits{I.S.}},
+\bauthor{\bsnm{Aronow}, \binits{B.J.}},
+\bauthor{\bsnm{Avillach}, \binits{P.}},
+\bauthor{\bsnm{{Beaulieu-Jones}}, \binits{B.K.}},
+\bauthor{\bsnm{Bellazzi}, \binits{R.}},
+\bauthor{\bsnm{Bradford}, \binits{R.L.}},
+\bauthor{\bsnm{Brat}, \binits{G.A.}},
+\bauthor{\bsnm{Cannataro}, \binits{M.}},
+\bauthor{\bsnm{Cimino}, \binits{J.J.}},
+\bauthor{\bsnm{{Garc{\'i}a-Barrio}}, \binits{N.}},
+\bauthor{\bsnm{Gehlenborg}, \binits{N.}},
+\bauthor{\bsnm{Ghassemi}, \binits{M.}},
+\bauthor{\bsnm{{Guti{\'e}rrez-Sacrist{\'a}n}}, \binits{A.}},
+\bauthor{\bsnm{Hanauer}, \binits{D.A.}},
+\bauthor{\bsnm{Holmes}, \binits{J.H.}},
+\bauthor{\bsnm{Hong}, \binits{C.}},
+\bauthor{\bsnm{Klann}, \binits{J.G.}},
+\bauthor{\bsnm{Loh}, \binits{N.H.W.}},
+\bauthor{\bsnm{Luo}, \binits{Y.}},
+\bauthor{\bsnm{Mandl}, \binits{K.D.}},
+\bauthor{\bsnm{Daniar}, \binits{M.}},
+\bauthor{\bsnm{Moore}, \binits{J.H.}},
+\bauthor{\bsnm{Murphy}, \binits{S.N.}},
+\bauthor{\bsnm{Neuraz}, \binits{A.}},
+\bauthor{\bsnm{Ngiam}, \binits{K.Y.}},
+\bauthor{\bsnm{Omenn}, \binits{G.S.}},
+\bauthor{\bsnm{Palmer}, \binits{N.}},
+\bauthor{\bsnm{Patel}, \binits{L.P.}},
+\bauthor{\bsnm{{Pedrera-Jim{\'e}nez}}, \binits{M.}},
+\bauthor{\bsnm{Sliz}, \binits{P.}},
+\bauthor{\bsnm{South}, \binits{A.M.}},
+\bauthor{\bsnm{Tan}, \binits{A.L.M.}},
+\bauthor{\bsnm{Taylor}, \binits{D.M.}},
+\bauthor{\bsnm{Taylor}, \binits{B.W.}},
+\bauthor{\bsnm{Torti}, \binits{C.}},
+\bauthor{\bsnm{Vallejos}, \binits{A.K.}},
+\bauthor{\bsnm{Wagholikar}, \binits{K.B.}},
+\bauthor{\bsnm{Ehr~(4ce)}, \binits{T.C.F.C.C.O.C.-.B.}},
+\bauthor{\bsnm{Weber}, \binits{G.M.}},
+\bauthor{\bsnm{Cai}, \binits{T.}}:
+\batitle{What {{Every Reader Should Know About Studies Using Electronic Health
+  Record Data}} but {{May Be Afraid}} to {{Ask}}}.
+\bjtitle{Journal of Medical Internet Research}
+\bvolume{23}(\bissue{3}),
+\bfpage{22219}
+(\byear{2021})
+\doiurl{10.2196/22219}
+\end{barticle}
+\endbibitem
+
+%%% 60
+\bibitem[\protect\citeauthoryear{Weber}{2015}]{Weber2015}
+\begin{barticle}
+\bauthor{\bsnm{Weber}, \binits{G.M.}}:
+\batitle{Federated queries of clinical data repositories: {{Scaling}} to a
+  national network}.
+\bjtitle{Journal of Biomedical Informatics}
+\bvolume{55},
+\bfpage{231}--\blpage{236}
+(\byear{2015})
+\doiurl{10.1016/j.jbi.2015.04.012}
+\end{barticle}
+\endbibitem
+
+%%% 61
+\bibitem[\protect\citeauthoryear{Haendel et~al.}{2021}]{Haendel2021}
+\begin{barticle}
+\bauthor{\bsnm{Haendel}, \binits{M.A.}},
+\bauthor{\bsnm{Chute}, \binits{C.G.}},
+\bauthor{\bsnm{Bennett}, \binits{T.D.}},
+\bauthor{\bsnm{Eichmann}, \binits{D.A.}},
+\bauthor{\bsnm{Guinney}, \binits{J.}},
+\bauthor{\bsnm{Kibbe}, \binits{W.A.}},
+\bauthor{\bsnm{Payne}, \binits{P.R.O.}},
+\bauthor{\bsnm{Pfaff}, \binits{E.R.}},
+\bauthor{\bsnm{Robinson}, \binits{P.N.}},
+\bauthor{\bsnm{Saltz}, \binits{J.H.}},
+\bauthor{\bsnm{Spratt}, \binits{H.}},
+\bauthor{\bsnm{Suver}, \binits{C.}},
+\bauthor{\bsnm{Wilbanks}, \binits{J.}},
+\bauthor{\bsnm{Wilcox}, \binits{A.B.}},
+\bauthor{\bsnm{Williams}, \binits{A.E.}},
+\bauthor{\bsnm{Wu}, \binits{C.}},
+\bauthor{\bsnm{Blacketer}, \binits{C.}},
+\bauthor{\bsnm{Bradford}, \binits{R.L.}},
+\bauthor{\bsnm{Cimino}, \binits{J.J.}},
+\bauthor{\bsnm{Clark}, \binits{M.}},
+\bauthor{\bsnm{Colmenares}, \binits{E.W.}},
+\bauthor{\bsnm{Francis}, \binits{P.A.}},
+\bauthor{\bsnm{Gabriel}, \binits{D.}},
+\bauthor{\bsnm{Graves}, \binits{A.}},
+\bauthor{\bsnm{Hemadri}, \binits{R.}},
+\bauthor{\bsnm{Hong}, \binits{S.S.}},
+\bauthor{\bsnm{Hripscak}, \binits{G.}},
+\bauthor{\bsnm{Jiao}, \binits{D.}},
+\bauthor{\bsnm{Klann}, \binits{J.G.}},
+\bauthor{\bsnm{Kostka}, \binits{K.}},
+\bauthor{\bsnm{Lee}, \binits{A.M.}},
+\bauthor{\bsnm{Lehmann}, \binits{H.P.}},
+\bauthor{\bsnm{Lingrey}, \binits{L.}},
+\bauthor{\bsnm{Miller}, \binits{R.T.}},
+\bauthor{\bsnm{Morris}, \binits{M.}},
+\bauthor{\bsnm{Murphy}, \binits{S.N.}},
+\bauthor{\bsnm{Natarajan}, \binits{K.}},
+\bauthor{\bsnm{Palchuk}, \binits{M.B.}},
+\bauthor{\bsnm{Sheikh}, \binits{U.}},
+\bauthor{\bsnm{Solbrig}, \binits{H.}},
+\bauthor{\bsnm{Visweswaran}, \binits{S.}},
+\bauthor{\bsnm{Walden}, \binits{A.}},
+\bauthor{\bsnm{Walters}, \binits{K.M.}},
+\bauthor{\bsnm{Weber}, \binits{G.M.}},
+\bauthor{\bsnm{Zhang}, \binits{X.T.}},
+\bauthor{\bsnm{Zhu}, \binits{R.L.}},
+\bauthor{\bsnm{Amor}, \binits{B.}},
+\bauthor{\bsnm{Girvin}, \binits{A.T.}},
+\bauthor{\bsnm{Manna}, \binits{A.}},
+\bauthor{\bsnm{Qureshi}, \binits{N.}},
+\bauthor{\bsnm{Kurilla}, \binits{M.G.}},
+\bauthor{\bsnm{Michael}, \binits{S.G.}},
+\bauthor{\bsnm{Portilla}, \binits{L.M.}},
+\bauthor{\bsnm{Rutter}, \binits{J.L.}},
+\bauthor{\bsnm{Austin}, \binits{C.P.}},
+\bauthor{\bsnm{Gersing}, \binits{K.R.}},
+\bauthor{\bsnm{{the N3C Consortium}}}:
+\batitle{The {{National COVID Cohort Collaborative}} ({{N3C}}): {{Rationale}},
+  design, infrastructure, and deployment}.
+\bjtitle{Journal of the American Medical Informatics Association}
+\bvolume{28}(\bissue{3}),
+\bfpage{427}--\blpage{443}
+(\byear{2021})
+\doiurl{10.1093/jamia/ocaa196}
+\end{barticle}
+\endbibitem
+
+%%% 62
+\bibitem[\protect\citeauthoryear{Matarese}{2022}]{Matarese2022}
+\begin{barticle}
+\bauthor{\bsnm{Matarese}, \binits{V.}}:
+\batitle{Kinds of replicability: Different terms and different functions}.
+\bjtitle{Axiomathes}
+\bvolume{32}(\bissue{2}),
+\bfpage{647}--\blpage{670}
+(\byear{2022})
+\doiurl{10.1007/s10516-021-09610-2}
+\end{barticle}
+\endbibitem
+
+%%% 63
+\bibitem[\protect\citeauthoryear{Biecek and Burzykowski}{2021}]{Biecek2021}
+\begin{bbook}
+\bauthor{\bsnm{Biecek}, \binits{P.}},
+\bauthor{\bsnm{Burzykowski}, \binits{T.}}:
+\bbtitle{Explanatory Model Analysis: Explore, Explain, and Examine Predictive
+  Models}.
+\bpublisher{{Chapman and Hall/CRC}},
+\blocation{New York}
+(\byear{2021})
+\end{bbook}
+\endbibitem
+
+%%% 64
+\bibitem[\protect\citeauthoryear{Moshawrab et~al.}{2023}]{Moshawrab2023}
+\begin{barticle}
+\bauthor{\bsnm{Moshawrab}, \binits{M.}},
+\bauthor{\bsnm{Adda}, \binits{M.}},
+\bauthor{\bsnm{Bouzouane}, \binits{A.}},
+\bauthor{\bsnm{Ibrahim}, \binits{H.}},
+\bauthor{\bsnm{Raad}, \binits{A.}}:
+\batitle{Reviewing federated machine learning and its use in diseases
+  prediction}.
+\bjtitle{Sensors}
+\bvolume{23}(\bissue{4}),
+\bfpage{2112}
+(\byear{2023})
+\doiurl{10.3390/s23042112}
+\end{barticle}
+\endbibitem
+
+%%% 65
+\bibitem[\protect\citeauthoryear{Brauneck et~al.}{2023}]{Brauneck2023}
+\begin{barticle}
+\bauthor{\bsnm{Brauneck}, \binits{A.}},
+\bauthor{\bsnm{Schmalhorst}, \binits{L.}},
+\bauthor{\bsnm{Majdabadi}, \binits{M.M.K.}},
+\bauthor{\bsnm{Bakhtiari}, \binits{M.}},
+\bauthor{\bsnm{V{\"o}lker}, \binits{U.}},
+\bauthor{\bsnm{Baumbach}, \binits{J.}},
+\bauthor{\bsnm{Baumbach}, \binits{L.}},
+\bauthor{\bsnm{Buchholtz}, \binits{G.}}:
+\batitle{Federated machine learning, privacy-enhancing technologies, and data
+  protection laws in medical research: Scoping review}.
+\bjtitle{Journal of Medical Internet Research}
+\bvolume{25}(\bissue{1}),
+\bfpage{41588}
+(\byear{2023})
+\doiurl{10.2196/41588}
+\end{barticle}
+\endbibitem
+
+\end{thebibliography}

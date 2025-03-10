@@ -441,6 +441,7 @@ tab_eval_prop |>
   theme(legend.position = "bottom") ->
   performance_determinants
 print(performance_determinants)
+# for consistent zoom with transpose orientation, set height here to width above
 ggsave(
   here::here("fig/fig-performance.png"), performance_determinants,
   width = 13, height = 8
