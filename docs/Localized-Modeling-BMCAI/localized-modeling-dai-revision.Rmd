@@ -368,7 +368,7 @@ A partial exception to this focus was a 2014 study that also reported a decision
 knitr::include_graphics("Fig3.png")
 ```
 
-## Challenges\hl{ with methods}
+## Challenges\hl{ faced}
 
 CBR can be understood as the opposite side of a trade-off with rule-based reasoning between model size and model complexity: @Doyle2006 describe their approach as "knowledge-light", in that "the cases do not contain explicit explanation structures; instead, explanation is achieved by comparison of the query case with retrieved cases". This means that the greatest performance and efficiency challenges in CBR have to do with the retrieval and revision phases in the R4 cycle. Several studies addressed these challenges: @Park2006, while excluded from the synthesis, were the earliest to propose that cohorts be bounded by a similarity threshold rather than by the number of cases, which improved performance in their experiments. @CampilloGimenez2013 leveraged predictor weights obtained from logistic regression to inform the similarity calculation used in retrieval. @Lowsky2013 used non-parametric models to reduce the computational burden of revision (prediction). @Ma2020 proposed to improve efficiency along the entire R4 cycle, but in particular by only executing task-dependent steps in real time ("just-in-time learning", JITL), and @Ng2021 and @Tang2021 partitioned multiple phases in the R4 cycle into offline and online components, only the latter of which would be performed in real time as new data are received.
 @Liu2022 used transfer learning from globally-fitted models to improve the efficiency of \hl{SCBM}s.
@@ -819,7 +819,7 @@ composite_studies |>
 knitr::include_graphics("Fig4.png")
 ```
 
-## Rationales\hl{ for methods}
+## Rationales\hl{ for proposed methods}
 
 \hl{Our review was driven by an interest in the potential of SCBM toward interpretable ML. While not essential to the main text, we were therefore interested in understanding what needs motivated the various proposed methods we found.}
 
