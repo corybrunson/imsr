@@ -1,7 +1,7 @@
 \providecommand{\noopsort}[1]{} \providecommand{\noopsort}[1]{}
 %% BioMed_Central_Bib_Style_v1.01
 
-\begin{thebibliography}{65}
+\begin{thebibliography}{66}
 % BibTex style file: bmc-mathphys.bst (version 2.1), 2014-07-24
 \ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
 \ifx \binits  \undefined \def \binits#1{#1}\fi
@@ -1009,6 +1009,29 @@ pp. \bfpage{25}--\blpage{32}.
 \endbibitem
 
 %%% 58
+\bibitem[\protect\citeauthoryear{Ravi et~al.}{2022}]{Ravi2022}
+\begin{barticle}
+\bauthor{\bsnm{Ravi}, \binits{N.}},
+\bauthor{\bsnm{Chaturvedi}, \binits{P.}},
+\bauthor{\bsnm{Huerta}, \binits{E.A.}},
+\bauthor{\bsnm{Liu}, \binits{Z.}},
+\bauthor{\bsnm{Chard}, \binits{R.}},
+\bauthor{\bsnm{Scourtas}, \binits{A.}},
+\bauthor{\bsnm{Schmidt}, \binits{K.J.}},
+\bauthor{\bsnm{Chard}, \binits{K.}},
+\bauthor{\bsnm{Blaiszik}, \binits{B.}},
+\bauthor{\bsnm{Foster}, \binits{I.}}:
+\batitle{Fair principles for ai models with a practical application for
+  accelerated high energy diffraction microscopy}.
+\bjtitle{Sci Data}
+\bvolume{9}(\bissue{1}),
+\bfpage{657}
+(\byear{2022})
+\doiurl{10.1038/s41597-022-01712-9}
+\end{barticle}
+\endbibitem
+
+%%% 59
 \bibitem[\protect\citeauthoryear{Weiskopf et~al.}{2013}]{Weiskopf2013}
 \begin{barticle}
 \bauthor{\bsnm{Weiskopf}, \binits{N.G.}},
@@ -1025,7 +1048,7 @@ pp. \bfpage{25}--\blpage{32}.
 \end{barticle}
 \endbibitem
 
-%%% 59
+%%% 60
 \bibitem[\protect\citeauthoryear{Kohane et~al.}{2021}]{Kohane2021}
 \begin{barticle}
 \bauthor{\bsnm{Kohane}, \binits{I.S.}},
@@ -1078,7 +1101,7 @@ pp. \bfpage{25}--\blpage{32}.
 \end{barticle}
 \endbibitem
 
-%%% 60
+%%% 61
 \bibitem[\protect\citeauthoryear{Weber}{2015}]{Weber2015}
 \begin{barticle}
 \bauthor{\bsnm{Weber}, \binits{G.M.}}:
@@ -1092,7 +1115,7 @@ pp. \bfpage{25}--\blpage{32}.
 \end{barticle}
 \endbibitem
 
-%%% 61
+%%% 62
 \bibitem[\protect\citeauthoryear{Haendel et~al.}{2021}]{Haendel2021}
 \begin{barticle}
 \bauthor{\bsnm{Haendel}, \binits{M.A.}},
@@ -1162,7 +1185,7 @@ pp. \bfpage{25}--\blpage{32}.
 \end{barticle}
 \endbibitem
 
-%%% 62
+%%% 63
 \bibitem[\protect\citeauthoryear{Matarese}{2022}]{Matarese2022}
 \begin{barticle}
 \bauthor{\bsnm{Matarese}, \binits{V.}}:
@@ -1175,7 +1198,7 @@ pp. \bfpage{25}--\blpage{32}.
 \end{barticle}
 \endbibitem
 
-%%% 63
+%%% 64
 \bibitem[\protect\citeauthoryear{Biecek and Burzykowski}{2021}]{Biecek2021}
 \begin{bbook}
 \bauthor{\bsnm{Biecek}, \binits{P.}},
@@ -1188,7 +1211,7 @@ pp. \bfpage{25}--\blpage{32}.
 \end{bbook}
 \endbibitem
 
-%%% 64
+%%% 65
 \bibitem[\protect\citeauthoryear{Moshawrab et~al.}{2023}]{Moshawrab2023}
 \begin{barticle}
 \bauthor{\bsnm{Moshawrab}, \binits{M.}},
@@ -1206,7 +1229,7 @@ pp. \bfpage{25}--\blpage{32}.
 \end{barticle}
 \endbibitem
 
-%%% 65
+%%% 66
 \bibitem[\protect\citeauthoryear{Brauneck et~al.}{2023}]{Brauneck2023}
 \begin{barticle}
 \bauthor{\bsnm{Brauneck}, \binits{A.}},
