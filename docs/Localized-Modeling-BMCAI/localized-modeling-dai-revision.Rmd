@@ -225,7 +225,7 @@ Because we are not aware of any standard procedures for conducting reviews and s
 
 We derived the eligibility \hl{criteria }from a seed set of previously read studies. Based on these criteria, we formulated search strings for five platforms: PubMed, Web of Science, Academic Search Premier, Google Scholar, and MathSciNet. \hl{These platforms were chosen to cover a range of relevant disciplines (biomedicine, mathematics, broader sciences) and types of reports (journal articles, conference proceedings, grey literature.} We finalized the PubMed search first, then adapted it to the other platforms\hl{.}
 
-We conducted all searches over 2021 July 19–22. We tentatively excluded results from Google Scholar because they were missing abstracts, and later agreed to discard these results due to the lack of reproducibility of the search. We organized the remaining results into a public Zotero collection with one subcollection for each database. We then imported the pooled results to Covidence, which merged some duplicate entries.
+We conducted all searches over 2021 July 19–22. We tentatively excluded results from Google Scholar because they were missing abstracts, and later agreed to discard these results due to the lack of reproducibility of the search.
 
 We repeated the search on 2024 January 24 on the PubMed and Web of Science databases to bring the results up to date.
 
@@ -368,24 +368,6 @@ A partial exception to this focus was a 2014 study that also reported a decision
 knitr::include_graphics("Fig3.png")
 ```
 
-## Rationales\hl{ for methods}
-
-The included studies hypothesized, asserted, or assumed several benefits of \hl{SCBM} specific to clinical and medical settings and advantages over other modeling approaches.
-The most common was that the restriction to similar or relevant past cases would improve predictive performance for the index case [@Mariuzzi1997; @Liang2015; @Ng2015; @Lee2017]. In particular, @Lee2015 hypothesized and confirmed that the value of each past case would be positively related to its similarity to the index case, an assumption built in to the weighting schemes of other approaches. @Lowsky2013 made a different case, that the fewer parametric assumptions and complications of a CBR-style model would allow for greater accuracy.
-Additionally, several investigators asserted that the use of localized cohorts befit the clinical focus on the individual patient rather than the population, without reference to performance [@Song2006; @Xu2008].
-
-In an interesting contrast, @Tang2021 and @Ng2021 argued that their localized approach using the larger and more heterogeneous populations covered by EHR-derived data could better capture the messy and diverse lessons of everyday practice, as a counterpart to guidelines based on randomized controlled trials.
-Their emphasis on the enabling role of EHRs to power methods well-suited to large, structured data repositories was shared by several others [@CampilloGimenez2013; @Nicolas2014; @Verma2015; @Lee2017].
-@Verma2015 and @Zhang2018 additionally pointed out that \hl{SCBM}s are adaptable to noise in the data, variation in patterns of missingness, and (harkening to the last step of the R4 cycle) addition of new cases with known outcomes to the corpus. These properties, they said, tend to be more difficult for whole-population models to handle.
-
-The other frequent advantage attributed to \hl{SCBM} was interpretability.
-@Elter2007 and @Nicolas2014 emphasized the value of the detailed past cases, available to the user, on which predictions are based. This "self-explanation capability" made outputs more intelligible to physicians in the \hl{CDSS} setting.
-@Ng2015 additionally pointed out that localized GLMs yield localized effect estimates, which may help investigators identify individually relevant risk factors.
-@Liu2022 took this idea further, systematically comparing regression coefficients for specific risk factors across dozens of diagnostic subpopulations.
-@Doborjeh2022 used localized time series models to identify environmental changes associated with increased stroke risk.
-
-The remaining coded rationales were for augmentations or hybridizations of then-conventional CBR, most of which defended the use of other tools to improve performance via cohort selection [@CampilloGimenez2013; @Nicolas2014; @Vilhena2016] or to make models and outputs more interpretable [@Lopez2011; @Wang2019]. @Liang2015 argued for simultaneous optimization of cohort and feature selection with model parameterization; their TWNFI approach combines localization with regularization.
-
 ## Challenges\hl{ with methods}
 
 CBR can be understood as the opposite side of a trade-off with rule-based reasoning between model size and model complexity: @Doyle2006 describe their approach as "knowledge-light", in that "the cases do not contain explicit explanation structures; instead, explanation is achieved by comparison of the query case with retrieved cases". This means that the greatest performance and efficiency challenges in CBR have to do with the retrieval and revision phases in the R4 cycle. Several studies addressed these challenges: @Park2006, while excluded from the synthesis, were the earliest to propose that cohorts be bounded by a similarity threshold rather than by the number of cases, which improved performance in their experiments. @CampilloGimenez2013 leveraged predictor weights obtained from logistic regression to inform the similarity calculation used in retrieval. @Lowsky2013 used non-parametric models to reduce the computational burden of revision (prediction). @Ma2020 proposed to improve efficiency along the entire R4 cycle, but in particular by only executing task-dependent steps in real time ("just-in-time learning", JITL), and @Ng2021 and @Tang2021 partitioned multiple phases in the R4 cycle into offline and online components, only the latter of which would be performed in real time as new data are received.
@@ -427,7 +409,7 @@ We then suggest some avenues for future studies and conclude with our key takeaw
 
 ## Process
 
-The low inter-rater reliability was due, in parts, to different interpretations of some eligibility criteria by the authors, inconsistent terminology across the sample, and incomplete reporting of resources and methods in the sample. Regarding interpretation of criteria, some wording of the criteria was adjusted following discussions between the reviewing authors during full-text review to better specify an agreed-upon meaning. We will discuss the different domains, terminologies, and reporting issues of the sample in the remainder of this section.
+The low inter-rater reliability was due, in parts, to different interpretations of some eligibility criteria by the authors, inconsistent terminology across the sample, and incomplete reporting of resources and methods in the sample. Regarding interpretation of criteria, some wording of the criteria was adjusted following discussions between the reviewing authors during full-text review to better specify an agreed-upon meaning. \hl{We }discuss the different domains, terminologies, and reporting issues of the sample in the remainder of this section.
 
 ## Study designs
 
@@ -436,9 +418,6 @@ Consistent with their orientation, almost all included studies were conducted us
 ## Coherence
 
 The motivational and methodological unity of these studies does not reflect a unified research program. Besides the lack of any primary journal of record, we observed collaborations only among the authors of smaller contiguous programs, including applications of the TWNFI methodology [@Song2006; @Verma2015], individualized mortality prediction for ICU patients [@Lee2015; @Lee2017] and the use of more explanatory models to prioritize predictors or treatments for chronic disease [@Ng2015; @Tang2021; @Ng2021].
-
-These programs used varying terminology for common concepts, and no common term is in use for what we here refer to as \hl{similarity cohort--based modeling}; authors described their approaches as "targeted prognosis" [@Mariuzzi1997], "transductive inference" [@Song2006], "personalized decision support" [@Lee2015], "personalized (predictive) models" [@Liang2015, in contrast to "local models"; @Ng2015; @Wang2019; @Ma2020; @Liu2022; @Doborjeh2022], and "precision cohort" analysis [@Wang2019; @Tang2021; @Ng2021]. \hl{(Interestingly, none of the articles described their methods as ``explainable'' ML.)} We find uses of "targeted", "personalized", and "precision" generic and imprecise, while transductive inference is an established term for a broader set of methods in ML.
-\hl{While \emph{local} naturally contrasts with \emph{global}, the overloaded term \emph{localized models} stands to cause more confusion than it resolves, so we use \emph{similarity cohort--based models} to refer to this specific approach.}
 
 ## Synthesis
 
@@ -467,7 +446,7 @@ With the exception of the descriptive survival models of @Mariuzzi1997, only one
 
 ### A general framework
 
-This relatively small sample exhibited a wide range of \hl{designs in both the assembly of pre-processing, retrieval, reuse, and interpretation steps and the specific tools deployed at each}. Discussion of the \hl{diversity} of \hl{tools} has been summarized above and published in greater detail in previous reviews [@Choudhury2016; @Sharafoddini2017; @Parimbelli2018]\hl{. In this section, we focus on the diversity of assemblies. These depend on} three largely independent choices \hl{(Figure }\ref{fig:framework}\hl{})}: (1) how to measure the similarity between cases, (2) how to retrieve a cohort of cases similar to an index case, and (3) how to generate a prediction or other statistical insight for the index case from the similarity cohort.
+This relatively small sample exhibited a wide range of \hl{designs in both the assembly of pre-processing, retrieval, reuse, and interpretation steps and the specific tools deployed at each}. Discussion of the \hl{diversity} of \hl{tools} has been summarized above and published in greater detail in previous reviews [@Choudhury2016; @Sharafoddini2017; @Parimbelli2018]\hl{. In this section, we focus on the diversity of assemblies. These depend on} three largely independent choices \hl{(Figure }\ref{fig:framework}\hl{)}: (1) how to measure the similarity between cases, (2) how to retrieve a cohort of cases similar to an index case, and (3) how to generate a prediction or other statistical insight for the index case from the similarity cohort.
 
 ```{r framework, fig.align='center', out.width="100%", echo=FALSE}
 #| fig.cap =
@@ -478,7 +457,7 @@ knitr::include_graphics("Fig5.pdf")
 
 Each step can be unsupervised supervised: Unsupervised similarity measures include \hl{the} Levenshtein distance and \hl{cosine} similarity, while supervised measures include the Mahalanobis distance and \hl{RF} proximity as well as several composite measures with weights calculated from the data. Most retrieval steps obtained cohorts with a uniform size (cardinality) or similarity threshold, and the remaining were likewise only informed by predictors; thus, while a retrieval step could in principle be supervised, in this sample none were. Almost all models were supervised, being that most performed predictive tasks, though @Mariuzzi1997 modeled only survival rates within localized cohorts. Meanwhile, each step can be optimized in a ML fashion by having its parameters tuned to improve performance. We found one study that tuned the calculation of similarity [@Liu2022], though most uniform cohort sizes were also tuned. Some earlier studies tuned generalized regression models, but more recent studies did not.
 
-\hl{A SCBM implementation based on this framework would help investigators systematically compare predictions and other output obtained using different tools for cohort retrieval and predictive modeling, as well as tune the parameters governing these tools. It would also make like-kind comparisons of performance easier on different tasks using different data sets and expedite validation studies. This would address the core technical needs expressed in our sample (Section }\ref{identified-needs}\hl{)} as well as the limitations of our own comparison of reported performances (Section }\ref{evaluations}\hl{).
+\hl{As in the case of data and, recently, of ML models, having a standardized general framework facilitates the recombination of ideas and prevents duplicate effort as well as supporting more comprehensive and efficient work [@Ravi2022]. A SCBM implementation based on this framework would help investigators systematically compare predictions and other output obtained using different tools for cohort retrieval and predictive modeling, as well as tune the parameters governing these tools. It would also make like-kind comparisons of performance easier on different tasks using different data sets and expedite validation studies. This would address the core technical needs expressed in our sample (Section }\ref{identified-needs}\hl{) as well as the limitations of our own comparison of reported performances (Section }\ref{evaluations}\hl{).
 We also believe that this framework could be used to make the diversity of possible approaches more comprehensible to users, enabling them to most appropriately tailor these decisions to their tasks.}
 
 \small
@@ -510,9 +489,9 @@ framework_specs |>
 
 \hl{We suggest four avenues for future work: evaluation of predictive performance, usability and interpretability, practical and regulatory feasibility, and customizability.}
 
-\hl{Most studies were premised on the potential predictive value of localized models (Section }\ref{rationales}\hl{), but not all experiments affirmed this premise (Section }\ref{evaluations}\hl{). Those that did mostly used DML to improve retrieval and sometimes iteratively optimized the metric and the model.
+\hl{Most studies were premised on the potential predictive value of localized models (Appendix), but not all experiments affirmed this premise (Section }\ref{evaluations}\hl{). Those that did mostly used DML to improve retrieval and sometimes iteratively optimized the metric and the model.
 However, even those that showcased several such specializations }[@CampilloGimenez2013; @Ng2015; @Zhang2018; @Liu2022]\hl{ mostly used their own precursors or commonplace alternatives as comparators. Future work should compare competitive alternatives to assess their performance and other trade-offs.
-This work would be facilitated by standardization and modularization using a framework like that outlined above.
+This work would be aided by standardization and modularization using a framework like that outlined above.
 For example, }@CampilloGimenez2013\hl{ and }@Liu2022\hl{ use a modular design to toggle multiple choices and obtain neatly nested comparisons.}
 
 \hl{While most studies identified outstanding technical needs (Section }\ref{identified-needs}\hl{), few (though some) emphasized the need to assess interpretability, meaningfulness, or trust.
@@ -595,7 +574,7 @@ AC and JCB drafted, and all authors contributed to, read, and approved, the manu
 
 ## Acknowledgements {-}
 
-Two anonymous reviewers provided valuable feedback on a previous version of this manuscript.
+\hl{Four} anonymous reviewers provided valuable feedback on \hl{previous versions} of this manuscript.
 
 \pagebreak
 
@@ -615,13 +594,13 @@ How is patient similarity–based individualized modeling conducted using retros
 
 The procedure for formulating the search began with an evaluation of the research question. We highlighted specific elements within our topic of interest that we found critical to our search and listed them using an OR of ANDs, pairing terms we believed would provide our desired result. Following the solidification of the search, a thesaurus was created in which each term was expanded by synonyms that are similar enough to our core term to be applicable to our search. The expanded search string was then evaluated using the PubMed Advanced Search platform. We initially included each term and their synonyms separately to evaluate what resulted. Several terms were eliminated due to PubMed classifying them as “phrases not found” and other terms were removed to reduce the number of results, providing a more concise list of results. At the conclusions of this process for each individual term, we combined each search term using an OR of ANDs to ultimately form our search.
 
-The search will have been designed to recover studies of the kind reviewed by the review papers from which we obtained our “seed set”. To validate the final search design, we will determine how many of the papers in this seed set that are indexed by PubMed are actually recovered by our search. In most cases, the focus of a review paper is different from ours, so we will only perform this validation test on the seed set obtained from two review papers that are (a) closest in focus to ours and (b) use terminology associated with the two distinct sub-literatures relevant to our focus: Choudhury & Begum (2016), which focuses on case-based reasoning in medicine, and Sharafoddini, Dubin, & Lee (2017), which focuses on patient similarity–based prediction models on health data. The proportion of each PubMed-indexed seed set that is recovered from our PubMed search provides a rough and optimistic yet useful estimate of the proportion of the relevant literature that our full search strategy will recover.
+The search \hl{was} designed to recover studies of the kind reviewed by the review papers from which we obtained our “seed set”. To validate the final search design, we \hl{determined} how many of the papers in this seed set that are indexed by PubMed are actually recovered by our search. In most cases, the focus of a review paper is different from ours, so we will only perform this validation test on the seed set obtained from two review papers that are (a) closest in focus to ours and (b) use terminology associated with the two distinct sub-literatures relevant to our focus: Choudhury & Begum (2016), which focuses on case-based reasoning in medicine, and Sharafoddini, Dubin, & Lee (2017), which focuses on patient similarity–based prediction models on health data. The proportion of each PubMed-indexed seed set \hl{recovered} from our PubMed search provides a rough and optimistic yet useful estimate of the proportion of the relevant literature that our full search strategy will recover.
 
-Once we have finalized the search as a logical pattern, we will take the following steps to generate the sample/corpus of literature that will be the starting point for our selection process.
+Once we \hl{finalized} the search as a logical pattern, we \hl{took} the following steps to generate the sample/corpus of literature that \hl{was} the starting point for our selection process.
 
-1. The logical pattern will be converted to a search string using the syntax appropriate to each database in our search strategy. These include PubMed (already done as part of the search design), Web of Science, Academic Search Premier/Elite, and Mathematical Reviews.
-2. The search will be conducted on each database and the results organized into a Zotero collection, with one subcollection for each database.
-3. Duplicate results will be identified and merged. (A result obtained from multiple databases should have only one Zotero entry but should be filed under the subcollection for each database in which it was found.)
+1. The logical pattern will be converted to a search string using the syntax appropriate to each database in our search strategy. These include\hl{d} PubMed (already done as part of the search design), Web of Science, Academic Search Premier/Elite, and Mathematical Reviews.
+2. The search \hl{was} conducted on each database and the results organized into a Zotero collection, with one subcollection for each database.
+3. Duplicate results \hl{were} identified and merged. (A result obtained from multiple databases should have only one Zotero entry but should be filed under the subcollection for each database in which it was found.)
 
 ### \hl{Databases}
 
@@ -790,6 +769,9 @@ Then, JCB then excluded on account of a study being (d) indicated by the intende
 
 ## Terminology {-}
 
+These programs used varying terminology for common concepts, and no common term is in use for what we here refer to as \hl{similarity cohort--based modeling}; authors described their approaches as "targeted prognosis" [@Mariuzzi1997], "transductive inference" [@Song2006], "personalized decision support" [@Lee2015], "personalized (predictive) models" [@Liang2015, in contrast to "local models"; @Ng2015; @Wang2019; @Ma2020; @Liu2022; @Doborjeh2022], and "precision cohort" analysis [@Wang2019; @Tang2021; @Ng2021]. \hl{(Interestingly, none of the articles described their methods as ``explainable'' ML.)} We find uses of "targeted", "personalized", and "precision" generic and imprecise, while transductive inference is an established term for a broader set of methods in ML.
+\hl{While \emph{local} naturally contrasts with \emph{global}, the overloaded term \emph{localized models} stands to cause more confusion than it resolves.}
+
 \hl{As one reviewer pointed out for many if not most models used in ML a predictor may play a different and more or less important role for some cases than others, as quantified by importance measures or model-agnostic explanations }[@Biecek2021; @Molnar2023]\hl{. In this way, such models can also be viewed as ``localized''. We recognize, for example, that the use of global and local explanations is standard. As another reviewer pointed out, the terminology of local and global is also used in the unrelated context of federated ML to distinguish models trained using data stored in a single storage device (local) from their aggregations (global) }[@Moshawrab2023; @Brauneck2023]\hl{. The prospects for federated architecture to more effectively implement similarity cohort--based models are intriguing, and would require some reconciliation of terms.
 A third reviewer pointed out that ``local'' may describe models fitted to data collected at a specific site or using features extracted from a specific patch of an image. Taken together, these issues convinced us to drop the shorthand ``localized model'' and adopt the more specific term ``similarity cohort--based model''.}
 
@@ -836,6 +818,26 @@ composite_studies |>
 #| "Frequency of recurring methodological elements across included studies."
 knitr::include_graphics("Fig4.png")
 ```
+
+## Rationales\hl{ for methods}
+
+\hl{Our review was driven by an interest in the potential of SCBM toward interpretable ML. While not essential to the main text, we were therefore interested in understanding what needs motivated the various proposed methods we found.}
+
+The included studies hypothesized, asserted, or assumed several benefits of \hl{SCBM} specific to clinical and medical settings and advantages over other modeling approaches.
+The most common was that the restriction to similar or relevant past cases would improve predictive performance for the index case [@Mariuzzi1997; @Liang2015; @Ng2015; @Lee2017]. In particular, @Lee2015 hypothesized and confirmed that the value of each past case would be positively related to its similarity to the index case, an assumption built in to the weighting schemes of other approaches. @Lowsky2013 made a different case, that the fewer parametric assumptions and complications of a CBR-style model would allow for greater accuracy.
+Additionally, several investigators asserted that the use of localized cohorts befit the clinical focus on the individual patient rather than the population, without reference to performance [@Song2006; @Xu2008].
+
+In an interesting contrast, @Tang2021 and @Ng2021 argued that their localized approach using the larger and more heterogeneous populations covered by EHR-derived data could better capture the messy and diverse lessons of everyday practice, as a counterpart to guidelines based on randomized controlled trials.
+Their emphasis on the enabling role of EHRs to power methods well-suited to large, structured data repositories was shared by several others [@CampilloGimenez2013; @Nicolas2014; @Verma2015; @Lee2017].
+@Verma2015 and @Zhang2018 additionally pointed out that \hl{SCBM}s are adaptable to noise in the data, variation in patterns of missingness, and (harkening to the last step of the R4 cycle) addition of new cases with known outcomes to the corpus. These properties, they said, tend to be more difficult for whole-population models to handle.
+
+The other frequent advantage attributed to \hl{SCBM} was interpretability.
+@Elter2007 and @Nicolas2014 emphasized the value of the detailed past cases, available to the user, on which predictions are based. This "self-explanation capability" made outputs more intelligible to physicians in the \hl{CDSS} setting.
+@Ng2015 additionally pointed out that localized GLMs yield localized effect estimates, which may help investigators identify individually relevant risk factors.
+@Liu2022 took this idea further, systematically comparing regression coefficients for specific risk factors across dozens of diagnostic subpopulations.
+@Doborjeh2022 used localized time series models to identify environmental changes associated with increased stroke risk.
+
+The remaining coded rationales were for augmentations or hybridizations of then-conventional CBR, most of which defended the use of other tools to improve performance via cohort selection [@CampilloGimenez2013; @Nicolas2014; @Vilhena2016] or to make models and outputs more interpretable [@Lopez2011; @Wang2019]. @Liang2015 argued for simultaneous optimization of cohort and feature selection with model parameterization; their TWNFI approach combines localization with regularization.
 
 ## Performance evaluations and comparisons {-}
 
